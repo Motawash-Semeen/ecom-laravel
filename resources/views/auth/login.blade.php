@@ -12,7 +12,11 @@
             </div>
         @endif
 
+<<<<<<< HEAD
         <form method="POST" action="{{ isset($guard) ? url($guard.'/login') : route('login') }}">
+=======
+        <form method="POST" action="{{ route('login') }}">
+>>>>>>> 976207ee6996c4b3bcc035ed40f2744dc9511aa9
             @csrf
 
             <div>
