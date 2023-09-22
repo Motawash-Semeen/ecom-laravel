@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-<<<<<<< HEAD
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -113,11 +112,3 @@ class AdminController extends Controller
     }
 }
 
-=======
-use Illuminate\Http\Request;
-
-class AdminController extends Controller
-{
-    //
-}
->>>>>>> 976207ee6996c4b3bcc035ed40f2744dc9511aa9
