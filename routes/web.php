@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Backend\AdminProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,15 +20,25 @@ Route::get('/', function () {
 });
 
 Route::group(['prefix'=> 'admin', 'middleware'=>['admin:admin']], function(){
-	Route::get('/login', [AdminController::class, 'loginForm']);
+	Route::get('/login', [AdminController::class, 'loginForm'])->name('admin.loginForm');
 	Route::post('/login',[AdminController::class, 'store'])->name('admin.login');
+
+
+    
+});
+
+Route::group(['prefix'=> 'admin', 'middleware'=>['auth:sanctum,admin', 'verified']], function(){
+	Route::get('logout', [AdminController::class, 'destroy'])->name('admin.logout');
+	Route::get('profile', [AdminProfileController::class, 'AdminProfile'])->name('admin.profile');
+	Route::post('profile', [AdminProfileController::class, 'AdminProfileUpdate'])->name('admin.profileUpdate');
+	Route::post('profile/up-pass', [AdminProfileController::class, 'AdminPasswordUpdate'])->name('admin.passwordUpdate');
+
 });
 
 
 
-
 Route::middleware(['auth:sanctum,admin', 'verified'])->get('/admin/dashboard', function () {
-    return view('dashboard');
+    return view('admin.index');
 })->name('dashboard');
 
 

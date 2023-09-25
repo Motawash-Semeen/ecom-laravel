@@ -11,6 +11,7 @@ use Laravel\Fortify\Actions\EnsureLoginIsNotThrottled;
 use Laravel\Fortify\Actions\PrepareAuthenticatedSession;
 use App\Actions\Fortify\RedirectIfTwoFactorAuthenticatable;
 use App\Http\Responses\LoginResponse;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Fortify\Contracts\LoginViewResponse;
 use Laravel\Fortify\Contracts\LogoutResponse;
 use Laravel\Fortify\Features;
@@ -39,7 +40,7 @@ class AdminController extends Controller
     }
 
     public function loginForm(){
-    	return view('auth.login', ['guard' => 'admin']);
+    	return view('auth.admin_login', ['guard' => 'admin']);
     }
 
     /**
@@ -100,15 +101,21 @@ class AdminController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Laravel\Fortify\Contracts\LogoutResponse
      */
-    public function destroy(Request $request): LogoutResponse
+    // public function destroy(Request $request): LogoutResponse
+    // {
+    //     $this->guard->logout();
+
+    //     $request->session()->invalidate();
+
+    //     $request->session()->regenerateToken();
+
+    //     return app(LogoutResponse::class);
+    // }
+    
+    public function destroy(Request $request)
     {
-        $this->guard->logout();
-
-        $request->session()->invalidate();
-
-        $request->session()->regenerateToken();
-
-        return app(LogoutResponse::class);
+        Auth::guard('admin')->logout();
+        return redirect()->route('admin.loginForm');
     }
 }
 
