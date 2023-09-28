@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Backend\AdminProfileController;
 use App\Http\Controllers\Frontend\IndexController;
+use App\Http\Controllers\Frontend\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,7 +17,7 @@ use App\Http\Controllers\Frontend\IndexController;
 |
 */
 
-Route::get('/', [IndexController::class, 'index'])->name('admin.index');
+Route::get('/', [IndexController::class, 'index'])->name('index');
 
 Route::group(['prefix'=> 'admin', 'middleware'=>['admin:admin']], function(){
 	Route::get('/login', [AdminController::class, 'loginForm'])->name('admin.loginForm');
@@ -33,6 +34,16 @@ Route::group(['prefix'=> 'admin', 'middleware'=>['auth:sanctum,admin', 'verified
 });
 
 
+Route::group([ 'middleware'=>['auth:sanctum,web', 'verified']], function(){
+	Route::get('profile', [ProfileController::class, 'show'])->name('user.profile');
+	Route::post('profile', [ProfileController::class, 'updateProfile'])->name('user.updateprofile');
+	Route::get('user-password', [ProfileController::class, 'passwordForm'])->name('user.password');
+	Route::post('user-password', [ProfileController::class, 'updatePassword'])->name('user.passwordupdate');
+	
+
+});
+
+
 
 Route::middleware(['auth:sanctum,admin', 'verified'])->get('/admin/dashboard', function () {
     return view('admin.index');
@@ -40,6 +51,4 @@ Route::middleware(['auth:sanctum,admin', 'verified'])->get('/admin/dashboard', f
 
 
 
-Route::middleware(['auth:sanctum,web', 'verified'])->get('/dashboard', function () {
-    return view('frontend.main_master');
-})->name('dashboard');
+Route::middleware(['auth:sanctum,web', 'verified'])->get('/dashboard', [ProfileController::class, 'index'])->name('dashboard');
