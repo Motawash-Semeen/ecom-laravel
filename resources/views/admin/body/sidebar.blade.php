@@ -43,6 +43,18 @@
                   <li class="{{ $route[1]=='brands' ? 'active':'' }}"><a href="{{ url('admin/brands') }}"><i class="ti-more"></i>All Brands</a></li>
               </ul>
           </li>
+          <li class="treeview {{ $route[1]=='category' ? 'active menu-open':'' }}">
+              <a href="{{ url('admin/category') }}">
+                  <i data-feather="message-circle"></i>
+                  <span>Category</span>
+                  <span class="pull-right-container">
+                      <i class="fa fa-angle-right pull-right"></i>
+                  </span>
+              </a>
+              <ul class="treeview-menu ">
+                  <li class="{{ $route[1]=='category' ? 'active':'' }}"><a href="{{ url('admin/category') }}"><i class="ti-more"></i>All Categories</a></li>
+              </ul>
+          </li>
 
           <li class="treeview">
               <a href="#">

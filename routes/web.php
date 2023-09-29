@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Backend\AdminProfileController;
 use App\Http\Controllers\Backend\BrandsController;
+use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\Frontend\ProfileController;
 
@@ -32,10 +33,20 @@ Route::group(['prefix'=> 'admin', 'middleware'=>['auth:sanctum,admin', 'verified
 	Route::get('profile', [AdminProfileController::class, 'AdminProfile'])->name('admin.profile');
 	Route::post('profile', [AdminProfileController::class, 'AdminProfileUpdate'])->name('admin.profileUpdate');
 	Route::post('profile/up-pass', [AdminProfileController::class, 'AdminPasswordUpdate'])->name('admin.passwordUpdate');
+
+	// Brands
+
 	Route::get('brands', [BrandsController::class, 'show'])->name('admin.brands');
 	Route::post('brands/store', [BrandsController::class, 'store'])->name('admin.brands.store');
 	Route::get('brands/delete/{id}', [BrandsController::class, 'delete'])->name('admin.brands.delete');
 	Route::get('brands/{id}', [BrandsController::class, 'edit'])->name('admin.brands.edit');
+
+	// Category
+
+	Route::get('category', [CategoryController::class, 'show'])->name('admin.category');
+	Route::post('category/store', [CategoryController::class, 'store'])->name('admin.category.store');
+	Route::get('category/delete/{id}', [CategoryController::class, 'delete'])->name('admin.category.delete');
+	Route::get('category/{id}', [CategoryController::class, 'edit'])->name('admin.category.edit');
 });
 
 

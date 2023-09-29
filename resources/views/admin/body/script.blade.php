@@ -1,3 +1,4 @@
+<script src="https://kit.fontawesome.com/4a3cf85510.js" crossorigin="anonymous"></script>
 <script src="{{ asset('backend') }}/js/vendors.min.js"></script>
 <script src="{{ asset('') }}assets/icons/feather-icons/feather.min.js"></script>
 <script src="{{ asset('') }}assets/vendor_components/easypiechart/dist/jquery.easypiechart.js"></script>
