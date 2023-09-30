@@ -26,7 +26,7 @@
 
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">SubCategory Info</h3>
+                            <h3 class="box-title">Sub SubCategory Info</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -34,23 +34,25 @@
                                 <table id="example1" class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
-                                            <th>Category Name</th>
-                                            <th>SubCategory(en)</th>
-                                            <th>SubCategory(bn)</th>
+                                            <th>Category</th>
+                                            <th>Sub Category</th>
+                                            <th>Sub SubCategory(en)</th>
+                                            <th>Sub SubCategory(bn)</th>
                                             <th width="100">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($subcategories as $subcategory)
+                                        @foreach ($subsubcategories as $subsubcategory)
                                             <tr>
-                                                <td>{{ $subcategory->category->category_name }}</td>
-                                                <td>{{ $subcategory->subcategory_name }}</td>
-                                                <td>{{ $subcategory->subcategory_name_bn }}</td>
+                                                <td>{{ $subsubcategory->category->category_name }}</td>
+                                                <td>{{ $subsubcategory->subcategory->subcategory_name }}</td>
+                                                <td>{{ $subsubcategory->subsubcategory_name }}</td>
+                                                <td>{{ $subsubcategory->subsubcategory_name_bn }}</td>
                                                 <td>
-                                                    <a href="{{ url('admin/subCategory/' . $subcategory->id) }}"
+                                                    <a href="{{ url('admin/subSubCategory/' . $subsubcategory->id) }}"
                                                         class="btn btn-info" title="Edit"><i
                                                             class="fa-regular fa-pen-to-square"></i></a>
-                                                    <a href="{{ url('admin/subCategory/delete/' . $subcategory->id) }}"
+                                                    <a href="{{ url('admin/subSubCategory/delete/' . $subsubcategory->id) }}"
                                                         class="btn btn-danger delete" id="delete" title="Delete"><i
                                                             class="fa-regular fa-trash-can"></i></a>
                                                 </td>
@@ -70,15 +72,15 @@
                 <div class="col-lg-4">
                     <div class="box">
                         <div class="box-header with-border">
-                            @if (isset($subcategory_edit))
-                                <h3 class="box-title">Edit SubCategory</h3>
+                            @if (isset($subsubcategory_edit))
+                                <h3 class="box-title">Edit Sub SubCategory</h3>
                             @else
-                                <h3 class="box-title">Add SubCategory</h3>
+                                <h3 class="box-title">Add Sub SubCategory</h3>
                             @endif
 
                         </div>
                         <div class="box-body">
-                            <form novalidate="" method="POST" action="{{ url('admin/subCategory/store') }}"
+                            <form novalidate="" method="POST" action="{{ url('admin/subSubCategory/store') }}"
                                 enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
@@ -89,7 +91,7 @@
                                                 style="width: 100%;" tabindex="-1" aria-hidden="true" name="category_id">
                                                 <option selected="selected">Select One</option>
                                                 @foreach ($categories as $category)
-                                                    <option value="{{ $category->id }}" @if (isset($subcategory_edit) && $subcategory_edit->category_id == $category->id)
+                                                    <option value="{{ $category->id }}" @if (isset($subsubcategory_edit) && $subsubcategory_edit->category_id == $category->id)
                                                         selected
                                                       
                                                     @endif>{{ $category->category_name }}
@@ -102,30 +104,48 @@
 
                                         </div>
                                         <div class="form-group">
-                                            <h5>SubCategory Name(en) <span class="text-danger">*</span></h5>
+                                            <h5>Sub Category Name<span class="text-danger">*</span></h5>
+                                            <select class="form-control"
+                                                style="width: 100%;" tabindex="-1" aria-hidden="true" name="subcategory_id">
+                                                 <option selected="selected">First Select Category</option>{{--
+                                                @foreach ($subcategories as $subcategory)
+                                                    <option value="{{ $subcategory->id }}" @if (isset($subsubcategory_edit) && $subsubcategory_edit->subcategory_id == $subcategory->id)
+                                                        selected
+                                                      
+                                                    @endif>{{ $subcategory->subcategory_name }}
+                                                    </option>
+                                                @endforeach                                                 --}}
+                                            </select>
+                                            
+
+                                            <!-- /.form-group -->
+
+                                        </div>
+                                        <div class="form-group">
+                                            <h5>Sub SubCategory Name(en) <span class="text-danger">*</span></h5>
                                             <input type="hidden" name="id"
-                                                value="{{ isset($subcategory_edit) ? $subcategory_edit->id : '' }}">
+                                                value="{{ isset($subsubcategory_edit) ? $subsubcategory_edit->id : '' }}">
                                             <div class="controls">
-                                                <input type="text" name="subcategory_name" class="form-control"
+                                                <input type="text" name="subsubcategory_name" class="form-control"
                                                     required="" data-validation-required-message="This field is required"
-                                                    value="{{ isset($subcategory_edit) ? $subcategory_edit->subcategory_name : '' }}">
+                                                    value="{{ isset($subsubcategory_edit) ? $subsubcategory_edit->subsubcategory_name : '' }}">
                                                 <div class="help-block"></div>
                                             </div>
-                                            @error('subcategory_name')
+                                            @error('subsubcategory_name')
                                                 <div class="form-control-feedback text-danger">
                                                     <small>{{ $message }}</small></div>
                                             @enderror
 
                                         </div>
                                         <div class="form-group">
-                                            <h5>SubCategory Name(bn) <span class="text-danger">*</span></h5>
+                                            <h5>Sub SubCategory Name(bn) <span class="text-danger">*</span></h5>
                                             <div class="controls">
-                                                <input type="text" name="subcategory_name_bn" class="form-control"
+                                                <input type="text" name="subsubcategory_name_bn" class="form-control"
                                                     required="" data-validation-required-message="This field is required"
-                                                    value="{{ isset($subcategory_edit) ? $subcategory_edit->subcategory_name_bn : '' }}">
+                                                    value="{{ isset($subsubcategory_edit) ? $subsubcategory_edit->subsubcategory_name_bn : '' }}">
                                                 <div class="help-block"></div>
                                             </div>
-                                            @error('subcategory_name_bn')
+                                            @error('subsubcategory_name_bn')
                                                 <div class="form-control-feedback text-danger">
                                                     <small>{{ $message }}</small></div>
                                             @enderror
@@ -149,4 +169,34 @@
         <!-- /.content -->
 
     </div>
+
+    <script>
+      $(document).ready(function () {
+          // Listen for changes in the category select element
+          $('select[name="category_id"]').on('change', function () {
+              var categoryId = $(this).val(); // Get the selected category ID
+  
+              // Make an AJAX request to fetch subcategories for the selected category
+              $.ajax({
+                  url: '/admin/get-subcategories', // Replace with the URL to your server-side script
+                  method: 'POST',
+                  data: {
+                      _token: '{{ csrf_token() }}', // Include CSRF token for security
+                      category_id: categoryId // Send the selected category ID
+                  },
+                  success: function (data) {
+                      // Clear and populate the subcategory select element with the fetched data
+                      var subcategorySelect = $('select[name="subcategory_id"]');
+                      subcategorySelect.empty();
+                      subcategorySelect.append('<option selected="selected">Select One</option>');
+  
+                      // Add the fetched subcategories as options
+                      $.each(data.subcategories, function (key, value) {
+                          subcategorySelect.append('<option value="' + value.id + '">' + value.subcategory_name + '</option>');
+                      });
+                  }
+              });
+          });
+      });
+  </script>
 @endsection

@@ -6,6 +6,7 @@ use App\Http\Controllers\Backend\AdminProfileController;
 use App\Http\Controllers\Backend\BrandsController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\SubCategoryController;
+use App\Http\Controllers\Backend\SubSubCategoryController;
 use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\Frontend\ProfileController;
 
@@ -55,6 +56,15 @@ Route::group(['prefix'=> 'admin', 'middleware'=>['auth:sanctum,admin', 'verified
 	Route::post('subCategory/store', [SubCategoryController::class, 'store'])->name('admin.subCategory.store');
 	Route::get('subCategory/delete/{id}', [SubCategoryController::class, 'delete'])->name('admin.subCategory.delete');
 	Route::get('subCategory/{id}', [SubCategoryController::class, 'edit'])->name('admin.subCategory.edit');
+
+	// SubSubCategory
+
+	Route::get('subSubCategory', [SubSubCategoryController::class, 'show'])->name('admin.subSubCategory');
+	Route::post('subSubCategory/store', [SubSubCategoryController::class, 'store'])->name('admin.subSubCategory.store');
+	Route::get('subSubCategory/delete/{id}', [SubSubCategoryController::class, 'delete'])->name('admin.subCategory.delete');
+	Route::get('subSubCategory/{id}', [SubSubCategoryController::class, 'edit'])->name('admin.subSubCategory.edit');
+	Route::post('/get-subcategories', [SubSubCategoryController::class, 'getSubcategories'])->name('admin.subSubCategory.getSubcategories');
+
 });
 
 

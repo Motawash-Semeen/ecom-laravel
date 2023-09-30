@@ -56,7 +56,7 @@
                                                 <td>
                                                     <a href="{{ url('admin/category/'. $category->id) }}"
                                                         class="btn btn-info" title="Edit"><i class="fa-regular fa-pen-to-square"></i></a>
-                                                    <a href="{{ url('admin/category/delete/'. $category->id) }}" class="btn btn-danger"
+                                                    <a href="{{ url('admin/category/delete/'. $category->id) }}" class="btn btn-danger delete"
                                                         id="delete" title="Delete"><i class="fa-regular fa-trash-can"></i></a>
                                                 </td>
                                             </tr>

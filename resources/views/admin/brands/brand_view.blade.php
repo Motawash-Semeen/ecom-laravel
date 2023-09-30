@@ -50,7 +50,7 @@
                                                 <td>
                                                     <a href="{{ url('admin/brands/'. $brand->id) }}"
                                                         class="btn btn-info">Edit</a>
-                                                    <a href="{{ url('admin/brands/delete/'. $brand->id) }}" class="btn btn-danger"
+                                                    <a href="{{ url('admin/brands/delete/'. $brand->id) }}" class="btn btn-danger delete"
                                                         id="delete">Delete</a>
                                                 </td>
                                             </tr>
