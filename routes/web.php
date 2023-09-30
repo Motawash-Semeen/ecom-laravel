@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Backend\AdminProfileController;
 use App\Http\Controllers\Backend\BrandsController;
 use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\Frontend\ProfileController;
 
@@ -47,6 +48,13 @@ Route::group(['prefix'=> 'admin', 'middleware'=>['auth:sanctum,admin', 'verified
 	Route::post('category/store', [CategoryController::class, 'store'])->name('admin.category.store');
 	Route::get('category/delete/{id}', [CategoryController::class, 'delete'])->name('admin.category.delete');
 	Route::get('category/{id}', [CategoryController::class, 'edit'])->name('admin.category.edit');
+
+	// SubCategory
+
+	Route::get('subCategory', [SubCategoryController::class, 'show'])->name('admin.subCategory');
+	Route::post('subCategory/store', [SubCategoryController::class, 'store'])->name('admin.subCategory.store');
+	Route::get('subCategory/delete/{id}', [SubCategoryController::class, 'delete'])->name('admin.subCategory.delete');
+	Route::get('subCategory/{id}', [SubCategoryController::class, 'edit'])->name('admin.subCategory.edit');
 });
 
 

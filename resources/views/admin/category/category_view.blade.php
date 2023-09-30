@@ -34,10 +34,10 @@
                                 <table id="example1" class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
-                                            <th>Category Name(en)</th>
-                                            <th>Category Name(bn)</th>
-                                            <th>Category Icon</th>
-                                            <th>Action</th>
+                                            <th>Category(en)</th>
+                                            <th>Category(bn)</th>
+                                            <th>Icon</th>
+                                            <th width="100">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -49,15 +49,15 @@
                                                   @if (isset($category->category_icon))
                                                   <i class="{{ $category->category_icon }}"></i>
                                                   @else
-                                                    <p class="text-danger">No Icon Selected</p>
+                                                    <p class="text-danger mb-0">No Icon Selected</p>
                                                   @endif
                                                   
                                                 </td>
                                                 <td>
                                                     <a href="{{ url('admin/category/'. $category->id) }}"
-                                                        class="btn btn-info">Edit</a>
+                                                        class="btn btn-info" title="Edit"><i class="fa-regular fa-pen-to-square"></i></a>
                                                     <a href="{{ url('admin/category/delete/'. $category->id) }}" class="btn btn-danger"
-                                                        id="delete">Delete</a>
+                                                        id="delete" title="Delete"><i class="fa-regular fa-trash-can"></i></a>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -113,7 +113,7 @@
                                 </div>
                                 
                                     <div class="form-group">
-                                        <h5>Icon</h5>
+                                        <h5>Category Icon</h5>
                                         <div class="controls">
                                             <input type="text" id="image" name="category_icon"
                                                 class="form-control" value="{{ isset($category_edit)? $category_edit->category_icon : '' }}">
