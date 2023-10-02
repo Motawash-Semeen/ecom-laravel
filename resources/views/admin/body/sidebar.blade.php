@@ -58,6 +58,21 @@
               </ul>
           </li>
 
+          <li class="treeview {{ $route[1]=='product' ? 'active menu-open':'' }}">
+              <a href="{{ url('admin/product') }}">
+                  <i data-feather="message-circle"></i>
+                  <span>Products</span>
+                  <span class="pull-right-container">
+                      <i class="fa fa-angle-right pull-right"></i>
+                  </span>
+              </a>
+              <ul class="treeview-menu ">
+                  <li class="{{ $route[1]=='addProduct' ? 'active':'' }}"><a href="{{ url('admin/addProduct') }}"><i class="ti-more"></i>Add Product</a></li>
+                  <li class="{{ $route[1]=='manageProduct' ? 'active':'' }}"><a href="{{ url('admin/manageProduct') }}"><i class="ti-more"></i>Manage Products</a></li>
+                  
+              </ul>
+          </li>
+
           <li class="treeview">
               <a href="#">
                   <i data-feather="mail"></i> <span>Mailbox</span>

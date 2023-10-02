@@ -86,4 +86,13 @@ class SubSubCategoryController extends Controller
 
     return response()->json(['subcategories' => $subcategories]);
 }
+public function getSubSubcategories(Request $request)
+    {
+        $subcategory_id = $request->input('subcategory_id');
+
+        // Query the database to fetch subsubcategories based on the selected subcategory
+        $subsubcategories = SubSubCategory::where('subcategory_id', $subcategory_id)->get();
+
+        return response()->json(['subsubcategories' => $subsubcategories]);
+    }
 }

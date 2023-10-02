@@ -5,10 +5,12 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Backend\AdminProfileController;
 use App\Http\Controllers\Backend\BrandsController;
 use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\SubSubCategoryController;
 use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\Frontend\ProfileController;
+use App\Models\Product;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,6 +66,13 @@ Route::group(['prefix'=> 'admin', 'middleware'=>['auth:sanctum,admin', 'verified
 	Route::get('subSubCategory/delete/{id}', [SubSubCategoryController::class, 'delete'])->name('admin.subCategory.delete');
 	Route::get('subSubCategory/{id}', [SubSubCategoryController::class, 'edit'])->name('admin.subSubCategory.edit');
 	Route::post('/get-subcategories', [SubSubCategoryController::class, 'getSubcategories'])->name('admin.subSubCategory.getSubcategories');
+	Route::post('/get-subsubcategories', [SubSubCategoryController::class, 'getSubSubcategories'])->name('admin.subSubCategory.getSubSubcategories');
+
+	// Products
+
+	Route::get('product', [ProductController::class, 'show'])->name('admin.product');
+	Route::get('addProduct', [ProductController::class, 'create'])->name('admin.addProduct');
+	Route::post('addProduct', [ProductController::class, 'store'])->name('admin.addProduct');
 
 });
 
