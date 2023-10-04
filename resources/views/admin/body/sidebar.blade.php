@@ -67,8 +67,8 @@
                   </span>
               </a>
               <ul class="treeview-menu ">
-                  <li class="{{ $route[1]=='addProduct' ? 'active':'' }}"><a href="{{ url('admin/addProduct') }}"><i class="ti-more"></i>Add Product</a></li>
-                  <li class="{{ $route[1]=='manageProduct' ? 'active':'' }}"><a href="{{ url('admin/manageProduct') }}"><i class="ti-more"></i>Manage Products</a></li>
+                  <li class="{{ isset($route[2]) ? $route[2]=='add' ? 'active': '':'' }}"><a href="{{ url('admin/product/add') }}"><i class="ti-more"></i>Add Product</a></li>
+                  <li class="{{ isset($route[2]) ? $route[2]=='manage' ? 'active': '':'' }}"><a href="{{ url('admin/product/manage') }}"><i class="ti-more"></i>Manage Products</a></li>
                   
               </ul>
           </li>

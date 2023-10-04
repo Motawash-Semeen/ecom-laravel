@@ -70,9 +70,15 @@ Route::group(['prefix'=> 'admin', 'middleware'=>['auth:sanctum,admin', 'verified
 
 	// Products
 
-	Route::get('product', [ProductController::class, 'show'])->name('admin.product');
-	Route::get('addProduct', [ProductController::class, 'create'])->name('admin.addProduct');
-	Route::post('addProduct', [ProductController::class, 'store'])->name('admin.addProduct');
+	Route::get('product/manage', [ProductController::class, 'show'])->name('admin.product.manage');
+	Route::get('product/add', [ProductController::class, 'create'])->name('admin.product.add');
+	Route::post('product/add', [ProductController::class, 'store']);
+	Route::get('product/edit/{id}', [ProductController::class, 'edit'])->name('admin.product.manage.edit');
+	Route::post('product/edit/{id}', [ProductController::class, 'update']);
+	Route::get('product/delete/{id}', [ProductController::class, 'delete'])->name('admin.product.delete');
+	Route::get('product/status/{id}', [ProductController::class, 'statusUpdate'])->name('admin.product.status');
+	Route::get('product/multiImg/delete/{id}', [ProductController::class, 'multiImgDelete']);
+	Route::post('product/multiImg/update', [ProductController::class, 'multiImgUpdate']);
 
 });
 

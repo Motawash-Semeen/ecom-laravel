@@ -107,14 +107,20 @@
                                             <h5>Sub Category Name<span class="text-danger">*</span></h5>
                                             <select class="form-control"
                                                 style="width: 100%;" tabindex="-1" aria-hidden="true" name="subcategory_id">
-                                                 <option selected="selected">First Select Category</option>{{--
-                                                @foreach ($subcategories as $subcategory)
-                                                    <option value="{{ $subcategory->id }}" @if (isset($subsubcategory_edit) && $subsubcategory_edit->subcategory_id == $subcategory->id)
-                                                        selected
-                                                      
-                                                    @endif>{{ $subcategory->subcategory_name }}
-                                                    </option>
-                                                @endforeach                                                 --}}
+                                                 <option selected="selected">First Select Category</option>
+                                                 @if (isset($subsubcategory_edit))
+                                                 @foreach ($subcategories as $subcategory)
+                                                 @if ($subcategory->category_id == $subsubcategory_edit->category_id)
+                                                 <option value="{{ $subcategory->id }}" @if (isset($subsubcategory_edit) && $subsubcategory_edit->subcategory_id == $subcategory->id)
+                                                    selected
+                                                  
+                                                @endif>{{ $subcategory->subcategory_name }}
+                                                </option>
+                                                 @endif
+                                                 
+                                                @endforeach   
+                                                 @endif
+                                                                                               
                                             </select>
                                             
 
