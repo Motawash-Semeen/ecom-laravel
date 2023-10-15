@@ -1,5 +1,10 @@
 @extends('admin.admin_master')
 @section('admin_content')
+<style>
+  .badge a{
+    color: #fff !important;
+  }
+</style>
     <div class="container-full">
         <!-- Content Header (Page header) -->
         <div class="content-header">
@@ -26,7 +31,7 @@
 
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Brand Info</h3>
+                            <h3 class="box-title">Slider Info</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -34,24 +39,45 @@
                                 <table id="example1" class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
-                                            <th>Band Name(en)</th>
-                                            <th>Band Name(bn)</th>
-                                            <th>Image</th>
-                                            <th>Action</th>
+                                            <th>Slider Image</th>
+                                            <th>Title</th>
+                                            <th>Description</th>
+                                            <th>Status</th>
+                                            <th width="100">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($brands as $brand)
+                                        @foreach ($sliders as $slider)
                                             <tr>
-                                                <td>{{ $brand->brand_name }}</td>
-                                                <td>{{ $brand->brand_name_bn }}</td>
-                                                <td><img src="{{ asset('upload/brands/'.$brand->brand_image) }}" alt=""
-                                                        style="width: 50px; height: 50px;"></td>
+                                                <td><img src="{{ asset('upload/sliders/'.$slider->slider_img) }}" alt=""
+                                                  style="width: 50px; height: 50px;"></td>
                                                 <td>
-                                                    <a href="{{ url('admin/brands/'. $brand->id) }}"
-                                                        class="btn btn-info">Edit</a>
-                                                    <a href="{{ url('admin/brands/delete/'. $brand->id) }}" class="btn btn-danger delete"
-                                                        id="delete">Delete</a>
+                                                  @if ($slider->slider_title)
+                                                  {{ $slider->slider_title }}
+                                                  @else
+                                                  <span class="badge badge-danger">No Title</span>
+                                                  @endif
+                                                  </td>
+                                                <td>
+                                                  @if ($slider->slider_description)
+                                                  {{ $slider->slider_description }}
+                                                  @else
+                                                  <span class="badge badge-danger">No Description</span>
+                                                  @endif
+                                                  </td>
+                                                <td>
+                                                    @if ($slider->slider_status == 1)
+                                                        <span class="badge badge-success icon-link-hover"><a href="{{ url('admin/slider/status/'.$slider->id) }}">Active</a></span>
+                                                    @else
+                                                        <span class="badge badge-danger icon-link-hover"><a href="{{ url('admin/slider/status/'.$slider->id) }}">Inactive</a></span>
+                                                    @endif
+                                                </td>
+                                                <td>
+
+                                                    <a href="{{ url('admin/slider/'. $slider->id) }}"
+                                                        class="btn btn-info" title="Edit"><i class="fa-regular fa-pen-to-square"></i></a>
+                                                    <a href="{{ url('admin/slider/delete/'. $slider->id) }}" class="btn btn-danger delete"
+                                                        id="delete" title="Delete"><i class="fa-regular fa-trash-can"></i></a>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -69,56 +95,51 @@
                 <div class="col-lg-4">
                   <div class="box">
                     <div class="box-header with-border">
-                        @if (isset($brand_edit))
-                      <h3 class="box-title">Edit Category</h3>
+                      @if (isset($slider_edit))
+                      <h3 class="box-title">Edit Slider</h3>
                       @else
-                        <h3 class="box-title">Add Brand</h3>
+                        <h3 class="box-title">Add Slider</h3>
                       @endif
                     </div>
                     <div class="box-body">
-                    <form novalidate="" method="POST" action="{{ url('admin/brands/store') }}" enctype="multipart/form-data">
+                    <form novalidate="" method="POST" action="{{ url('admin/slider/store') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-12">
                                 <div class="form-group">
-                                    <h5>Brand Name(en) <span class="text-danger">*</span></h5>
-                                    <input type="hidden" name="id" value="{{ isset($brand_edit) ? $brand_edit->id : '' }}">
+                                    <h5>Slider Title </h5>
+                                    <input type="hidden" name="id" value="{{ isset($slider_edit) ? $slider_edit->id : '' }}">
                                     <div class="controls">
-                                        <input type="text" name="brand_name" class="form-control" required=""
-                                            data-validation-required-message="This field is required" value="{{ isset($brand_edit) ? $brand_edit->brand_name : '' }}">
+                                        <input type="text" name="slider_title" class="form-control" required=""
+                                            data-validation-required-message="This field is required" value="{{ isset($slider_edit) ? $slider_edit->slider_title : '' }}">
                                         <div class="help-block"></div>
                                     </div>
-                                    @error('brand_name')
-                                        <div class="form-control-feedback text-danger"><small>{{ $message }}</small></div>
-                                    @enderror
 
                                 </div>
                                 <div class="form-group">
-                                    <h5>Brand Name(bn) <span class="text-danger">*</span></h5>
+                                    <h5>Slider Description </h5>
                                     <div class="controls">
-                                        <input type="text" name="brand_name_bn" class="form-control" required=""
-                                            data-validation-required-message="This field is required" value="{{ isset($brand_edit)? $brand_edit->brand_name_bn : '' }}">
+                                        <input type="text" name="slider_description" class="form-control" required=""
+                                            data-validation-required-message="This field is required" value="{{ isset($slider_edit)? $slider_edit->slider_description : '' }}">
                                         <div class="help-block"></div>
                                     </div>
-                                    @error('brand_name_bn')
-                                        <div class="form-control-feedback text-danger"><small>{{ $message }}</small></div>
-                                    @enderror
+
                                 </div>
                                 
                                     <div class="form-group">
                                         <h5>Brand Image <span class="text-danger">*</span></h5>
                                         <div class="controls">
-                                            <input type="file" id="image" name="brand_image"
-                                                class="form-control" value="{{ isset($brand_edit)? $brand_edit->brand_image : '' }}">
+                                            <input type="file" id="image" name="slider_img"
+                                                class="form-control" value="{{ isset($slider_edit)? $slider_edit->slider_img : '' }}">
                                             <div class="help-block"></div>
                                         </div>
-                                        @error('brand_image')
+                                        @error('slider_img')
                                         <div class="form-control-feedback text-danger"><small>{{ $message }}</small></div>
                                     @enderror
 
                                     </div>
                                     <div class="form-group d-flex align-items-center justify-content-center">
-                                        <img src="{{ isset($brand_edit)? asset('upload/brands/'.$brand_edit->brand_image) : asset('upload/profile/no_image.jpg') }}" alt="" id="showImage" class=" "
+                                        <img src="{{ isset($slider_edit)? asset('upload/sliders/'.$slider_edit->slider_img) : asset('upload/profile/no_image.jpg') }}" alt="" id="showImage" class=" "
                                             style="width: 100px; height:100px;">
 
                                     </div>

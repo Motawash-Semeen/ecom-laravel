@@ -73,6 +73,21 @@
               </ul>
           </li>
 
+          <li class="treeview {{ $route[1]=='slider' ? 'active menu-open':'' }}">
+              <a href="{{ url('admin/slider') }}">
+                  <i data-feather="message-circle"></i>
+                  <span>Sliders</span>
+                  <span class="pull-right-container">
+                      <i class="fa fa-angle-right pull-right"></i>
+                  </span>
+              </a>
+              <ul class="treeview-menu ">
+                  <li class="{{ isset($route[1]) ? $route[1]=='slider' ? 'active': '':'' }}"><a href="{{ url('admin/slider') }}"><i class="ti-more"></i>Manage Sliders</a></li>
+                  
+                  
+              </ul>
+          </li>
+
           <li class="treeview">
               <a href="#">
                   <i data-feather="mail"></i> <span>Mailbox</span>

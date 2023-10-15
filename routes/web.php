@@ -6,6 +6,7 @@ use App\Http\Controllers\Backend\AdminProfileController;
 use App\Http\Controllers\Backend\BrandsController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ProductController;
+use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\SubSubCategoryController;
 use App\Http\Controllers\Frontend\IndexController;
@@ -79,6 +80,17 @@ Route::group(['prefix'=> 'admin', 'middleware'=>['auth:sanctum,admin', 'verified
 	Route::get('product/status/{id}', [ProductController::class, 'statusUpdate'])->name('admin.product.status');
 	Route::get('product/multiImg/delete/{id}', [ProductController::class, 'multiImgDelete']);
 	Route::post('product/multiImg/update', [ProductController::class, 'multiImgUpdate']);
+
+
+
+	// Sliders
+	Route::get('slider', [SliderController::class, 'show'])->name('admin.slider');
+	Route::post('slider/store', [SliderController::class, 'store'])->name('admin.slider.store');
+	Route::get('slider/delete/{id}', [SliderController::class, 'delete'])->name('admin.slider.delete');
+	Route::get('slider/{id}', [SliderController::class, 'edit'])->name('admin.slider.edit');
+	Route::get('slider/status/{id}', [SliderController::class, 'status'])->name('admin.slider.status');
+	
+	
 
 });
 

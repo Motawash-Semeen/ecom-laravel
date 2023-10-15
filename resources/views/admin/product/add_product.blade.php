@@ -5,7 +5,12 @@
     <div class="content-header">
       <div class="d-flex align-items-center">
         <div class="mr-auto">
+          @if (isset($product->id))
+          <h3 class="page-title">Edit Product</h3>
+          @else
           <h3 class="page-title">Add Product</h3>
+          @endif
+          
           <div class="d-inline-block align-items-center">
             <nav>
               <ol class="breadcrumb">

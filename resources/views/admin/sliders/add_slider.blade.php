@@ -69,11 +69,7 @@
                 <div class="col-lg-4">
                   <div class="box">
                     <div class="box-header with-border">
-                        @if (isset($brand_edit))
-                      <h3 class="box-title">Edit Category</h3>
-                      @else
                         <h3 class="box-title">Add Brand</h3>
-                      @endif
                     </div>
                     <div class="box-body">
                     <form novalidate="" method="POST" action="{{ url('admin/brands/store') }}" enctype="multipart/form-data">
