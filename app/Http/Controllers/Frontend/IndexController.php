@@ -25,8 +25,9 @@ class IndexController extends Controller
     }
     public function details($id){
         $product = Product::with('multiImgs')->find($id)->first();
+        $products = Product::orderBy('id','desc')->get();
         $related = Product::where('subcategory_id', $product->subcategory_id)->where('id', '!=', $id)->get();
-        return view('frontend.product-details', compact('product', 'related'));
+        return view('frontend.product-details', compact('product', 'related','products'));
 
     }
 }
