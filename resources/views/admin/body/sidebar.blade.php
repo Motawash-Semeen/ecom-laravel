@@ -67,11 +67,17 @@
                   </span>
               </a>
               <ul class="treeview-menu ">
-                  <li class="{{ isset($route[2]) ? $route[2]=='add' ? 'active': '':'' }}"><a href="{{ url('admin/product/add') }}"><i class="ti-more"></i>Add Product</a></li>
-                  <li class="{{ isset($route[2]) ? $route[2]=='manage' ? 'active': '':'' }}"><a href="{{ url('admin/product/manage') }}"><i class="ti-more"></i>Manage Products</a></li>
+                  <li class="@if (isset($route[2]) && $route[2] === 'add' && $route[1] === 'product')
+                      active
+                  @endif"><a href="{{ url('admin/product/add') }}"><i class="ti-more"></i>Add Product</a></li>
+                  <li class="@if (isset($route[2]) && $route[2] === 'manage' && $route[1] === 'product')
+                  active
+              @endif"><a href="{{ url('admin/product/manage') }}"><i class="ti-more"></i>Manage Products</a></li>
                   
               </ul>
           </li>
+
+          
 
           <li class="treeview {{ $route[1]=='slider' ? 'active menu-open':'' }}">
               <a href="{{ url('admin/slider') }}">
@@ -82,7 +88,7 @@
                   </span>
               </a>
               <ul class="treeview-menu ">
-                  <li class="{{ isset($route[1]) ? $route[1]=='slider' ? 'active': '':'' }}"><a href="{{ url('admin/slider') }}"><i class="ti-more"></i>Manage Sliders</a></li>
+                  <li class="{{ isset($route[1]) ? $route[1]=='slider' ? 'active': '':'' }}"><a href="{{ url('admin/slider/manage') }}"><i class="ti-more"></i>Manage Sliders</a></li>
                   
                   
               </ul>

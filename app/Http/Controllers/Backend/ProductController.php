@@ -12,6 +12,8 @@ use App\Models\SubSubCategory;
 use Illuminate\Http\Request;
 use Image;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Validator;
+
 
 class ProductController extends Controller
 {
@@ -31,7 +33,7 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         if (isset($request->id)) {
-            $request->validate(
+            $validateData = Validator::make($request->all(),
                 [
                     'brand_id' => 'required|integer',
                     'category_id' => 'required',
@@ -73,7 +75,7 @@ class ProductController extends Controller
             );
         } 
         else {
-            $request->validate(
+            $validateData = Validator::make($request->all(),
                 [
                     'brand_id' => 'required',
                     'category_id' => 'required',
@@ -119,6 +121,14 @@ class ProductController extends Controller
 
                 ]
             );
+        }
+
+        if($validateData->fails()){
+            $notification = array(
+                'message' => 'Error Occured!',
+                'alert-type' => 'error'
+            );
+            return redirect()->back()->with($notification);
         }
 
 

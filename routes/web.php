@@ -10,8 +10,11 @@ use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\SubSubCategoryController;
 use App\Http\Controllers\Frontend\IndexController;
+use App\Http\Controllers\Frontend\LanguageController;
 use App\Http\Controllers\Frontend\ProfileController;
 use App\Models\Product;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Redirect;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +28,7 @@ use App\Models\Product;
 */
 
 Route::get('/', [IndexController::class, 'index'])->name('index');
+Route::get('/product-details/{id}', [IndexController::class,'details'])->name('product.details');
 
 Route::group(['prefix'=> 'admin', 'middleware'=>['admin:admin']], function(){
 	Route::get('/login', [AdminController::class, 'loginForm'])->name('admin.loginForm');
@@ -32,6 +36,9 @@ Route::group(['prefix'=> 'admin', 'middleware'=>['admin:admin']], function(){
 	Route::get('/brand-view', [BrandsController::class, 'show'])->name('admin.brands');
 
 });
+
+Route::middleware(['auth:admin'])->group(function(){
+
 
 Route::group(['prefix'=> 'admin', 'middleware'=>['auth:sanctum,admin', 'verified']], function(){
 	Route::get('logout', [AdminController::class, 'destroy'])->name('admin.logout');
@@ -84,7 +91,7 @@ Route::group(['prefix'=> 'admin', 'middleware'=>['auth:sanctum,admin', 'verified
 
 
 	// Sliders
-	Route::get('slider', [SliderController::class, 'show'])->name('admin.slider');
+	Route::get('slider/manage', [SliderController::class, 'show'])->name('admin.slider.manage');
 	Route::post('slider/store', [SliderController::class, 'store'])->name('admin.slider.store');
 	Route::get('slider/delete/{id}', [SliderController::class, 'delete'])->name('admin.slider.delete');
 	Route::get('slider/{id}', [SliderController::class, 'edit'])->name('admin.slider.edit');
@@ -93,6 +100,13 @@ Route::group(['prefix'=> 'admin', 'middleware'=>['auth:sanctum,admin', 'verified
 	
 
 });
+
+});
+
+Route::middleware(['auth:sanctum,admin', 'verified'])->get('/admin/dashboard', function () {
+	return view('admin.index');
+})->name('admin.dashboard')->middleware('auth:admin');
+
 
 
 Route::group([ 'middleware'=>['auth:sanctum,web', 'verified']], function(){
@@ -105,11 +119,12 @@ Route::group([ 'middleware'=>['auth:sanctum,web', 'verified']], function(){
 });
 
 
-
-Route::middleware(['auth:sanctum,admin', 'verified'])->get('/admin/dashboard', function () {
-    return view('admin.index');
-})->name('admin.dashboard');
-
-
-
 Route::middleware(['auth:sanctum,web', 'verified'])->get('/dashboard', [ProfileController::class, 'index'])->name('dashboard');
+
+
+/////////////////Frontend All Routes
+//////////Multi Language
+// Route::get('language/bn', [LanguageController::class, 'bn'])->name('bangla.lang');
+// Route::get('language/en', [LanguageController::class, 'en'])->name('english.lang');
+
+Route::get('language/{locale}', [LanguageController::class, 'index'])->name('language');

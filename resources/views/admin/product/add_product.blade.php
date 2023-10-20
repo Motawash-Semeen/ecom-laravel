@@ -190,7 +190,7 @@
                   </h5>
                   <div class="controls">
                       <div class="tags-default bg-transparent">
-                          <input type="text" data-role="tagsinput" class="form-control productTags" id="productTags" placeholder="add tags" name="product_tags_en" value="{{ isset($product->id) ? $product->product_tags_en : '' }}"/>
+                          <input type="text" data-role="tagsinput" class="form-control productTags" id="productTags" placeholder="add tags" name="product_tags_en" value="{{ isset($product->id) ? $product->product_tags_en : old('product_tags_en') }}"/>
                       </div>
                     {{-- <select multiple data-role="tagsinput">
 											<option value="Lorem">Lorem</option>
@@ -212,7 +212,7 @@
                   <h5>Product Tag(bn) <span class="text-danger">*</span><small>Comma Separeted.</small></h5>
                   <div class="controls">
                       <div class="tags-default bg-transparent">
-                          <input type="text" value="{{ isset($product->id) ? $product->product_tags_bn : '' }}" data-role="tagsinput" class="form-control productTags" id="productTagsBn" placeholder="add tags" name="product_tags_bn"/>
+                          <input type="text" value="{{ isset($product->id) ? $product->product_tags_bn : old('product_tags_bn') }}" data-role="tagsinput" class="form-control productTags" id="productTagsBn" placeholder="add tags" name="product_tags_bn"/>
                       </div>
                     
                     </div>
@@ -262,11 +262,7 @@
                       <div class="tags-default bg-transparent">
                           <input type="text" value="{{ isset($product->id) ? $product->product_color_en	 : 'black,red,white' }}" data-role="tagsinput" class="form-control productTags" id="productTags" placeholder="add tags" name="product_color_en"/>
                       </div>
-                    {{-- <select multiple data-role="tagsinput">
-											<option value="Lorem">Lorem</option>
-											<option value="Ipsum">Ipsum</option>
-											<option value="Amet">Amet</option>
-										</select> --}}
+                    
                     </div>
                   @error('product_color_en')
                       <div class="form-control-feedback text-danger"><small>{{ $message }}</small></div>
@@ -297,7 +293,7 @@
                   <div class="form-group">
                   <h5>Product Price <span class="text-danger">*</span></h5>
                   <div class="controls">
-                      <input type="text" name="selling_price" class="form-control" value="{{ isset($product->id) ? $product->selling_price	 : '' }}">
+                      <input type="text" name="selling_price" class="form-control" value="{{ isset($product->id) ? $product->selling_price	 : old('selling_price') }}">
                       <div class="help-block"></div>
                   </div>
                   @error('selling_price')
@@ -314,7 +310,7 @@
                     <h5>Price Discount </h5>
                     <div class="controls">
                       <div class="input-group">
-                        <input type="text" class="form-control"   aria-invalid="false" name="discount_price" value="{{ isset($product->id) ? $product->discount_price	 : '' }}"> <span class="input-group-addon" id="basic-addon1"><i class="fa-solid fa-percent"></i></span> </div>
+                        <input type="text" class="form-control"   aria-invalid="false" name="discount_price" value="{{ isset($product->id) ? $product->discount_price	 : old('discount_price') }}"> <span class="input-group-addon" id="basic-addon1"><i class="fa-solid fa-percent"></i></span> </div>
                     <div class="help-block"></div></div>
                     
                   </div> 
@@ -355,7 +351,7 @@
                 <div class="col-md-6 col-12">
                   <div class="form-group">
                     <h5>Short Description(en) <span class="text-danger">*</span></h5>
-                    <textarea rows="3" class="form-control" placeholder="Short Description in English" name="short_descp_en">{{ isset($product->id) ? $product->short_descp_en	 : '' }}</textarea>
+                    <textarea rows="3" class="form-control" placeholder="Short Description in English" name="short_descp_en">{{ isset($product->id) ? $product->short_descp_en	 : old('short_descp_en') }}</textarea>
                     @error('short_descp_en')
                     <div class="form-control-feedback text-danger"><small>{{ $message }}</small></div>
                 @enderror
@@ -364,7 +360,7 @@
                 <div class="col-md-6 col-12">
                   <div class="form-group">
                     <h5>Short Description(bn) <span class="text-danger">*</span></h5>
-                    <textarea rows="3" class="form-control" placeholder="Short Description in Bangla" name="short_descp_bn">{{ isset($product->id) ? $product->short_descp_bn	 : '' }}</textarea>
+                    <textarea rows="3" class="form-control" placeholder="Short Description in Bangla" name="short_descp_bn">{{ isset($product->id) ? $product->short_descp_bn	 : old('short_descp_bn') }}</textarea>
                     @error('short_descp_bn')
                     <div class="form-control-feedback text-danger"><small>{{ $message }}</small></div>
                 @enderror
@@ -377,7 +373,7 @@
                   <div class="form-group">
                     <h5>Long Description(en) <span class="text-danger">*</span></h5>
                     <textarea id="editor1" name="long_descp_en" rows="10" cols="80" placeholder="">
-                      {{ isset($product->id) ? $product->long_descp_en	 : '' }}
+                      {{ isset($product->id) ? $product->long_descp_en	 : old('long_descp_en') }}
                     </textarea>
                     @error('long_descp_en')
                     <div class="form-control-feedback text-danger"><small>{{ $message }}</small></div>
@@ -388,7 +384,7 @@
                   <div class="form-group">
                     <h5>Long Description(bn) <span class="text-danger">*</span></h5>
                     <textarea id="editor2" name="long_descp_bn" rows="10" cols="80"  placeholder="">
-                      {{ isset($product->id) ? $product->long_descp_bn	 : '' }}
+                      {{ isset($product->id) ? $product->long_descp_bn	 : old('long_descp_bn') }}
                     </textarea>
                     @error('long_descp_bn')
                     <div class="form-control-feedback text-danger"><small>{{ $message }}</small></div>

@@ -110,8 +110,7 @@
                                     <h5>Slider Title </h5>
                                     <input type="hidden" name="id" value="{{ isset($slider_edit) ? $slider_edit->id : '' }}">
                                     <div class="controls">
-                                        <input type="text" name="slider_title" class="form-control" required=""
-                                            data-validation-required-message="This field is required" value="{{ isset($slider_edit) ? $slider_edit->slider_title : '' }}">
+                                        <input id="editor" type="text" name="slider_title" class="form-control"  value="{{ isset($slider_edit) ? $slider_edit->slider_title : '' }}">
                                         <div class="help-block"></div>
                                     </div>
 
@@ -119,8 +118,7 @@
                                 <div class="form-group">
                                     <h5>Slider Description </h5>
                                     <div class="controls">
-                                        <input type="text" name="slider_description" class="form-control" required=""
-                                            data-validation-required-message="This field is required" value="{{ isset($slider_edit)? $slider_edit->slider_description : '' }}">
+                                        <input type="text" name="slider_description" class="form-control"  value="{{ isset($slider_edit)? $slider_edit->slider_description : '' }}">
                                         <div class="help-block"></div>
                                     </div>
 

@@ -14,29 +14,31 @@ class SliderController extends Controller
         $sliders = Slider::orderBy('id', 'desc')->get();
         return view('admin.sliders.manage_sliders', compact('sliders'));
     }
-    // public function create()
-    // {
-    //     return view('admin.sliders.add_slider');
-    // }
+    public function add()
+    {
+        return view('admin.sliders.addedit_slider');
+    }
     public function store(Request $request)
     {
 
-    $request->validate(
-        [
-            'slider_img' => 'required|mimes:png,jpg,jpeg',
-        ],
-        [
-            'slider_img.required' => 'Please select an image',
-            'slider_img.mimes' => 'Only PNG, JPG, JPEG are allowed',
-        ]
-    );
+        if (!isset($request->id)) {
+            $request->validate(
+                [
+                    'slider_img' => 'required|mimes:png,jpg,jpeg',
+                ],
+                [
+                    'slider_img.required' => 'Please select an image',
+                    'slider_img.mimes' => 'Only PNG, JPG, JPEG are allowed',
+                ]
+            );
+        }
+
 
         //return $request->all();
-        if(isset($request->id)){
+        if (isset($request->id)) {
             $id = $request->id;
             $Slider =  Slider::find($id);
-        }
-        else{
+        } else {
             $Slider = new Slider();
         }
         // $Slider = new Slider();
@@ -45,7 +47,7 @@ class SliderController extends Controller
         if ($request->hasFile('slider_img')) {
             if (isset($request->id)) {
                 $Slider = Slider::find($request->id); // Assuming you have a Slider model
-        
+
                 if ($Slider) {
                     $image_path = 'upload/Sliders/' . $Slider->slider_img;
                     if (file_exists($image_path)) {
@@ -53,44 +55,44 @@ class SliderController extends Controller
                     }
                 }
             }
-        
+
             $image = $request->file('slider_img');
             $image_name = time() . '_Slider_img'; // Updated image name format
             $ext = strtolower($image->getClientOriginalExtension());
             $image_full_name = $image_name . '.' . $ext;
             $upload_path = 'upload/sliders/';
-        
+
             // Use Laravel's file upload method to move and resize the image
             $success = $image->move($upload_path, $image_full_name);
-        
+
             // Check if the image was successfully uploaded
             if ($success) {
                 // Resize the uploaded image to 300x300 pixels
                 Image::make($upload_path . $image_full_name)
                     ->resize(870, 370)
                     ->save($upload_path . $image_full_name);
-        
+
                 // Update the Slider's image attribute
                 $Slider->slider_img = $image_full_name;
                 $Slider->save(); // Save the changes to the database
             }
         }
-        
+
         $Slider->save();
         $notification = array(
             'message' => 'Slider Updated Successfully',
             'alert-type' => 'success'
         );
-        return redirect('admin/slider')->with($notification);
+        return redirect('admin/slider/manage')->with($notification);
     }
 
     public function delete($id)
     {
         $Slider = Slider::find($id);
         $image_path = 'upload/sliders/' . $Slider->slider_img;
-                    if (file_exists($image_path)) {
-                        unlink($image_path);
-                    }
+        if (file_exists($image_path)) {
+            unlink($image_path);
+        }
         $Slider->delete();
         $notification = array(
             'message' => 'Slider Deleted Successfully',
@@ -102,7 +104,7 @@ class SliderController extends Controller
     {
         $sliders = Slider::all();
         $slider_edit = Slider::find($id);
-        return view('admin.sliders.manage_sliders', compact('slider_edit','sliders'));
+        return view('admin.sliders.manage_sliders', compact('slider_edit', 'sliders'));
     }
     public function status($id)
     {

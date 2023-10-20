@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\SubCategory;
+use App\Models\SubSubCategory;
 use Illuminate\Http\Request;
 
 class SubCategoryController extends Controller
@@ -55,8 +56,10 @@ class SubCategoryController extends Controller
 
     public function delete($id)
     {
-        $category = SubCategory::find($id);
-        $category->delete();
+        $subcategory = SubCategory::find($id);
+        $subcategory->delete();
+        $subsub_category = SubSubCategory::where('category_id', $id)->delete();
+
         $notification = array(
             'message' => 'SubCategory Deleted Successfully',
             'alert-type' => 'success'

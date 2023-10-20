@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\SubCategory;
+use App\Models\SubSubCategory;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -39,7 +41,9 @@ class CategoryController extends Controller
         $category->category_name = $request->category_name;
         $category->category_name_bn = $request->category_name_bn;
         $category->category_slug = strtolower(str_replace(' ', '-', $request->category_name));
+        $category->category_slug = strtolower(str_replace("'", '', $category->category_slug));
         $category->category_slug_bn = strtolower(str_replace(' ', '-', $request->category_name_bn));
+        $category->category_slug_bn = strtolower(str_replace("'", '', $category->category_slug_bn));
         $category->category_icon = $request->category_icon;
         $category->save();
         $notification = array(
@@ -53,6 +57,8 @@ class CategoryController extends Controller
     {
         $category = Category::find($id);
         $category->delete();
+        $sub_category = SubCategory::where('category_id', $id)->delete();
+        $subsub_category = SubSubCategory::where('category_id', $id)->delete();
         $notification = array(
             'message' => 'Category Deleted Successfully',
             'alert-type' => 'success'
