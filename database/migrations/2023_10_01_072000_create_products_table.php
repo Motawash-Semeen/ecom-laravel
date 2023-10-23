@@ -31,6 +31,7 @@ return new class extends Migration
             $table->string('product_color_bn');
             $table->string('selling_price');
             $table->string('discount_price')->nullable();
+            $table->integer('offer_exp')->nullable();
             $table->string('short_descp_en');
             $table->string('short_descp_bn');
             $table->text('long_descp_en');
