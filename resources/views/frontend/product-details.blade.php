@@ -5,8 +5,8 @@
 		<div class="breadcrumb-inner">
 			<ul class="list-inline list-unstyled">
 				<li><a href="#">Home</a></li>
-				<li><a href="#">Clothing</a></li>
-				<li class='active'>Floral Print Buttoned</li>
+				<li><a href="#">{{ $oneproduct->categories->category_name }}</a></li>
+				<li class='active'>{{ $oneproduct->product_name_en }}</li>
 			</ul>
 		</div><!-- /.breadcrumb-inner -->
 	</div><!-- /.container -->
@@ -16,368 +16,20 @@
         <div class='row single-product'>
             <div class='col-md-3 sidebar'>
                 <div class="sidebar-module-container">
-                    <div class="home-banner outer-top-n">
+                    <div class="home-banner outer-top-n" style="margin-bottom: 30px;">
                         <img src="{{ asset('frontend') }}/assets/images/banners/LHS-banner.jpg" alt="Image">
                     </div>
 
                     <!-- ============================================== HOT DEALS ============================================== -->
-                    <div class="sidebar-widget hot-deals wow fadeInUp outer-top-vs">
-                        <h3 class="section-title">hot deals</h3>
-                        <div class="owl-carousel sidebar-carousel custom-carousel owl-theme outer-top-xs">
-
-                          @foreach ($products as $product)
-                          @if ($product->hot_deals == 1)
-                          <div class="item">
-                            <div class="products">
-                                <div class="hot-deal-wrapper">
-                                    <div class="image">
-                                        <img src="{{ asset('upload/products/'.$product->product_thambnail) }}" alt="">
-                                    </div>
-                                    <div class="sale-offer-tag">
-                                      {{-- <span>35%<br>off</span> --}}
-                                      @if ($product->discount_price != NULL)
-                                                    <span>{{ $product->discount_price }}%<br>off</span>
-                                                    @else
-                                                    <span>new</span>
-                                                    @endif
-                                    </div>
-                                    <div class="timing-wrapper">
-                                        <div class="box-wrapper">
-                                            <div class="date box">
-                                                <span class="key">120</span>
-                                                <span class="value">Days</span>
-                                            </div>
-                                        </div>
-
-                                        <div class="box-wrapper">
-                                            <div class="hour box">
-                                                <span class="key">20</span>
-                                                <span class="value">HRS</span>
-                                            </div>
-                                        </div>
-
-                                        <div class="box-wrapper">
-                                            <div class="minutes box">
-                                                <span class="key">36</span>
-                                                <span class="value">MINS</span>
-                                            </div>
-                                        </div>
-
-                                        <div class="box-wrapper hidden-md">
-                                            <div class="seconds box">
-                                                <span class="key">60</span>
-                                                <span class="value">SEC</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div><!-- /.hot-deal-wrapper -->
-
-                                <div class="product-info text-left m-t-20">
-                                    <h3 class="name"><a href="detail.html">{{ session()->get('lang')=='bn' ? mb_substr($product->product_name_bn, 0, 20, 'UTF-8') : substr($product->product_name_en, 0, 20) }}...</a></h3>
-                                    <div class="rating rateit-small"></div>
-
-                                    <div class="product-price">
-                                      @if($product->discount_price == NULL)
-                                                    <span class="price"> $ {{ $product->selling_price }} </span>
-                                                    @else
-                                                    @php
-                                                    $sellingPrice = floatval($product->selling_price);
-                                                    $discount = floatval($product->discount_price);
-                                                    $discountedPrice = $sellingPrice - ($sellingPrice * $discount / 100);
-                                                @endphp
-
-                                                <span class="price">$ {{ number_format($discountedPrice, 2) }}</span>
-                                                <span class="price-before-discount">$ {{ number_format($sellingPrice, 2) }}</span>
-                                                    @endif
-
-                                    </div><!-- /.product-price -->
-
-                                </div><!-- /.product-info -->
-
-                                <div class="cart clearfix animate-effect">
-                                    <div class="action">
-
-                                        <div class="add-cart-button btn-group">
-                                            <button class="btn btn-primary icon" data-toggle="dropdown"
-                                                type="button">
-                                                <i class="fa fa-shopping-cart"></i>
-                                            </button>
-                                            <button class="btn btn-primary cart-btn" type="button">Add to
-                                                cart</button>
-
-                                        </div>
-
-                                    </div><!-- /.action -->
-                                </div><!-- /.cart -->
-                            </div>
-                        </div>
-                          @endif
-                          
-                          @endforeach
-                            {{-- <div class="item">
-                                <div class="products">
-                                    <div class="hot-deal-wrapper">
-                                        <div class="image">
-                                            <img src="assets/images/hot-deals/p5.jpg" alt="">
-                                        </div>
-                                        <div class="sale-offer-tag"><span>35%<br>off</span></div>
-                                        <div class="timing-wrapper">
-                                            <div class="box-wrapper">
-                                                <div class="date box">
-                                                    <span class="key">120</span>
-                                                    <span class="value">Days</span>
-                                                </div>
-                                            </div>
-
-                                            <div class="box-wrapper">
-                                                <div class="hour box">
-                                                    <span class="key">20</span>
-                                                    <span class="value">HRS</span>
-                                                </div>
-                                            </div>
-
-                                            <div class="box-wrapper">
-                                                <div class="minutes box">
-                                                    <span class="key">36</span>
-                                                    <span class="value">MINS</span>
-                                                </div>
-                                            </div>
-
-                                            <div class="box-wrapper hidden-md">
-                                                <div class="seconds box">
-                                                    <span class="key">60</span>
-                                                    <span class="value">SEC</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div><!-- /.hot-deal-wrapper -->
-
-                                    <div class="product-info text-left m-t-20">
-                                        <h3 class="name"><a href="detail.html">Floral Print Buttoned</a></h3>
-                                        <div class="rating rateit-small"></div>
-
-                                        <div class="product-price">
-                                            <span class="price">
-                                                $600.00
-                                            </span>
-
-                                            <span class="price-before-discount">$800.00</span>
-
-                                        </div><!-- /.product-price -->
-
-                                    </div><!-- /.product-info -->
-
-                                    <div class="cart clearfix animate-effect">
-                                        <div class="action">
-
-                                            <div class="add-cart-button btn-group">
-                                                <button class="btn btn-primary icon" data-toggle="dropdown"
-                                                    type="button">
-                                                    <i class="fa fa-shopping-cart"></i>
-                                                </button>
-                                                <button class="btn btn-primary cart-btn" type="button">Add to
-                                                    cart</button>
-
-                                            </div>
-
-                                        </div><!-- /.action -->
-                                    </div><!-- /.cart -->
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="products">
-                                    <div class="hot-deal-wrapper">
-                                        <div class="image">
-                                            <img src="assets/images/products/p6.jpg" alt="">
-                                        </div>
-                                        <div class="sale-offer-tag"><span>35%<br>off</span></div>
-                                        <div class="timing-wrapper">
-                                            <div class="box-wrapper">
-                                                <div class="date box">
-                                                    <span class="key">120</span>
-                                                    <span class="value">Days</span>
-                                                </div>
-                                            </div>
-
-                                            <div class="box-wrapper">
-                                                <div class="hour box">
-                                                    <span class="key">20</span>
-                                                    <span class="value">HRS</span>
-                                                </div>
-                                            </div>
-
-                                            <div class="box-wrapper">
-                                                <div class="minutes box">
-                                                    <span class="key">36</span>
-                                                    <span class="value">MINS</span>
-                                                </div>
-                                            </div>
-
-                                            <div class="box-wrapper hidden-md">
-                                                <div class="seconds box">
-                                                    <span class="key">60</span>
-                                                    <span class="value">SEC</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div><!-- /.hot-deal-wrapper -->
-
-                                    <div class="product-info text-left m-t-20">
-                                        <h3 class="name"><a href="detail.html">Floral Print Buttoned</a></h3>
-                                        <div class="rating rateit-small"></div>
-
-                                        <div class="product-price">
-                                            <span class="price">
-                                                $600.00
-                                            </span>
-
-                                            <span class="price-before-discount">$800.00</span>
-
-                                        </div><!-- /.product-price -->
-
-                                    </div><!-- /.product-info -->
-
-                                    <div class="cart clearfix animate-effect">
-                                        <div class="action">
-
-                                            <div class="add-cart-button btn-group">
-                                                <button class="btn btn-primary icon" data-toggle="dropdown"
-                                                    type="button">
-                                                    <i class="fa fa-shopping-cart"></i>
-                                                </button>
-                                                <button class="btn btn-primary cart-btn" type="button">Add to
-                                                    cart</button>
-
-                                            </div>
-
-                                        </div><!-- /.action -->
-                                    </div><!-- /.cart -->
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="products">
-                                    <div class="hot-deal-wrapper">
-                                        <div class="image">
-                                            <img src="assets/images/products/p7.jpg" alt="">
-                                        </div>
-                                        <div class="sale-offer-tag"><span>35%<br>off</span></div>
-                                        <div class="timing-wrapper">
-                                            <div class="box-wrapper">
-                                                <div class="date box">
-                                                    <span class="key">120</span>
-                                                    <span class="value">Days</span>
-                                                </div>
-                                            </div>
-
-                                            <div class="box-wrapper">
-                                                <div class="hour box">
-                                                    <span class="key">20</span>
-                                                    <span class="value">HRS</span>
-                                                </div>
-                                            </div>
-
-                                            <div class="box-wrapper">
-                                                <div class="minutes box">
-                                                    <span class="key">36</span>
-                                                    <span class="value">MINS</span>
-                                                </div>
-                                            </div>
-
-                                            <div class="box-wrapper hidden-md">
-                                                <div class="seconds box">
-                                                    <span class="key">60</span>
-                                                    <span class="value">SEC</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div><!-- /.hot-deal-wrapper -->
-
-                                    <div class="product-info text-left m-t-20">
-                                        <h3 class="name"><a href="detail.html">Floral Print Buttoned</a></h3>
-                                        <div class="rating rateit-small"></div>
-
-                                        <div class="product-price">
-                                            <span class="price">
-                                                $600.00
-                                            </span>
-
-                                            <span class="price-before-discount">$800.00</span>
-
-                                        </div><!-- /.product-price -->
-
-                                    </div><!-- /.product-info -->
-
-                                    <div class="cart clearfix animate-effect">
-                                        <div class="action">
-
-                                            <div class="add-cart-button btn-group">
-                                                <button class="btn btn-primary icon" data-toggle="dropdown"
-                                                    type="button">
-                                                    <i class="fa fa-shopping-cart"></i>
-                                                </button>
-                                                <button class="btn btn-primary cart-btn" type="button">Add to
-                                                    cart</button>
-
-                                            </div>
-
-                                        </div><!-- /.action -->
-                                    </div><!-- /.cart -->
-                                </div>
-                            </div> --}}
-
-
-                        </div><!-- /.sidebar-widget -->
-                    </div>
+                    @include('frontend.body.hotdeals')
                     <!-- ============================================== HOT DEALS: END ============================================== -->
 
                     <!-- ============================================== NEWSLETTER ============================================== -->
-                    <div class="sidebar-widget newsletter wow fadeInUp outer-bottom-small outer-top-vs">
-                        <h3 class="section-title">Newsletters</h3>
-                        <div class="sidebar-widget-body outer-top-xs">
-                            <p>Sign Up for Our Newsletter!</p>
-                            <form>
-                                <div class="form-group">
-                                    <label class="sr-only" for="exampleInputEmail1">Email address</label>
-                                    <input type="email" class="form-control" id="exampleInputEmail1"
-                                        placeholder="Subscribe to our newsletter">
-                                </div>
-                                <button class="btn btn-primary">Subscribe</button>
-                            </form>
-                        </div><!-- /.sidebar-widget-body -->
-                    </div><!-- /.sidebar-widget -->
+                    @include('frontend.body.newsletter')<!-- /.sidebar-widget -->
                     <!-- ============================================== NEWSLETTER: END ============================================== -->
 
                     <!-- ============================================== Testimonials============================================== -->
-                    <div class="sidebar-widget  wow fadeInUp outer-top-vs ">
-                        <div id="advertisement" class="advertisement">
-                            <div class="item">
-                                <div class="avatar"><img src="{{ asset('frontend') }}/assets/images/testimonials/member1.png"
-                                        alt="Image"></div>
-                                <div class="testimonials"><em>"</em> Vtae sodales aliq uam morbi non sem lacus port
-                                    mollis. Nunc condime tum metus eud molest sed consectetuer.<em>"</em></div>
-                                <div class="clients_author">John Doe <span>Abc Company</span> </div>
-                                <!-- /.container-fluid -->
-                            </div><!-- /.item -->
-
-                            <div class="item">
-                                <div class="avatar"><img src="{{ asset('frontend') }}/assets/images/testimonials/member3.png"
-                                        alt="Image"></div>
-                                <div class="testimonials"><em>"</em>Vtae sodales aliq uam morbi non sem lacus port
-                                    mollis. Nunc condime tum metus eud molest sed consectetuer.<em>"</em></div>
-                                <div class="clients_author">Stephen Doe <span>Xperia Designs</span> </div>
-                            </div><!-- /.item -->
-
-                            <div class="item">
-                                <div class="avatar"><img src="{{ asset('frontend') }}/assets/images/testimonials/member2.png"
-                                        alt="Image"></div>
-                                <div class="testimonials"><em>"</em> Vtae sodales aliq uam morbi non sem lacus port
-                                    mollis. Nunc condime tum metus eud molest sed consectetuer.<em>"</em></div>
-                                <div class="clients_author">Saraha Smith <span>Datsun &amp; Co</span> </div>
-                                <!-- /.container-fluid -->
-                            </div><!-- /.item -->
-
-                        </div><!-- /.owl-carousel -->
-                    </div>
+                    @include('frontend.body.testimonials')
 
                     <!-- ============================================== Testimonials: END ============================================== -->
 
@@ -398,13 +50,13 @@
                                 <div id="owl-single-product">
                                   <div class="single-product-gallery-item" id="slide0">
                                     <a data-lightbox="image-1" data-title="Gallery"
-                                        href="{{ asset('upload/products/'.$product->product_thambnail) }}">
+                                        href="{{ asset('upload/products/'.$oneproduct->product_thambnail) }}">
                                         <img class="img-responsive" alt=""
                                             src="assets/images/blank.gif"
-                                            data-echo="{{ asset('upload/products/'.$product->product_thambnail) }}" />
+                                            data-echo="{{ asset('upload/products/'.$oneproduct->product_thambnail) }}" />
                                     </a>
                                 </div><!-- /.single-product-gallery-item -->
-                                  @foreach ($product->multiImgs as $multiImg)
+                                  @foreach ($oneproduct->multiImgs as $multiImg)
                                   @php
                               $i++;
                             @endphp
@@ -417,86 +69,6 @@
                                     </a>
                                   </div><!-- /.single-product-gallery-item -->
                                   @endforeach
-                                    {{-- <div class="single-product-gallery-item" id="slide1">
-                                        <a data-lightbox="image-1" data-title="Gallery"
-                                            href="assets/images/products/p8.jpg">
-                                            <img class="img-responsive" alt=""
-                                                src="assets/images/blank.gif"
-                                                data-echo="assets/images/products/p8.jpg" />
-                                        </a>
-                                    </div><!-- /.single-product-gallery-item -->
-
-                                    <div class="single-product-gallery-item" id="slide2">
-                                        <a data-lightbox="image-1" data-title="Gallery"
-                                            href="assets/images/products/p9.jpg">
-                                            <img class="img-responsive" alt=""
-                                                src="assets/images/blank.gif"
-                                                data-echo="assets/images/products/p9.jpg" />
-                                        </a>
-                                    </div><!-- /.single-product-gallery-item -->
-
-                                    <div class="single-product-gallery-item" id="slide3">
-                                        <a data-lightbox="image-1" data-title="Gallery"
-                                            href="assets/images/products/p10.jpg">
-                                            <img class="img-responsive" alt=""
-                                                src="assets/images/blank.gif"
-                                                data-echo="assets/images/products/p10.jpg" />
-                                        </a>
-                                    </div><!-- /.single-product-gallery-item -->
-
-                                    <div class="single-product-gallery-item" id="slide4">
-                                        <a data-lightbox="image-1" data-title="Gallery"
-                                            href="assets/images/products/p11.jpg">
-                                            <img class="img-responsive" alt=""
-                                                src="assets/images/blank.gif"
-                                                data-echo="assets/images/products/p11.jpg" />
-                                        </a>
-                                    </div><!-- /.single-product-gallery-item -->
-
-                                    <div class="single-product-gallery-item" id="slide5">
-                                        <a data-lightbox="image-1" data-title="Gallery"
-                                            href="assets/images/products/p12.jpg">
-                                            <img class="img-responsive" alt=""
-                                                src="assets/images/blank.gif"
-                                                data-echo="assets/images/products/p12.jpg" />
-                                        </a>
-                                    </div><!-- /.single-product-gallery-item -->
-
-                                    <div class="single-product-gallery-item" id="slide6">
-                                        <a data-lightbox="image-1" data-title="Gallery"
-                                            href="assets/images/products/p13.jpg">
-                                            <img class="img-responsive" alt=""
-                                                src="assets/images/blank.gif"
-                                                data-echo="assets/images/products/p13.jpg" />
-                                        </a>
-                                    </div><!-- /.single-product-gallery-item -->
-
-                                    <div class="single-product-gallery-item" id="slide7">
-                                        <a data-lightbox="image-1" data-title="Gallery"
-                                            href="assets/images/products/p14.jpg">
-                                            <img class="img-responsive" alt=""
-                                                src="assets/images/blank.gif"
-                                                data-echo="assets/images/products/p14.jpg" />
-                                        </a>
-                                    </div><!-- /.single-product-gallery-item -->
-
-                                    <div class="single-product-gallery-item" id="slide8">
-                                        <a data-lightbox="image-1" data-title="Gallery"
-                                            href="assets/images/products/p15.jpg">
-                                            <img class="img-responsive" alt=""
-                                                src="assets/images/blank.gif"
-                                                data-echo="assets/images/products/p15.jpg" />
-                                        </a>
-                                    </div><!-- /.single-product-gallery-item -->
-
-                                    <div class="single-product-gallery-item" id="slide9">
-                                        <a data-lightbox="image-1" data-title="Gallery"
-                                            href="assets/images/products/p16.jpg">
-                                            <img class="img-responsive" alt=""
-                                                src="assets/images/blank.gif"
-                                                data-echo="assets/images/products/p16.jpg" />
-                                        </a>
-                                    </div><!-- /.single-product-gallery-item --> --}}
 
                                 </div><!-- /.single-product-slider -->
 
@@ -509,13 +81,13 @@
                                             data-slide="0" href="#slide0">
                                             <img class="img-responsive" width="85" alt=""
                                                 src="assets/images/blank.gif"
-                                                data-echo="{{ asset('upload/products/'.$product->product_thambnail) }}" />
+                                                data-echo="{{ asset('upload/products/'.$oneproduct->product_thambnail) }}" />
                                         </a>
                                     </div>
                                       @php
                                       $i=1;
                                     @endphp
-                                      @foreach ($product->multiImgs as $multiImg)
+                                      @foreach ($oneproduct->multiImgs as $multiImg)
                                   @php
                               $i++;
                             @endphp
@@ -528,86 +100,7 @@
                                     </a>
                                 </div>
                                   @endforeach
-                                        {{-- <div class="item">
-                                            <a class="horizontal-thumb active" data-target="#owl-single-product"
-                                                data-slide="{{$i}}" href="#slide{{$i}}">
-                                                <img class="img-responsive" width="85" alt=""
-                                                    src="assets/images/blank.gif"
-                                                    data-echo="{{ asset('upload/products/'.$multiImg->photo_name) }}" />
-                                            </a>
-                                        </div>
-
-                                        <div class="item">
-                                            <a class="horizontal-thumb" data-target="#owl-single-product"
-                                                data-slide="2" href="#slide2">
-                                                <img class="img-responsive" width="85" alt=""
-                                                    src="assets/images/blank.gif"
-                                                    data-echo="assets/images/products/p18.jpg" />
-                                            </a>
-                                        </div>
-                                        <div class="item">
-
-                                            <a class="horizontal-thumb" data-target="#owl-single-product"
-                                                data-slide="3" href="#slide3">
-                                                <img class="img-responsive" width="85" alt=""
-                                                    src="assets/images/blank.gif"
-                                                    data-echo="assets/images/products/p19.jpg" />
-                                            </a>
-                                        </div>
-                                        <div class="item">
-
-                                            <a class="horizontal-thumb" data-target="#owl-single-product"
-                                                data-slide="4" href="#slide4">
-                                                <img class="img-responsive" width="85" alt=""
-                                                    src="assets/images/blank.gif"
-                                                    data-echo="assets/images/products/p20.jpg" />
-                                            </a>
-                                        </div>
-                                        <div class="item">
-
-                                            <a class="horizontal-thumb" data-target="#owl-single-product"
-                                                data-slide="5" href="#slide5">
-                                                <img class="img-responsive" width="85" alt=""
-                                                    src="assets/images/blank.gif"
-                                                    data-echo="assets/images/products/p21.jpg" />
-                                            </a>
-                                        </div>
-                                        <div class="item">
-
-                                            <a class="horizontal-thumb" data-target="#owl-single-product"
-                                                data-slide="6" href="#slide6">
-                                                <img class="img-responsive" width="85" alt=""
-                                                    src="assets/images/blank.gif"
-                                                    data-echo="assets/images/products/p22.jpg" />
-                                            </a>
-                                        </div>
-                                        <div class="item">
-
-                                            <a class="horizontal-thumb" data-target="#owl-single-product"
-                                                data-slide="7" href="#slide7">
-                                                <img class="img-responsive" width="85" alt=""
-                                                    src="assets/images/blank.gif"
-                                                    data-echo="assets/images/products/p23.jpg" />
-                                            </a>
-                                        </div>
-                                        <div class="item">
-
-                                            <a class="horizontal-thumb" data-target="#owl-single-product"
-                                                data-slide="8" href="#slide8">
-                                                <img class="img-responsive" width="85" alt=""
-                                                    src="assets/images/blank.gif"
-                                                    data-echo="assets/images/products/p24.jpg" />
-                                            </a>
-                                        </div>
-                                        <div class="item">
-
-                                            <a class="horizontal-thumb" data-target="#owl-single-product"
-                                                data-slide="9" href="#slide9">
-                                                <img class="img-responsive" width="85" alt=""
-                                                    src="assets/images/blank.gif"
-                                                    data-echo="assets/images/products/p25.jpg" />
-                                            </a>
-                                        </div> --}}
+                                        
                                     </div><!-- /#owl-single-product-thumbnails -->
 
 
@@ -618,7 +111,7 @@
                         </div><!-- /.gallery-holder -->
                         <div class='col-sm-6 col-md-7 product-info-block'>
                             <div class="product-info">
-                                <h1 class="name">{{ session()->get('lang')=='bn' ? $product->product_name_bn : $product->product_name_en }}</h1>
+                                <h1 class="name">{{ session()->get('lang')=='bn' ? $oneproduct->product_name_bn : $oneproduct->product_name_en }}</h1>
 
                                 <div class="rating-reviews m-t-20">
                                     <div class="row">
@@ -649,7 +142,7 @@
                                 </div><!-- /.stock-container -->
 
                                 <div class="description-container m-t-20">
-                                    {{ session()->get('lang')=='bn' ? $product->short_descp_bn : $product->short_descp_en }}
+                                    {{ session()->get('lang')=='bn' ? $oneproduct->short_descp_bn : $oneproduct->short_descp_en }}
                                 </div><!-- /.description-container -->
 
                                 <div class="price-container info-container m-t-20">
@@ -661,12 +154,12 @@
                                                 {{-- <span class="price">$800.00</span>
                                                 <span class="price-strike">$900.00</span> --}}
 
-                                                @if($product->discount_price == NULL)
-                                                    <span class="price"> ${{ $product->selling_price }} </span>
+                                                @if($oneproduct->discount_price == NULL)
+                                                    <span class="price"> ${{ $oneproduct->selling_price }} </span>
                                                     @else
                                                     @php
-                                                    $sellingPrice = floatval($product->selling_price);
-                                                    $discount = floatval($product->discount_price);
+                                                    $sellingPrice = floatval($oneproduct->selling_price);
+                                                    $discount = floatval($oneproduct->discount_price);
                                                     $discountedPrice = $sellingPrice - ($sellingPrice * $discount / 100);
                                                 @endphp
 
@@ -751,7 +244,7 @@
 
                                 <div id="description" class="tab-pane in active">
                                     <div class="product-tab">
-                                        <p class="text">{!! session()->get('lang')=='bn' ? $product->long_descp_bn : $product->long_descp_en !!}</p>
+                                        <p class="text">{!! session()->get('lang')=='bn' ? $oneproduct->long_descp_bn : $oneproduct->long_descp_en !!}</p>
                                     </div>
                                 </div><!-- /.tab-pane -->
 
@@ -883,6 +376,19 @@
                                     <div class="product-tag">
 
                                         <h4 class="title">Product Tags</h4>
+                                        <div class="sidebar-widget-body outer-top-xs" style="margin-bottom:10px;">
+                                            <div class="tag-list">
+                                                @php
+                                                    session()->get('lang')=='bn' ? $tags = $oneproduct->product_tags_bn : $tags = $oneproduct->product_tags_en;
+                                                @endphp 
+                                                @foreach ($tags_en as $tag)
+                                                <a class="item" title="{{strtoupper($tag)}}" href="category.html">{{ $tag }}</a>  
+                                                @endforeach
+                                                
+                                                
+                                            </div>
+                                            <!-- /.tag-list --> 
+                                          </div>
                                         <form role="form" class="form-inline form-cnt">
                                             <div class="form-container">
 
@@ -923,8 +429,7 @@
 
                         
 
-                        @foreach ($products as $product)
-                        @if ($product->featured == 1)
+                        @foreach ($related as $product)
                         <div class="item item-carousel">
                           <div class="products">
                               <div class="product">
@@ -988,127 +493,9 @@
 
                           </div><!-- /.products -->
                       </div><!-- /.item -->
-                      @endif
                         @endforeach
 
-                        {{-- <div class="item item-carousel">
-                            <div class="products">
-
-                                <div class="product">
-                                    <div class="product-image">
-                                        <div class="image">
-                                            <a href="detail.html"><img src="assets/images/products/p1.jpg"
-                                                    alt=""></a>
-                                        </div><!-- /.image -->
-
-                                        <div class="tag sale"><span>sale</span></div>
-                                    </div><!-- /.product-image -->
-
-
-                                    <div class="product-info text-left">
-                                        <h3 class="name"><a href="detail.html">Floral Print Buttoned</a></h3>
-                                        <div class="rating rateit-small"></div>
-                                        <div class="description"></div>
-
-                                        <div class="product-price">
-                                            <span class="price">
-                                                $650.99 </span>
-                                            <span class="price-before-discount">$ 800</span>
-
-                                        </div><!-- /.product-price -->
-
-                                    </div><!-- /.product-info -->
-                                    <div class="cart clearfix animate-effect">
-                                        <div class="action">
-                                            <ul class="list-unstyled">
-                                                <li class="add-cart-button btn-group">
-                                                    <button class="btn btn-primary icon" data-toggle="dropdown"
-                                                        type="button">
-                                                        <i class="fa fa-shopping-cart"></i>
-                                                    </button>
-                                                    <button class="btn btn-primary cart-btn" type="button">Add to
-                                                        cart</button>
-
-                                                </li>
-
-                                                <li class="lnk wishlist">
-                                                    <a class="add-to-cart" href="detail.html" title="Wishlist">
-                                                        <i class="icon fa fa-heart"></i>
-                                                    </a>
-                                                </li>
-
-                                                <li class="lnk">
-                                                    <a class="add-to-cart" href="detail.html" title="Compare">
-                                                        <i class="fa fa-signal"></i>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div><!-- /.action -->
-                                    </div><!-- /.cart -->
-                                </div><!-- /.product -->
-
-                            </div><!-- /.products -->
-                        </div><!-- /.item -->
-                        <div class="item item-carousel">
-                            <div class="products">
-
-                                <div class="product">
-                                    <div class="product-image">
-                                        <div class="image">
-                                            <a href="detail.html"><img src="assets/images/blank.gif"
-                                                    data-echo="assets/images/products/p6.jpg"
-                                                    alt=""></a>
-                                        </div><!-- /.image -->
-
-                                        <div class="tag new"><span>new</span></div>
-                                    </div><!-- /.product-image -->
-
-
-                                    <div class="product-info text-left">
-                                        <h3 class="name"><a href="detail.html">Floral Print Buttoned</a></h3>
-                                        <div class="rating rateit-small"></div>
-                                        <div class="description"></div>
-
-                                        <div class="product-price">
-                                            <span class="price">
-                                                $650.99 </span>
-                                            <span class="price-before-discount">$ 800</span>
-
-                                        </div><!-- /.product-price -->
-
-                                    </div><!-- /.product-info -->
-                                    <div class="cart clearfix animate-effect">
-                                        <div class="action">
-                                            <ul class="list-unstyled">
-                                                <li class="add-cart-button btn-group">
-                                                    <button class="btn btn-primary icon" data-toggle="dropdown"
-                                                        type="button">
-                                                        <i class="fa fa-shopping-cart"></i>
-                                                    </button>
-                                                    <button class="btn btn-primary cart-btn" type="button">Add
-                                                        to cart</button>
-
-                                                </li>
-
-                                                <li class="lnk wishlist">
-                                                    <a class="add-to-cart" href="detail.html"
-                                                        title="Wishlist">
-                                                        <i class="icon fa fa-heart"></i>
-                                                    </a>
-                                                </li>
-
-                                                <li class="lnk">
-                                                    <a class="add-to-cart" href="detail.html" title="Compare">
-                                                        <i class="fa fa-signal"></i>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div><!-- /.action -->
-                                    </div><!-- /.cart -->
-                                </div><!-- /.product -->
-
-                            </div><!-- /.products -->
-                        </div><!-- /.item --> --}}
+                        
                     </div><!-- /.home-owl-carousel -->
                 </section><!-- /.section -->
                 <!-- ============================================== UPSELL PRODUCTS : END ============================================== -->

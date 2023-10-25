@@ -40,11 +40,15 @@ class IndexController extends Controller
         //return $props;
     	return view('frontend.index', compact('categories', 'sliders' ,'slidercates', 'props', 'items','hotdeals','offers','featured','specialdeals','firstcateproducts','firstcate','allTagsen','allTagsbn'));
     }
-    public function details($id){
-        $product = Product::with('multiImgs')->find($id)->first();
-        $products = Product::orderBy('id','desc')->get();
-        $related = Product::where('subcategory_id', $product->subcategory_id)->where('id', '!=', $id)->get();
-        return view('frontend.product-details', compact('product', 'related','products'));
+    public function details($id,$slug){
+
+        $oneproduct = Product::with('multiImgs','categories')->where('id', $id)->where('status',1)->first();
+        $tags_en = explode(',', $oneproduct->product_tags_en);
+        $tags_bn = explode(',', $oneproduct->product_tags_bn);
+        //return $product;
+        $hotdeals = Product::where('hot_deals',1)->where('status',1)->where('discount_price', '!=', null)->orderBy('id','desc')->limit(4)->get();
+        $related = Product::where('subcategory_id', $oneproduct->subcategory_id)->where('id', '!=', $id)->where('status',1)->get();
+        return view('frontend.product-details', compact('oneproduct', 'related','hotdeals','tags_en','tags_bn'));
 
     }
 }

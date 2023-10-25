@@ -28,7 +28,7 @@ use Illuminate\Support\Facades\Redirect;
 */
 
 Route::get('/', [IndexController::class, 'index'])->name('index');
-Route::get('/product-details/{id}', [IndexController::class,'details'])->name('product.details');
+Route::get('/product-details/{id}/{slug}', [IndexController::class,'details'])->name('product.details');
 
 Route::group(['prefix'=> 'admin', 'middleware'=>['admin:admin']], function(){
 	Route::get('/login', [AdminController::class, 'loginForm'])->name('admin.loginForm');

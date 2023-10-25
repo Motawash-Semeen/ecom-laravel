@@ -66,282 +66,30 @@
               <!-- ================================== TOP NAVIGATION : END ================================== -->
 
               <!-- ============================================== HOT DEALS ============================================== -->
-              <div class="sidebar-widget hot-deals wow fadeInUp outer-bottom-xs">
-                  <h3 class="section-title">hot deals</h3>
-                  <div class="owl-carousel sidebar-carousel custom-carousel owl-theme outer-top-ss">
-                    @foreach ($hotdeals as $hotdeal)
-                    <div class="item">
-                        <div class="products">
-                            <div class="hot-deal-wrapper">
-                                <div class="image"> <img
-                                        src="{{ asset('upload/products/'.$hotdeal->product_thambnail) }}"
-                                        alt=""> </div>
-                                <div class="sale-offer-tag"><span>{{ $hotdeal->discount_price }}%<br>
-                                        off</span></div>
-                                <div class="timing-wrapper">
-                                    <div class="box-wrapper">
-                                        <div class="date box"> <span class="key">120</span> <span
-                                                class="value">DAYS</span> </div>
-                                    </div>
-                                    <div class="box-wrapper">
-                                        <div class="hour box"> <span class="key">20</span> <span
-                                                class="value">HRS</span> </div>
-                                    </div>
-                                    <div class="box-wrapper">
-                                        <div class="minutes box"> <span class="key">36</span> <span
-                                                class="value">MINS</span> </div>
-                                    </div>
-                                    <div class="box-wrapper hidden-md">
-                                        <div class="seconds box"> <span class="key">60</span> <span
-                                                class="value">SEC</span> </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- /.hot-deal-wrapper -->
-
-                            <div class="product-info text-left m-t-20">
-                                <h3 class="name"><a href="detail.html">{{ session()->get('lang')=='bn' ? mb_substr($hotdeal->product_name_bn, 0, 20, 'UTF-8') : substr($hotdeal->product_name_en, 0, 20) }}...</a></h3>
-                                <div class="rating rateit-small"></div>
-                                <div class="product-price">  @if($hotdeal->discount_price == NULL)
-                                    <span class="price"> $ {{ $hotdeal->selling_price }} </span>
-                                    @else
-                                    @php
-                                    $sellingPrice = floatval($hotdeal->selling_price);
-                                    $discount = floatval($hotdeal->discount_price);
-                                    $discountedPrice = $sellingPrice - ($sellingPrice * $discount / 100);
-                                @endphp
-
-                                <span class="price">$ {{ number_format($discountedPrice, 2) }}</span>
-                                <span class="price-before-discount">$ {{ number_format($sellingPrice, 2) }}</span>
-                                    @endif </div>
-                                <!-- /.product-price -->
-
-                            </div>
-                            <!-- /.product-info -->
-
-                            <div class="cart clearfix animate-effect">
-                                <div class="action">
-                                    <div class="add-cart-button btn-group">
-                                        <button class="btn btn-primary icon" data-toggle="dropdown"
-                                            type="button"> <i class="fa fa-shopping-cart"></i> </button>
-                                        <button class="btn btn-primary cart-btn" type="button">Add to
-                                            cart</button>
-                                    </div>
-                                </div>
-                                <!-- /.action -->
-                            </div>
-                            <!-- /.cart -->
-                        </div>
-                    </div>
-                    @endforeach
-                      
-                  </div>
-                  <!-- /.sidebar-widget -->
-              </div>
+              @include('frontend.body.hotdeals')
               <!-- ============================================== HOT DEALS: END ============================================== -->
 
               <!-- ============================================== SPECIAL OFFER ============================================== -->
 
-              <div class="sidebar-widget outer-bottom-small wow fadeInUp">
-                  <h3 class="section-title">Special Offer</h3>
-                  <div class="sidebar-widget-body outer-top-xs">
-                      <div
-                          class="owl-carousel sidebar-carousel special-offer custom-carousel owl-theme outer-top-xs">
-                          <div class="item">
-                            <div class="products special-product">
-                                @foreach ($offers as $offer)
-                                <div class="product" style="margin: 1rem 0rem;">
-                                    <div class="product-micro">
-                                        <div class="row product-micro-row">
-                                            <div class="col col-xs-5">
-                                                <div class="product-image">
-                                                    <div class="image"> <a href="#"> <img
-                                                                src="{{ asset('upload/products/'.$offer->product_thambnail) }}"
-                                                                alt=""> </a> </div>
-                                                    <!-- /.image -->
-
-                                                </div>
-                                                <!-- /.product-image -->
-                                            </div>
-                                            <!-- /.col -->
-                                            <div class="col col-xs-7">
-                                                <div class="product-info">
-                                                    <h3 class="name"><a href="#">{{ session()->get('lang')=='bn' ? mb_substr($offer->product_name_bn, 0, 20, 'UTF-8') : substr($offer->product_name_en, 0, 20) }}...</a></h3>
-                                                    <div class="rating rateit-small"></div>
-                                                    <div class="product-price"> @if($offer->discount_price == NULL)
-                                                        <span class="price"> $ {{ $offer->selling_price }} </span>
-                                                        @else
-                                                        @php
-                                                        $sellingPrice = floatval($offer->selling_price);
-                                                        $discount = floatval($offer->discount_price);
-                                                        $discountedPrice = $sellingPrice - ($sellingPrice * $discount / 100);
-                                                    @endphp
-                    
-                                                    <span class="price">$ {{ number_format($discountedPrice, 2) }}</span>
-                                                    
-                                                        @endif </div>
-                                                    <!-- /.product-price -->
-
-                                                </div>
-                                            </div>
-                                            <!-- /.col -->
-                                        </div>
-                                        <!-- /.product-micro-row -->
-                                    </div>
-                                    <!-- /.product-micro -->
-
-                                </div>
-                                @endforeach
-                            </div>
-                        </div>
-                          
-                      </div>
-                      
-                  </div>
-                  <!-- /.sidebar-widget-body -->
-              </div>
+              @include('frontend.body.specialoffer')
               <!-- /.sidebar-widget -->
               <!-- ============================================== SPECIAL OFFER : END ============================================== -->
               <!-- ============================================== PRODUCT TAGS ============================================== -->
-              <div class="sidebar-widget product-tag wow fadeInUp">
-                  <h3 class="section-title">Product tags</h3>
-                  <div class="sidebar-widget-body outer-top-xs">
-                      <div class="tag-list"> 
-                        @php
-                            session()->get('lang')=='bn' ? $alltag = $allTagsbn : $alltag= $allTagsen;
-                        @endphp
-                        @foreach ($alltag as $tag)
-                        <a class="item" title="{{ $tag }}" href="category.html">{{ $tag }}</a>
-                        @endforeach
-                        {{-- 
-                          <a class="item active" title="Vest" href="category.html">Vest</a> <a --}}
-                      </div>
-                      <!-- /.tag-list -->
-                  </div>
-                  <!-- /.sidebar-widget-body -->
-              </div>
+              @include('frontend.body.producttag')
               <!-- /.sidebar-widget -->
               <!-- ============================================== PRODUCT TAGS : END ============================================== -->
               <!-- ============================================== SPECIAL DEALS ============================================== -->
 
-              <div class="sidebar-widget outer-bottom-small wow fadeInUp">
-                  <h3 class="section-title">Special Deals</h3>
-                  <div class="sidebar-widget-body outer-top-xs">
-                      <div
-                          class="owl-carousel sidebar-carousel special-offer custom-carousel owl-theme outer-top-xs">
-                          <div class="item">
-                              <div class="products special-product">
-                                @foreach ($specialdeals as $specialdeal)
-                                <div class="product">
-                                    <div class="product-micro">
-                                        <div class="row product-micro-row">
-                                            <div class="col col-xs-5">
-                                                <div class="product-image">
-                                                    <div class="image"> <a href="#"> <img
-                                                                src="{{ asset('upload/products/'.$specialdeal->product_thambnail) }}"
-                                                                alt=""> </a> </div>
-                                                    <!-- /.image -->
-
-                                                </div>
-                                                <!-- /.product-image -->
-                                            </div>
-                                            <!-- /.col -->
-                                            <div class="col col-xs-7">
-                                                <div class="product-info">
-                                                    <h3 class="name"><a href="#">{{ session()->get('lang')=='bn' ? mb_substr($specialdeal->product_name_bn, 0, 20, 'UTF-8') : substr($specialdeal->product_name_en, 0, 20) }}...</a></h3>
-                                                    <div class="rating rateit-small"></div>
-                                                    <div class="product-price"> @if($offer->discount_price == NULL)
-                                                        <span class="price"> $ {{ $offer->selling_price }} </span>
-                                                        @else
-                                                        @php
-                                                        $sellingPrice = floatval($offer->selling_price);
-                                                        $discount = floatval($offer->discount_price);
-                                                        $discountedPrice = $sellingPrice - ($sellingPrice * $discount / 100);
-                                                    @endphp
-                    
-                                                    <span class="price">$ {{ number_format($discountedPrice, 2) }}</span>
-                                                    
-                                                        @endif </div>
-                                                    <!-- /.product-price -->
-
-                                                </div>
-                                            </div>
-                                            <!-- /.col -->
-                                        </div>
-                                        <!-- /.product-micro-row -->
-                                    </div>
-                                    <!-- /.product-micro -->
-
-                                </div>
-                                @endforeach
-                                  
-                                  
-                              </div>
-                          </div>
-                          
-                      </div>
-                  </div>
-                  <!-- /.sidebar-widget-body -->
-              </div>
+              @include('frontend.body.specialdeals')
               <!-- /.sidebar-widget -->
               <!-- ============================================== SPECIAL DEALS : END ============================================== -->
               <!-- ============================================== NEWSLETTER ============================================== -->
-              <div class="sidebar-widget newsletter wow fadeInUp outer-bottom-small">
-                  <h3 class="section-title">Newsletters</h3>
-                  <div class="sidebar-widget-body outer-top-xs">
-                      <p>Sign Up for Our Newsletter!</p>
-                      <form>
-                          <div class="form-group">
-                              <label class="sr-only" for="exampleInputEmail1">Email address</label>
-                              <input type="email" class="form-control" id="exampleInputEmail1"
-                                  placeholder="Subscribe to our newsletter">
-                          </div>
-                          <button class="btn btn-primary">Subscribe</button>
-                      </form>
-                  </div>
-                  <!-- /.sidebar-widget-body -->
-              </div>
+              @include('frontend.body.newsletter')
               <!-- /.sidebar-widget -->
               <!-- ============================================== NEWSLETTER: END ============================================== -->
 
               <!-- ============================================== Testimonials============================================== -->
-              <div class="sidebar-widget  wow fadeInUp outer-top-vs ">
-                  <div id="advertisement" class="advertisement">
-                      <div class="item">
-                          <div class="avatar"><img
-                                  src="{{ asset('frontend') }}/assets/images/testimonials/member1.png"
-                                  alt="Image"></div>
-                          <div class="testimonials"><em>"</em> Vtae sodales aliq uam morbi non sem lacus port
-                              mollis. Nunc condime tum metus eud molest sed consectetuer.<em>"</em></div>
-                          <div class="clients_author">John Doe <span>Abc Company</span> </div>
-                          <!-- /.container-fluid -->
-                      </div>
-                      <!-- /.item -->
-
-                      <div class="item">
-                          <div class="avatar"><img
-                                  src="{{ asset('frontend') }}/assets/images/testimonials/member3.png"
-                                  alt="Image"></div>
-                          <div class="testimonials"><em>"</em>Vtae sodales aliq uam morbi non sem lacus port
-                              mollis. Nunc condime tum metus eud molest sed consectetuer.<em>"</em></div>
-                          <div class="clients_author">Stephen Doe <span>Xperia Designs</span> </div>
-                      </div>
-                      <!-- /.item -->
-
-                      <div class="item">
-                          <div class="avatar"><img
-                                  src="{{ asset('frontend') }}/assets/images/testimonials/member2.png"
-                                  alt="Image"></div>
-                          <div class="testimonials"><em>"</em> Vtae sodales aliq uam morbi non sem lacus port
-                              mollis. Nunc condime tum metus eud molest sed consectetuer.<em>"</em></div>
-                          <div class="clients_author">Saraha Smith <span>Datsun &amp; Co</span> </div>
-                          <!-- /.container-fluid -->
-                      </div>
-                      <!-- /.item -->
-
-                  </div>
-                  <!-- /.owl-carousel -->
-              </div>
+              @include('frontend.body.testimonials')
 
               <!-- ============================================== Testimonials: END ============================================== -->
 
@@ -481,12 +229,10 @@
                                       <div class="products">
                                           <div class="product">
                                               <div class="product-image">
-                                                  <div class="image"> <a href="detail.html"><img
+                                                  <div class="image"> <a href="{{url('product-details/'.$prop->id.'/'.$prop->product_slug_en)}}"><img
                                                               src="{{ asset('upload/products/'.$prop->product_thambnail) }}"
                                                               alt=""></a> </div>
                                                   <!-- /.image -->
-
-                                                  {{-- <div class="tag @if($prop->discount_price != NULL) sale @elseif ($prop->hot_deals == '1') hot @else new @endif"><span>@if($prop->discount_price != NULL)sale @elseif ($prop->hot_deals == '1') hot @else new @endif</span></div> --}}
                                                   @if ($prop->discount_price != NULL)
                                                     <div class="tag sale"><span>{{ $prop->discount_price }}%</span></div>
                                                     @else
@@ -496,7 +242,7 @@
                                               <!-- /.product-image -->
 
                                               <div class="product-info text-left">
-                                                  <h3 class="name"><a href="detail.html">{{ session()->get('lang')=='bn' ? mb_substr($prop->product_name_bn, 0, 20, 'UTF-8') : substr($prop->product_name_en, 0, 20) }}...</a></h3>
+                                                  <h3 class="name"><a href="{{url('product-details/'.$prop->id.'/'.$prop->product_slug_en)}}">{{ session()->get('lang')=='bn' ? mb_substr($prop->product_name_bn, 0, 20, 'UTF-8') : substr($prop->product_name_en, 0, 20) }}...</a></h3>
                                                   <div class="rating rateit-small"></div>
                                                   <div class="description"></div>
                                                   <div class="product-price">
@@ -588,7 +334,7 @@
                                                 <!-- /.product-image -->
   
                                                 <div class="product-info text-left">
-                                                    <h3 class="name"><a href="#">{{ session()->get('lang')=='bn' ? mb_substr($prop->product_name_bn, 0, 20, 'UTF-8') : substr($prop->product_name_en, 0, 20) }}...</a></h3>
+                                                    <h3 class="name"><a href="{{url('product-details/'.$prop->id.'/'.$prop->product_slug_en)}}">{{ session()->get('lang')=='bn' ? mb_substr($prop->product_name_bn, 0, 20, 'UTF-8') : substr($prop->product_name_en, 0, 20) }}...</a></h3>
                                                     <div class="rating rateit-small"></div>
                                                     <div class="description"></div>
                                                     <div class="product-price">
@@ -703,7 +449,7 @@
                                 <!-- /.product-image -->
 
                                 <div class="product-info text-left">
-                                    <h3 class="name"><a href="detail.html">{{ session()->get('lang')=='bn' ? mb_substr($feature->product_name_bn, 0, 20, 'UTF-8') : substr($feature->product_name_en, 0, 20) }}...</a></h3>
+                                    <h3 class="name"><a href="{{url('product-details/'.$feature->id.'/'.$feature->product_slug_en)}}">{{ session()->get('lang')=='bn' ? mb_substr($feature->product_name_bn, 0, 20, 'UTF-8') : substr($feature->product_name_en, 0, 20) }}...</a></h3>
                                     <div class="rating rateit-small"></div>
                                     <div class="description"></div>
                                     <div class="product-price"> @if($prop->discount_price == NULL)
@@ -1222,7 +968,7 @@
                         <div class="products">
                             <div class="product">
                                 <div class="product-image">
-                                    <div class="image"> <a href="detail.html"><img
+                                    <div class="image"> <a href="{{url('product-details/'.$firstcateproduct->id.'/'.$firstcateproduct->product_slug_en)}}"><img
                                                 src="{{ asset('upload/products/'.$firstcateproduct->product_thambnail) }}"
                                                 alt=""></a>
                                     </div>
@@ -1233,7 +979,7 @@
                                 <!-- /.product-image -->
 
                                 <div class="product-info text-left">
-                                    <h3 class="name"><a href="detail.html">{{ session()->get('lang')=='bn' ? mb_substr($firstcateproduct->product_name_bn, 0, 20, 'UTF-8') : substr($firstcateproduct->product_name_en, 0, 20) }}...</a></h3>
+                                    <h3 class="name"><a href="{{url('product-details/'.$firstcateproduct->id.'/'.$firstcateproduct->product_slug_en)}}">{{ session()->get('lang')=='bn' ? mb_substr($firstcateproduct->product_name_bn, 0, 20, 'UTF-8') : substr($firstcateproduct->product_name_en, 0, 20) }}...</a></h3>
                                     <div class="rating rateit-small"></div>
                                     <div class="description"></div>
                                     <div class="product-price"> @if($firstcateproduct->discount_price == NULL)
