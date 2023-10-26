@@ -65,7 +65,7 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-3 logo-holder">
                     <!-- ============================================================= LOGO ============================================================= -->
-                    <div class="logo"> <a href="home.html"> <img src="{{ asset('frontend') }}/assets/images/logo.png"
+                    <div class="logo"> <a href="{{ url('/') }}"> <img src="{{ asset('frontend') }}/assets/images/logo.png"
                                 alt="logo"> </a>
                     </div>
                     <!-- /.logo -->
@@ -180,8 +180,7 @@
                     <div class="navbar-collapse collapse" id="mc-horizontal-menu-collapse">
                         <div class="nav-outer">
                             <ul class="nav navbar-nav">
-                                <li class="active dropdown yamm-fw"> <a href="home.html" data-hover="dropdown"
-                                        class="dropdown-toggle" data-toggle="dropdown">Home</a> </li>
+                                <li class="active dropdown yamm-fw"> <a href="{{ url('/') }}" >Home</a> </li>
                                         @php
                                             $categories = App\Models\Category::orderBy('id', 'ASC')->get();
 

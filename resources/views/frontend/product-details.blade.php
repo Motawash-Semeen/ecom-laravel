@@ -4,7 +4,7 @@
 	<div class="container">
 		<div class="breadcrumb-inner">
 			<ul class="list-inline list-unstyled">
-				<li><a href="#">Home</a></li>
+				<li><a href="{{ url('/') }}">Home</a></li>
 				<li><a href="#">{{ $oneproduct->categories->category_name }}</a></li>
 				<li class='active'>{{ $oneproduct->product_name_en }}</li>
 			</ul>
@@ -422,6 +422,7 @@
                 </div><!-- /.product-tabs -->
 
                 <!-- ============================================== UPSELL PRODUCTS ============================================== -->
+                @if ($related->count() > 0)
                 <section class="section featured-product wow fadeInUp">
                     <h3 class="section-title">upsell products</h3>
                     <div
@@ -435,7 +436,7 @@
                               <div class="product">
                                   <div class="product-image">
                                       <div class="image">
-                                          <a href="detail.html"><img src="{{ asset('upload/products/'.$product->product_thambnail) }}"
+                                          <a href="{{url('product-details/'.$product->id.'/'.$product->product_slug_en)}}"><img src="{{ asset('upload/products/'.$product->product_thambnail) }}"
                                                   alt=""></a>
                                       </div><!-- /.image -->
 
@@ -443,7 +444,7 @@
                                   </div><!-- /.product-image -->
 
                                   <div class="product-info text-left">
-                                      <h3 class="name"><a href="detail.html">{{ session()->get('lang')=='bn' ? mb_substr($product->product_name_bn, 0, 20, 'UTF-8') : substr($product->product_name_en, 0, 20) }}...</a></h3>
+                                      <h3 class="name"><a href="{{url('product-details/'.$product->id.'/'.$product->product_slug_en)}}">{{ session()->get('lang')=='bn' ? mb_substr($product->product_name_bn, 0, 20, 'UTF-8') : substr($product->product_name_en, 0, 20) }}...</a></h3>
                                       <div class="rating rateit-small"></div>
                                       <div class="description"></div>
 
@@ -498,6 +499,8 @@
                         
                     </div><!-- /.home-owl-carousel -->
                 </section><!-- /.section -->
+                @endif
+                
                 <!-- ============================================== UPSELL PRODUCTS : END ============================================== -->
 
             </div><!-- /.col -->
