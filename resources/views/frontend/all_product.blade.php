@@ -183,16 +183,17 @@
                                         <div class="fld inline">
                                             <div class="dropdown dropdown-small dropdown-med dropdown-white inline">
                                                 <button data-toggle="dropdown" type="button"
-                                                    class="btn dropdown-toggle"> Position <span class="caret"></span>
+                                                    class="btn dropdown-toggle"> Defaut <span class="caret"></span>
                                                 </button>
                                                 <ul role="menu" class="dropdown-menu">
-                                                    <li role="presentation"><a href="#">position</a></li>
-                                                    <li role="presentation"><a href="&p=0">Price:Lowest
+                                                    <li role="presentation"><a href="?sort=price_asc&limit={{$limit}}">Price:Lowest
                                                             first</a></li>
-                                                    <li role="presentation"><a href="#">Price:HIghest
+                                                    <li role="presentation"><a href="?sort=price_desc&limit={{$limit}}">Price:HIghest
                                                             first</a></li>
-                                                    <li role="presentation"><a href="#">Product Name:A
+                                                    <li role="presentation"><a href="?sort=name_asc&limit={{$limit}}">Product Name:A
                                                             to Z</a></li>
+                                                    <li role="presentation"><a href="?sort=name_desc&limit={{$limit}}">Product Name:Z
+                                                            to A</a></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -209,16 +210,16 @@
                                                     class="btn dropdown-toggle"> {{ $limit }} <span class="caret"></span>
                                                 </button>
                                                 <ul role="menu" class="dropdown-menu">
-                                                    <li role="presentation"><a href="?limit=10">10</a></li>
-                                                    <li role="presentation"><a href="?limit=20">20</a></li>
-                                                    <li role="presentation"><a href="?limit=30">30</a></li>
-                                                    <li role="presentation"><a href="?limit=40">40</a></li>
-                                                    <li role="presentation"><a href="?limit=50">50</a></li>
-                                                    <li role="presentation"><a href="?limit=60">60</a></li>
-                                                    <li role="presentation"><a href="?limit=70">70</a></li>
-                                                    <li role="presentation"><a href="?limit=80">80</a></li>
-                                                    <li role="presentation"><a href="?limit=90">90</a></li>
-                                                    <li role="presentation"><a href="?limit=100">100</a></li>
+                                                    <li role="presentation"><a href="?{{$sort != '' ? 'sort='.$sort.'&limit=10' : 'limit=10'}}">10</a></li>
+                                                    <li role="presentation"><a href="?{{$sort != '' ? 'sort='.$sort.'&limit=20' : 'limit=20'}}">20</a></li>
+                                                    <li role="presentation"><a href="?{{$sort != '' ? 'sort='.$sort.'&limit=30' : 'limit=30'}}">30</a></li>
+                                                    <li role="presentation"><a href="?{{$sort != '' ? 'sort='.$sort.'&limit=40' : 'limit=40'}}">40</a></li>
+                                                    <li role="presentation"><a href="?{{$sort != '' ? 'sort='.$sort.'&limit=50' : 'limit=50'}}">50</a></li>
+                                                    <li role="presentation"><a href="?{{$sort != '' ? 'sort='.$sort.'&limit=60' : 'limit=60'}}">60</a></li>
+                                                    <li role="presentation"><a href="?{{$sort != '' ? 'sort='.$sort.'&limit=70' : 'limit=70'}}">70</a></li>
+                                                    <li role="presentation"><a href="?{{$sort != '' ? 'sort='.$sort.'&limit=80' : 'limit=80'}}">80</a></li>
+                                                    <li role="presentation"><a href="?{{$sort != '' ? 'sort='.$sort.'&limit=90' : 'limit=90'}}">90</a></li>
+                                                    <li role="presentation"><a href="?{{$sort != '' ? 'sort='.$sort.'&limit=100' : 'limit=100'}}">100</a></li>
                                                 </ul>
                                             </div>
                                         </div>

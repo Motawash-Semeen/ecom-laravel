@@ -90,13 +90,32 @@ class IndexController extends Controller
         $allTagsbn = $this->allTagsbn;
 
         $limit = isset($_GET['limit']) ? $_GET['limit'] : 10;
-        $products = Product::where('subcategory_id', $id)->where('status',1)->orderBy('id','desc')->paginate($limit);
+        
+        if(isset($_GET['sort'])){
+            $sort = $_GET['sort'];
+            if($sort == 'price_asc'){
+                $products = Product::where('subcategory_id', $id)->where('status',1)->orderBy('selling_price','asc')->paginate($limit);
+            }
+            if($sort == 'price_desc'){
+                $products = Product::where('subcategory_id', $id)->where('status',1)->orderBy('selling_price','desc')->paginate($limit);
+            }
+            if($sort == 'name_asc'){
+                $products = Product::where('subcategory_id', $id)->where('status',1)->orderBy('product_name_en','asc')->paginate($limit);
+            }
+            if($sort == 'name_desc'){
+                $products = Product::where('subcategory_id', $id)->where('status',1)->orderBy('product_name_en','desc')->paginate($limit);
+            }
+        }
+        else{
+            $sort = '';
+            $products = Product::where('subcategory_id', $id)->where('status',1)->orderBy('id','desc')->paginate($limit);
+        }
 
         $color_en = $this->color_en;
         $color_bn = $this->color_bn;
 
         $brands = Brand::orderBy('id','asc')->get();
         
-        return view('frontend.all_product', compact('categories','allTagsen','allTagsbn','products', 'color_en', 'color_bn','brands','limit'));
+        return view('frontend.all_product', compact('categories','allTagsen','allTagsbn','products', 'color_en', 'color_bn','brands','limit','sort'));
     }
 }
