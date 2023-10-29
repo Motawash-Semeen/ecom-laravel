@@ -187,7 +187,7 @@
                                                 </button>
                                                 <ul role="menu" class="dropdown-menu">
                                                     <li role="presentation"><a href="#">position</a></li>
-                                                    <li role="presentation"><a href="#">Price:Lowest
+                                                    <li role="presentation"><a href="&p=0">Price:Lowest
                                                             first</a></li>
                                                     <li role="presentation"><a href="#">Price:HIghest
                                                             first</a></li>
@@ -206,19 +206,19 @@
                                         <div class="fld inline">
                                             <div class="dropdown dropdown-small dropdown-med dropdown-white inline">
                                                 <button data-toggle="dropdown" type="button"
-                                                    class="btn dropdown-toggle"> 1 <span class="caret"></span>
+                                                    class="btn dropdown-toggle"> {{ $limit }} <span class="caret"></span>
                                                 </button>
                                                 <ul role="menu" class="dropdown-menu">
-                                                    <li role="presentation"><a href="#">1</a></li>
-                                                    <li role="presentation"><a href="#">2</a></li>
-                                                    <li role="presentation"><a href="#">3</a></li>
-                                                    <li role="presentation"><a href="#">4</a></li>
-                                                    <li role="presentation"><a href="#">5</a></li>
-                                                    <li role="presentation"><a href="#">6</a></li>
-                                                    <li role="presentation"><a href="#">7</a></li>
-                                                    <li role="presentation"><a href="#">8</a></li>
-                                                    <li role="presentation"><a href="#">9</a></li>
-                                                    <li role="presentation"><a href="#">10</a></li>
+                                                    <li role="presentation"><a href="?limit=10">10</a></li>
+                                                    <li role="presentation"><a href="?limit=20">20</a></li>
+                                                    <li role="presentation"><a href="?limit=30">30</a></li>
+                                                    <li role="presentation"><a href="?limit=40">40</a></li>
+                                                    <li role="presentation"><a href="?limit=50">50</a></li>
+                                                    <li role="presentation"><a href="?limit=60">60</a></li>
+                                                    <li role="presentation"><a href="?limit=70">70</a></li>
+                                                    <li role="presentation"><a href="?limit=80">80</a></li>
+                                                    <li role="presentation"><a href="?limit=90">90</a></li>
+                                                    <li role="presentation"><a href="?limit=100">100</a></li>
                                                 </ul>
                                             </div>
                                         </div>

@@ -89,13 +89,14 @@ class IndexController extends Controller
         $allTagsen = $this->allTagsen;
         $allTagsbn = $this->allTagsbn;
 
-        $products = Product::where('subcategory_id', $id)->where('status',1)->orderBy('id','desc')->paginate(3);
+        $limit = isset($_GET['limit']) ? $_GET['limit'] : 10;
+        $products = Product::where('subcategory_id', $id)->where('status',1)->orderBy('id','desc')->paginate($limit);
 
         $color_en = $this->color_en;
         $color_bn = $this->color_bn;
 
         $brands = Brand::orderBy('id','asc')->get();
-
-        return view('frontend.all_product', compact('categories','allTagsen','allTagsbn','products', 'color_en', 'color_bn','brands'));
+        
+        return view('frontend.all_product', compact('categories','allTagsen','allTagsbn','products', 'color_en', 'color_bn','brands','limit'));
     }
 }
