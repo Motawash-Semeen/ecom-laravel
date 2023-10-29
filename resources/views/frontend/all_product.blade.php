@@ -19,124 +19,29 @@
                                 </div>
                                 <div class="sidebar-widget-body">
                                     <div class="accordion">
+                                        @foreach ($categories as $category)
                                         <div class="accordion-group">
-                                            <div class="accordion-heading"> <a href="#collapseOne" data-toggle="collapse"
-                                                    class="accordion-toggle collapsed"> Camera </a>
+                                            <div class="accordion-heading"> <a href="{{ count($category->subcategories) != 0 ? '#collapse'.$category->category_slug : '/admin/login' }}" @if (count($category->subcategories) != 0)
+                                                data-toggle="collapse" class="accordion-toggle collapsed"
+                                            @else
+                                            class="collapsed" style="line-height: 30px; color: #666666;"
+                                            @endif> {{ session()->get('lang')=='bn' ? $category->category_name_bn : $category->category_name }} </a>
                                             </div>
                                             <!-- /.accordion-heading -->
-                                            <div class="accordion-body collapse" id="collapseOne" style="height: 0px;">
+                                            <div class="accordion-body collapse" id="collapse{{$category->category_slug}}" style="height: 0px;">
                                                 <div class="accordion-inner">
                                                     <ul>
-                                                        <li><a href="#">gaming</a></li>
-                                                        <li><a href="#">office</a></li>
-                                                        <li><a href="#">kids</a></li>
-                                                        <li><a href="#">for women</a></li>
+                                                        @foreach ($category->subcategories as $subcategory)
+                                                        <li><a href="#">{{ session()->get('lang')=='bn' ? $subcategory->subcategory_name_bn : $subcategory->subcategory_name }}</a></li>
+                                                        @endforeach
                                                     </ul>
                                                 </div>
                                                 <!-- /.accordion-inner -->
                                             </div>
                                             <!-- /.accordion-body -->
                                         </div>
-                                        <!-- /.accordion-group -->
+                                        @endforeach
 
-                                        <div class="accordion-group">
-                                            <div class="accordion-heading"> <a href="#collapseTwo" data-toggle="collapse"
-                                                    class="accordion-toggle collapsed"> Desktops </a>
-                                            </div>
-                                            <!-- /.accordion-heading -->
-                                            <div class="accordion-body collapse" id="collapseTwo" style="height: 0px;">
-                                                <div class="accordion-inner">
-                                                    <ul>
-                                                        <li><a href="#">gaming</a></li>
-                                                        <li><a href="#">office</a></li>
-                                                        <li><a href="#">kids</a></li>
-                                                        <li><a href="#">for women</a></li>
-                                                    </ul>
-                                                </div>
-                                                <!-- /.accordion-inner -->
-                                            </div>
-                                            <!-- /.accordion-body -->
-                                        </div>
-                                        <!-- /.accordion-group -->
-
-                                        <div class="accordion-group">
-                                            <div class="accordion-heading"> <a href="#collapseThree" data-toggle="collapse"
-                                                    class="accordion-toggle collapsed"> Pants </a>
-                                            </div>
-                                            <!-- /.accordion-heading -->
-                                            <div class="accordion-body collapse" id="collapseThree" style="height: 0px;">
-                                                <div class="accordion-inner">
-                                                    <ul>
-                                                        <li><a href="#">gaming</a></li>
-                                                        <li><a href="#">office</a></li>
-                                                        <li><a href="#">kids</a></li>
-                                                        <li><a href="#">for women</a></li>
-                                                    </ul>
-                                                </div>
-                                                <!-- /.accordion-inner -->
-                                            </div>
-                                            <!-- /.accordion-body -->
-                                        </div>
-                                        <!-- /.accordion-group -->
-
-                                        <div class="accordion-group">
-                                            <div class="accordion-heading"> <a href="#collapseFour" data-toggle="collapse"
-                                                    class="accordion-toggle collapsed"> Bags </a>
-                                            </div>
-                                            <!-- /.accordion-heading -->
-                                            <div class="accordion-body collapse" id="collapseFour" style="height: 0px;">
-                                                <div class="accordion-inner">
-                                                    <ul>
-                                                        <li><a href="#">gaming</a></li>
-                                                        <li><a href="#">office</a></li>
-                                                        <li><a href="#">kids</a></li>
-                                                        <li><a href="#">for women</a></li>
-                                                    </ul>
-                                                </div>
-                                                <!-- /.accordion-inner -->
-                                            </div>
-                                            <!-- /.accordion-body -->
-                                        </div>
-                                        <!-- /.accordion-group -->
-
-                                        <div class="accordion-group">
-                                            <div class="accordion-heading"> <a href="#collapseFive" data-toggle="collapse"
-                                                    class="accordion-toggle collapsed"> Hats </a>
-                                            </div>
-                                            <!-- /.accordion-heading -->
-                                            <div class="accordion-body collapse" id="collapseFive" style="height: 0px;">
-                                                <div class="accordion-inner">
-                                                    <ul>
-                                                        <li><a href="#">gaming</a></li>
-                                                        <li><a href="#">office</a></li>
-                                                        <li><a href="#">kids</a></li>
-                                                        <li><a href="#">for women</a></li>
-                                                    </ul>
-                                                </div>
-                                                <!-- /.accordion-inner -->
-                                            </div>
-                                            <!-- /.accordion-body -->
-                                        </div>
-                                        <!-- /.accordion-group -->
-
-                                        <div class="accordion-group">
-                                            <div class="accordion-heading"> <a href="#collapseSix" data-toggle="collapse"
-                                                    class="accordion-toggle collapsed"> Accessories </a>
-                                            </div>
-                                            <!-- /.accordion-heading -->
-                                            <div class="accordion-body collapse" id="collapseSix" style="height: 0px;">
-                                                <div class="accordion-inner">
-                                                    <ul>
-                                                        <li><a href="#">gaming</a></li>
-                                                        <li><a href="#">office</a></li>
-                                                        <li><a href="#">kids</a></li>
-                                                        <li><a href="#">for women</a></li>
-                                                    </ul>
-                                                </div>
-                                                <!-- /.accordion-inner -->
-                                            </div>
-                                            <!-- /.accordion-body -->
-                                        </div>
                                         <!-- /.accordion-group -->
 
                                     </div>
@@ -326,14 +231,7 @@
                             <!-- /.col -->
                             <div class="col col-sm-6 col-md-4 text-right">
                                 <div class="pagination-container">
-                                    <ul class="list-inline list-unstyled">
-                                        <li class="prev"><a href="#"><i class="fa fa-angle-left"></i></a></li>
-                                        <li><a href="#">1</a></li>
-                                        <li class="active"><a href="#">2</a></li>
-                                        <li><a href="#">3</a></li>
-                                        <li><a href="#">4</a></li>
-                                        <li class="next"><a href="#"><i class="fa fa-angle-right"></i></a></li>
-                                    </ul>
+                                    {!! $products->links('layouts.custom_pagination') !!}
                                     <!-- /.list-inline -->
                                 </div>
                                 <!-- /.pagination-container -->
@@ -511,17 +409,11 @@
                         <div class="clearfix filters-container">
                             <div class="text-right">
                                 <div class="pagination-container">
-                                    <ul class="list-inline list-unstyled">
-                                        <li class="prev"><a href="#"><i class="fa fa-angle-left"></i></a></li>
-                                        <li><a href="#">1</a></li>
-                                        <li class="active"><a href="#">2</a></li>
-                                        <li><a href="#">3</a></li>
-                                        <li><a href="#">4</a></li>
-                                        <li class="next"><a href="#"><i class="fa fa-angle-right"></i></a>
-                                        </li>
-                                    </ul>
+                                    
+                                    {!! $products->links('layouts.custom_pagination') !!}
                                     <!-- /.list-inline -->
                                 </div>
+                                
                                 <!-- /.pagination-container -->
                             </div>
                             <!-- /.text-right -->
