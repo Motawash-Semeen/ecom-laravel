@@ -259,15 +259,19 @@ jQuery(function(){
 /*===================================================================================*/
 /* PRICE SLIDER
 /*===================================================================================*/
+
 jQuery(function () {
+    var valueFromPHP = $('#myElement').data('value');
+    var limit_max = $('#limit_max').data('value');
+    var limit_min = $('#limit_min').data('value');
 
 // Price Slider
 if (jQuery('.price-slider').length > 0) {
     jQuery('.price-slider').slider({
-        min: 100,
-        max: 700,
+        min: 0,
+        max: valueFromPHP,
         step: 10,
-        value: [200, 500],
+        value: [limit_min, limit_max],
         handle: "square"
 
     });
@@ -275,7 +279,28 @@ if (jQuery('.price-slider').length > 0) {
 }
 
 });
+$('.price-slider').on('slide', function(event, ui) {
+    var sort = $('#sort').data('value');
+    var limit = $('#limit').data('value');
 
+    var currentURL = window.location.href;
+    var value = $('.price-slider').val()
+    const myArray = value.split(",");
+    if(sort != '' && limit != '') {
+        $(".lnk").attr("href", "?sort="+sort+"&limit="+limit+"&min="+myArray[0]+"&max="+myArray[1]+"");
+    }
+    else if(sort != '') {
+        $(".lnk").attr("href", "?sort="+sort+"&min="+myArray[0]+"&max="+myArray[1]+"");
+    }
+    else if(limit != '') {
+        $(".lnk").attr("href", "?limit="+limit+"&min="+myArray[0]+"&max="+myArray[1]+"");
+    }
+     else {
+        $(".lnk").attr("href", "?min="+myArray[0]+"&max="+myArray[1]+"");
+    }
+    
+    //console.log(value);
+});
 
 /*===================================================================================*/
 /* SINGLE PRODUCT GALLERY

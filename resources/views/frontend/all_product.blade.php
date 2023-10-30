@@ -59,7 +59,7 @@
                                 </div>
                                 <div class="sidebar-widget-body m-t-10">
                                     <div class="price-range-holder"> <span class="min-max">
-                                            <span class="pull-left">$200.00</span> <span class="pull-right">$800.00</span>
+                                            <span class="pull-left">$0.00</span> <span class="pull-right">${{$max}}.00</span>
                                         </span>
                                         <input type="text" id="amount"
                                             style="border:0; color:#666666; font-weight:bold;text-align:center;">
@@ -70,6 +70,13 @@
                                 </div>
                                 <!-- /.sidebar-widget-body -->
                             </div>
+
+                             <div id="myElement" data-value="{{ $max }}" hidden></div>
+                             <div id="limit_max" data-value="{{$limit_max}}" hidden></div>
+                             <div id="limit_min" data-value="{{$limit_min}}" hidden></div>
+                            <div id="sort" data-value="{{ $sort }}" hidden></div>
+                            <div id="limit" data-value="{{ $limit }}" hidden></div>
+
                             <!-- /.sidebar-widget -->
                             <!-- ============================================== PRICE SILDER : END ============================================== -->
                             <!-- ============================================== MANUFACTURES============================================== -->
@@ -177,13 +184,24 @@
                                 <!-- /.filter-tabs -->
                             </div>
                             <!-- /.col -->
-                            <div class="col col-sm-12 col-md-6">
+                            <div class="col col-sm-12 col-md-8">
                                 <div class="col col-sm-3 col-md-6 no-padding">
                                     <div class="lbl-cnt"> <span class="lbl">Sort by</span>
                                         <div class="fld inline">
                                             <div class="dropdown dropdown-small dropdown-med dropdown-white inline">
                                                 <button data-toggle="dropdown" type="button"
-                                                    class="btn dropdown-toggle"> Defaut <span class="caret"></span>
+                                                    class="btn dropdown-toggle">  
+                                                    @if ($sort == 'price_asc')
+                                                        Price:Lowest first
+                                                    @elseif ($sort == 'price_desc')
+                                                        Price:HIghest first
+                                                    @elseif ($sort == 'name_asc')
+                                                        Product Name:A to Z
+                                                    @elseif ($sort == 'name_desc')
+                                                        Product Name:Z to A
+                                                    @else
+                                                        Defaut
+                                                    @endif<span class="caret"></span>
                                                 </button>
                                                 <ul role="menu" class="dropdown-menu">
                                                     <li role="presentation"><a href="?sort=price_asc&limit={{$limit}}">Price:Lowest
@@ -438,3 +456,4 @@
         <!-- /.container -->
     </div>
 @endsection
+
