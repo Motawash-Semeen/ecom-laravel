@@ -208,13 +208,14 @@
                                                     @foreach ($subcategories as $subcategory)
 
                                                     <div class="col-xs-12 col-sm-12 col-md-2 col-menu">
-                                                        <h2 class="title">{{ session()->get('lang')=='bn' ? $subcategory->subcategory_name_bn : $subcategory->subcategory_name }}</h2>
+                                                        <a style="padding:0px" href="{{ url('all-product/'.$subcategory->id.'/'.$subcategory->subcategory_slug) }}"><h2 class="title">{{ session()->get('lang')=='bn' ? $subcategory->subcategory_name_bn : $subcategory->subcategory_name }}</h2></a>
+                                                        
                                                         <ul class="links">
                                                             @php
                                                                 $subsubcategories = App\Models\Subsubcategory::where('subcategory_id', $subcategory->id)->orderBy('id', 'ASC')->get();
                                                             @endphp
                                                             @foreach ($subsubcategories as $subsubcategory)
-                                                            <li><a href="#">{{ session()->get('lang')=='bn' ? $subsubcategory->subsubcategory_name_bn : $subsubcategory->subsubcategory_name }}</a></li>
+                                                            <li><a href="{{ url('all-product/'.$subsubcategory->id.'/'.$subsubcategory->subsubcategory_slug) }}">{{ session()->get('lang')=='bn' ? $subsubcategory->subsubcategory_name_bn : $subsubcategory->subsubcategory_name }}</a></li>
                                                             @endforeach
                                                         </ul>
                                                     </div>
