@@ -6,7 +6,7 @@
             session()->get('lang')=='bn' ? $alltag = $allTagsbn : $alltag= $allTagsen;
         @endphp
         @foreach ($alltag as $tag)
-        <a class="item" title="{{ $tag }}" href="category.html">{{ $tag }}</a>
+        <a class="item {{ $name==$tag ? 'active':'' }}" title="{{ $tag }}" href="{{ url('search-product/tag/'.$tag) }}">{{ $tag }}</a>
         @endforeach
         {{-- 
           <a class="item active" title="Vest" href="category.html">Vest</a> <a --}}

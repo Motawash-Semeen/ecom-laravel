@@ -87,7 +87,7 @@
                                 <div class="sidebar-widget-body">
                                     <ul class="list">
                                         @foreach ($brands as $brand)
-                                        <li><a href="#">{{ session()->get('lang')=='bn' ? $brand->brand_name_bn : $brand->brand_name }}</a></li>
+                                        <li><a href="{{ url('all-product/'.$brand->id.'/brands/'.$brand->brand_slug) }}">{{ session()->get('lang')=='bn' ? $brand->brand_name_bn : $brand->brand_name }}</a></li>
                                         @endforeach
                                     </ul>
                                     <!--<a href="#" class="lnk btn btn-primary">Show Now</a>-->
@@ -107,7 +107,7 @@
                                             session()->get('lang')=='bn' ? $colors = $color_bn : $colors = $color_en;
                                         @endphp
                                         @foreach ($colors as $color)
-                                        <li><a href="#">{{ $color }}</a></li>
+                                        <li><a href="{{ url('search-product/color/'.$color) }}">{{ $color }}</a></li>
                                         @endforeach
                                     </ul>
                                 </div>
@@ -250,7 +250,7 @@
                             <!-- /.col -->
                             <div class="col col-sm-6 col-md-4 text-right">
                                 <div class="pagination-container">
-                                    {!! $products->links('layouts.custom_pagination') !!}
+                                    {{-- {!! $products->links('layouts.custom_pagination') !!} --}}
                                     <!-- /.list-inline -->
                                 </div>
                                 <!-- /.pagination-container -->
@@ -264,6 +264,7 @@
                             <div class="tab-pane active " id="grid-container">
                                 <div class="category-product">
                                     <div class="row">
+                                        @if ($products->count() > 0)
                                         @foreach ($products as $product)
                                         <div class="col-sm-6 col-md-4 wow fadeInUp">
                                             <div class="products">
@@ -328,7 +329,11 @@
                                             </div>
                                             <!-- /.products -->
                                         </div>
-                                        @endforeach
+                                        @endforeach 
+                                        @else
+                                            <h2 class="text-danger text-center">No Item Found</h2>
+                                        @endif
+                                        
                                         
                                         <!-- /.item -->
 
@@ -343,6 +348,7 @@
 
                             <div class="tab-pane " id="list-container">
                                 <div class="category-product">
+                                    @if ($products->count() > 0)
                                     @foreach ($products as $product)
                                     <div class="category-product-inner wow fadeInUp">
                                         <div class="products">
@@ -414,6 +420,10 @@
                                         <!-- /.products -->
                                     </div>
                                     @endforeach
+                                    @else
+                                    <h2 class="text-danger text-center">No Item Found</h2>
+                                    @endif
+                                    
                                     
                                     <!-- /.category-product-inner -->
 
@@ -429,7 +439,7 @@
                             <div class="text-right">
                                 <div class="pagination-container">
                                     
-                                    {!! $products->links('layouts.custom_pagination') !!}
+                                    {{-- {!! $products->links('layouts.custom_pagination') !!} --}}
                                     <!-- /.list-inline -->
                                 </div>
                                 

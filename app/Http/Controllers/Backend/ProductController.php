@@ -164,7 +164,9 @@ class ProductController extends Controller
         isset($request->special_offer) ? $product->special_offer = $request->special_offer : '';
         isset($request->special_deals) ? $product->special_deals = $request->special_deals : '';
         $product->product_slug_en = strtolower(str_replace(' ', '-', $request->product_name_en));
+        $product->product_slug_en = strtolower(str_replace('/', '-', $request->product_name_en));
         $product->product_slug_bn = strtolower(str_replace(' ', '-', $request->product_name_bn));
+        $product->product_slug_bn = strtolower(str_replace('/', '-', $request->product_name_bn));
 
         if ($request->hasFile('product_thambnail')) {
             if($request->id){
