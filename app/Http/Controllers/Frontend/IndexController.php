@@ -281,9 +281,6 @@ class IndexController extends Controller
             $query = Product::where('product_color_en', 'like', '%' . $name . '%')->where('status', 1);
         }
         
-
-        
-
         if (isset($_GET['max']) && isset($_GET['min'])) {
             $query = $query->whereBetween('selling_price', [$min, $max]);
         }
@@ -327,14 +324,13 @@ class IndexController extends Controller
         //$max= Product::where('subcategory_id', $id)->where('status',1)->max('selling_price');
 
         
-        if($by == 'tag'){
-            $max_query = Product::where('product_tags_en', 'like', '%' . $name . '%')->where('status', 1);
+        if ($by == 'tag') {
+            $max = Product::where('product_tags_en', 'like', '%' . $name . '%')->where('status', 1)->max(\DB::raw('CAST(selling_price AS SIGNED)'));
+        } else if ($by == 'color') {
+            $max = Product::where('product_color_en', 'like', '%' . $name . '%')->where('status', 1)->max(\DB::raw('CAST(selling_price AS SIGNED)'));
         }
-        else if($by == 'color'){
-            $max_query = Product::where('product_color_en', 'like', '%' . $name . '%')->where('status', 1);
-        }
-
-        $max= $max_query->max('selling_price'); 
+        
+         
 
         $limit_min = isset($_GET['min']) ? $_GET['min'] :0;
         $limit_max = isset($_GET['max']) ? $_GET['max'] :$max;
@@ -343,7 +339,7 @@ class IndexController extends Controller
         $color_bn = $this->color_bn;
 
         $brands = Brand::orderBy('id','asc')->get();
-        
+        //return $max;
         return view('frontend.all_product', compact('categories','allTagsen','allTagsbn','products', 'color_en', 'color_bn','brands','limit','sort','max','limit_max','limit_min','name'));
     }
 }
