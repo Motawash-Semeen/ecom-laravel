@@ -248,9 +248,10 @@
                                 <!-- /.col -->
                             </div>
                             <!-- /.col -->
-                            <div class="col col-sm-6 col-md-4 text-right">
+                            <div class="col col-sm-6 col-md-2 text-right">
                                 <div class="pagination-container">
-                                    {{-- {!! $products->links('layouts.custom_pagination') !!} --}}
+                                    {!! $products->links('layouts.custom_pagination', ['limit' => $limit, 'sort' => $sort]) !!}
+
                                     <!-- /.list-inline -->
                                 </div>
                                 <!-- /.pagination-container -->
@@ -439,7 +440,8 @@
                             <div class="text-right">
                                 <div class="pagination-container">
                                     
-                                    {{-- {!! $products->links('layouts.custom_pagination') !!} --}}
+                                    {!! $products->links('layouts.custom_pagination', ['limit' => $limit, 'sort' => $sort]) !!}
+
                                     <!-- /.list-inline -->
                                 </div>
                                 

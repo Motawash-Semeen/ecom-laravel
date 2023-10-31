@@ -282,17 +282,18 @@ class IndexController extends Controller
         }
         
         if (isset($_GET['max']) && isset($_GET['min'])) {
-            $query = $query->whereBetween('selling_price', [$min, $max]);
+            $query = $query->where(\DB::raw('CAST(selling_price AS SIGNED)'), '>=', $min)
+            ->where(\DB::raw('CAST(selling_price AS SIGNED)'), '<=', $max);
         }
     
         if (isset($_GET['sort'])) {
             $sort = $_GET['sort'];
             switch ($sort) {
                 case 'price_asc':
-                    $query = $query->orderBy('selling_price', 'asc');
+                    $query = $query->orderBy(\DB::raw('CAST(selling_price AS SIGNED)'), 'asc');
                     break;
                 case 'price_desc':
-                    $query = $query->orderBy('selling_price', 'desc');
+                    $query = $query->orderBy(\DB::raw('CAST(selling_price AS SIGNED)'), 'desc');
                     break;
                 case 'name_asc':
                     $query = $query->orderBy('product_name_en', 'asc');
@@ -339,7 +340,7 @@ class IndexController extends Controller
         $color_bn = $this->color_bn;
 
         $brands = Brand::orderBy('id','asc')->get();
-        //return $max;
-        return view('frontend.all_product', compact('categories','allTagsen','allTagsbn','products', 'color_en', 'color_bn','brands','limit','sort','max','limit_max','limit_min','name'));
+        //return $products;
+         return view('frontend.all_product', compact('categories','allTagsen','allTagsbn','products', 'color_en', 'color_bn','brands','limit','sort','max','limit_max','limit_min','name'));
     }
 }
