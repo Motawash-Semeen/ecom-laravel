@@ -9,6 +9,7 @@
         <a class="item @if (isset($name))
           $name==$tag ? 'active':''
         @endif" title="{{ $tag }}" href="{{ url('search-product/tag/'.$tag) }}">{{ $tag }}</a>
+        <a class="item {{ isset($name)? $name==$tag ? 'active':'' :'' }}" title="{{ $tag }}" href="{{ url('search-product/tag/'.$tag) }}">{{ $tag }}</a>
         @endforeach
         {{-- 
           <a class="item active" title="Vest" href="category.html">Vest</a> <a --}}
