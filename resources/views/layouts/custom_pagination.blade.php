@@ -21,9 +21,19 @@
             @if (is_array($element))
                 @foreach ($element as $page => $url)
                     @if ($page == $paginator->currentPage())
-                        <li class="active" aria-current="page"><a href="{{ $url.'&limit='.$limit.'&sort='.$sort  }}">{{ $page }}</a></li>
+                    @if (isset($sort))
+                    <li class="active" aria-current="page"><a href="{{ $url.'&limit='.$limit.'&sort='.$sort  }}">{{ $page }}</a></li>
                     @else
-                        <li><a href="{{ $url.'&limit='.$limit.'&sort='.$sort }}">{{ $page }}</a></li>
+                    <li class="active" aria-current="page"><a href="{{ $url.'&limit='.$limit  }}">{{ $page }}</a></li>
+                    @endif
+                        
+                    @else
+                    @if (isset($sort))
+                    <li><a href="{{ $url.'&limit='.$limit.'&sort='.$sort }}">{{ $page }}</a></li>
+                    @else
+                    <li><a href="{{ $url.'&limit='.$limit }}">{{ $page }}</a></li>
+                    @endif
+                    
                     @endif
                 @endforeach
             @endif

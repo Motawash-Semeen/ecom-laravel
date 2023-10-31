@@ -7,9 +7,13 @@
         @endphp
         @foreach ($alltag as $tag)
         <a class="item @if (isset($name))
-          $name==$tag ? 'active':''
+        @if ($name==$tag)
+        active
+        @else
+          
+        @endif
         @endif" title="{{ $tag }}" href="{{ url('search-product/tag/'.$tag) }}">{{ $tag }}</a>
-        <a class="item {{ isset($name)? $name==$tag ? 'active':'' :'' }}" title="{{ $tag }}" href="{{ url('search-product/tag/'.$tag) }}">{{ $tag }}</a>
+
         @endforeach
         {{-- 
           <a class="item active" title="Vest" href="category.html">Vest</a> <a --}}

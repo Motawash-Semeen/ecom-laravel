@@ -250,7 +250,11 @@
                             <!-- /.col -->
                             <div class="col col-sm-6 col-md-2 text-right">
                                 <div class="pagination-container">
+                                    @if ($sort != '')
                                     {!! $products->links('layouts.custom_pagination', ['limit' => $limit, 'sort' => $sort]) !!}
+                                    @else
+                                    {!! $products->links('layouts.custom_pagination', ['limit' => $limit]) !!}
+                                    @endif
 
                                     <!-- /.list-inline -->
                                 </div>
@@ -439,8 +443,12 @@
                         <div class="clearfix filters-container">
                             <div class="text-right">
                                 <div class="pagination-container">
-                                    
+                                    @if ($sort != '')
                                     {!! $products->links('layouts.custom_pagination', ['limit' => $limit, 'sort' => $sort]) !!}
+                                    @else
+                                    {!! $products->links('layouts.custom_pagination', ['limit' => $limit]) !!}
+                                    @endif
+                                    
 
                                     <!-- /.list-inline -->
                                 </div>
