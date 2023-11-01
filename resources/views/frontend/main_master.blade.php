@@ -31,7 +31,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Product Name</h5>
+                <h5 class="modal-title" id="exampleModalLabel"></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
@@ -40,17 +40,17 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="card" style="width: 18rem;">
-                            <img src="..." class="card-img-top" alt="..." style="width: 200px; height:200px;">
+                            <img src="" class="card-img-top" alt="" style="width: 200px; height:200px;">
                             
                         </div>
                     </div>
                     <div class="col-md-4">
                         <ul class="list-group">
-                            <li class="list-group-item">Price:</li>
-                            <li class="list-group-item">Code:</li>
-                            <li class="list-group-item">Brand:</li>
-                            <li class="list-group-item">Category:</li>
-                            <li class="list-group-item">Stock:</li>
+                            <li class="list-group-item product_price">Price: <span id="pprice" class="text-danger"></span> <del id="oldprice">$</del></li>
+                            <li class="list-group-item product_code">Code:</li>
+                            <li class="list-group-item product_brand">Brand:</li>
+                            <li class="list-group-item product_category">Category:</li>
+                            <li class="list-group-item product_stock">Stock: <span class="badge badge-pill badge-success" id="available" style="background: green; color:white;"></span><span class="badge badge-pill badge-success" id="stockout" style="background: red; color:white;"></span></li>
                           </ul>
                     </div>
                     <div class="col-md-4">
@@ -60,23 +60,13 @@
                               <input type="number" class="form-control" id="exampleFormControlInput1" value="1" min="1">
                             </div>
                             <div class="form-group">
-                              <label for="exampleFormControlSelect1">Choose Color</label>
-                              <select class="form-control" id="exampleFormControlSelect1">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
+                              <label for="colorControl">Choose Color</label>
+                              <select class="form-control" id="colorControl">
                               </select>
                             </div>
-                            <div class="form-group">
-                              <label for="exampleFormControlSelect1">Choose Size</label>
-                              <select class="form-control" id="exampleFormControlSelect1">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
+                            <div class="form-group sizeControlMian">
+                              <label for="sizeControl">Choose Size</label>
+                              <select class="form-control" id="sizeControl">
                               </select>
                             </div>
                             <div class="form-group">
@@ -112,13 +102,44 @@
                 success: function(data){
                     //console.log(data)
                     $('#cartModal').modal('show');
-                    $('.modal-title').text(data.product.product_name);
-                    $('.card-img-top').attr('src', data.product.product_thambnail);
-                    $('.product_price').text(data.product.product_price);
-                    $('.product_code').text(data.product.product_code);
-                    $('.product_brand').text(data.product.brand.brand_name);
-                    $('.product_category').text(data.product.category.category_name);
-                    $('.product_stock').text(data.product.product_stock);
+                    $('.modal-title').text(data.product.product_name_en);
+                    $('.card-img-top').attr('src', 'upload/products/'+data.product.product_thambnail);
+                    $('#pprice').html('<b>$ '+data.product.selling_price+'</b>');
+                    $('.product_code').html('Code: <b>'+data.product.product_code+'</b>');
+                    $('.product_brand').html('Brand: <b>'+data.product.brands.brand_name+'</b>');
+                    $('.product_category').html('Category: <b>'+data.product.categories.category_name+'</b>');
+                    if(data.product.product_qty > 0){
+                        $('#available').html('Available');
+                        $('#stockout').html('');
+                    }
+                    else{
+                        $('#available').html('');
+                        $('#stockout').html('Stock Out');
+                    }
+                    //console.log(data.color_en.length);
+                    $.each(data.color_en,function(key, value) {
+                        $("#colorControl").append("<option>"+value+"</option>");
+                    });
+                    $.each(data.size_en,function(key, value) {
+                        $("#sizeControl").append("<option>"+value+"</option>");
+                        if(data.size_en == ''){
+                            // $("#sizeControl").append("<option>Free Size</option>");
+                            $(".sizeControlMian").hide();
+                        }
+                        else{
+                            $(".sizeControlMian").show();
+                        }
+                    });
+
+                    if(data.product.discount_price == null){
+                        $("#oldprice").hide();
+                    }
+                    else{
+                        var price = data.product.selling_price-(data.product.selling_price*data.product.discount_price)/100;
+                        $("#oldprice").show();
+                        $("#oldprice").html(data.product.selling_price);
+                        $('#pprice').html('<b>$ '+price+'</b>');
+                    }
                 }
             })
         }

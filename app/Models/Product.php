@@ -19,4 +19,7 @@ class Product extends Model
     public function categories(){
         return $this->hasOne(Category::class,'id', 'category_id');
     }
+    public function brands(){
+        return $this->hasOne(Brand::class,'id', 'brand_id');
+    }
 }

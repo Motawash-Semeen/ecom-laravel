@@ -344,7 +344,7 @@ class IndexController extends Controller
          return view('frontend.all_product', compact('categories','allTagsen','allTagsbn','products', 'color_en', 'color_bn','brands','limit','sort','max','limit_max','limit_min','name'));
     }
     public function modalView($id){
-        $product = Product::where('id', $id)->where('status',1)->first();
+        $product = Product::with('categories','brands')->where('id', $id)->where('status',1)->first();
         $color_en = explode(',', $product->product_color_en);
         $color_bn = explode(',', $product->product_color_bn);
         $size_en = explode(',', $product->product_size_en);
