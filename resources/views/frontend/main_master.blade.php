@@ -54,10 +54,9 @@
                           </ul>
                     </div>
                     <div class="col-md-4">
-                        <form>
                             <div class="form-group">
-                              <label for="exampleFormControlInput1">Quantity</label>
-                              <input type="number" class="form-control" id="exampleFormControlInput1" value="1" min="1">
+                              <label for="quntyControl">Quantity</label>
+                              <input type="number" class="form-control" id="quntyControl" value="1" min="1">
                             </div>
                             <div class="form-group">
                               <label for="colorControl">Choose Color</label>
@@ -70,10 +69,9 @@
                               </select>
                             </div>
                             <div class="form-group">
-                                <button type="submit" class="btn btn-primary mb-2">Add to cart</button>
+                                <input type="hidden" name="product_id" id="product_id">
+                                <button type="submit" class="btn btn-primary mb-2" onclick="addToCart()">Add to cart</button>
                             </div>
-                            
-                          </form>
                     </div>
                 </div>
             </div>
@@ -103,7 +101,11 @@
                     //console.log(data)
                     $('#cartModal').modal('show');
                     $('.modal-title').text(data.product.product_name_en);
+                    $('#product_id').val(data.product.id);
                     $('.card-img-top').attr('src', 'upload/products/'+data.product.product_thambnail);
+                    $("#quntyControl").attr({
+                        "max" : data.product.product_qty,        // substitute your own
+                    });
                     $('#pprice').html('<b>$ '+data.product.selling_price+'</b>');
                     $('.product_code').html('Code: <b>'+data.product.product_code+'</b>');
                     $('.product_brand').html('Brand: <b>'+data.product.brands.brand_name+'</b>');
@@ -121,13 +123,14 @@
                         $("#colorControl").append("<option>"+value+"</option>");
                     });
                     $.each(data.size_en,function(key, value) {
-                        $("#sizeControl").append("<option>"+value+"</option>");
+                        
                         if(data.size_en == ''){
                             // $("#sizeControl").append("<option>Free Size</option>");
                             $(".sizeControlMian").hide();
                         }
                         else{
                             $(".sizeControlMian").show();
+                            $("#sizeControl").append("<option>"+value+"</option>");
                         }
                     });
 
@@ -143,6 +146,35 @@
                 }
             })
         }
+
+        // Start add to Cart
+        function addToCart(){
+            var product_id = $('#product_id').val();
+            var product_name = $('.modal-title').text();
+            var qty = $('#quntyControl').val();
+            var color = $('#colorControl').val();
+            var size = $('#sizeControl').val();
+            //alert(product_id);
+            //console.log(product_id, product_name, qty, color, size)
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                data: {product_id:product_id, qty:qty, color:color, size:size, product_name:product_name},
+                url: "/cart/data/store/"+product_id,
+                success: function(data){
+                    //console.log(data)
+                    $('#cartModal').modal('hide');
+                    $('#cartShow').html(data);
+                    if($.isEmptyObject(data.error)){
+                        toastr.success('Product Added to Cart Successfully')
+                    }
+                    else{
+                        toastr.error('An error occurred. Please try again.')
+                    }
+                }
+            })
+        }
+
     </script>
 
 </body>

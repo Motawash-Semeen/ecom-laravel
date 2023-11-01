@@ -111,7 +111,7 @@
                         </div><!-- /.gallery-holder -->
                         <div class='col-sm-6 col-md-7 product-info-block'>
                             <div class="product-info">
-                                <h1 class="name">{{ session()->get('lang')=='bn' ? $oneproduct->product_name_bn : $oneproduct->product_name_en }}</h1>
+                                <h1 class="name modal-title">{{ session()->get('lang')=='bn' ? $oneproduct->product_name_bn : $oneproduct->product_name_en }}</h1>
 
                                 <div class="rating-reviews m-t-20">
                                     <div class="row">
@@ -189,6 +189,30 @@
                                     </div><!-- /.row -->
                                 </div><!-- /.price-container -->
 
+                                {{-- Add Product Color and Product Size --}}
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="colorControl">Choose Color</label>
+                                        <select class="form-control" id="colorControl">
+                                            @foreach ($oneproduct->product_color_en as $color)
+                                            <option value="{{ $color }}">{{ $color }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    @if ($oneproduct->product_size_en != '')
+                                    <div class="col-md-6">
+                                        <label for="sizeControl">Choose Size</label>
+                                        <select class="form-control" id="sizeControl">
+                                            @foreach ($oneproduct->product_size_en as $size)
+                                            <option value="{{ $size }}">{{ $size }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    @endif
+                                    
+                                </div>
+
                                 <div class="quantity-container info-container">
                                     <div class="row">
 
@@ -199,20 +223,16 @@
                                         <div class="col-sm-2">
                                             <div class="cart-quantity">
                                                 <div class="quant-input">
-                                                    <div class="arrows">
-                                                        <div class="arrow plus gradient"><span class="ir"><i
-                                                                    class="icon fa fa-sort-asc"></i></span></div>
-                                                        <div class="arrow minus gradient"><span class="ir"><i
-                                                                    class="icon fa fa-sort-desc"></i></span></div>
-                                                    </div>
-                                                    <input type="text" value="1">
+                                                    
+                                                    <input type="number" value="1" min="1" id="quntyControl">
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="col-sm-7">
-                                            <a href="#" class="btn btn-primary"><i
-                                                    class="fa fa-shopping-cart inner-right-vs"></i> ADD TO CART</a>
+                                            <input type="hidden" name="product_id" id="product_id" value="{{ $oneproduct->id }}">
+                                            <button class="btn btn-primary" onclick="addToCart()"><i
+                                                    class="fa fa-shopping-cart inner-right-vs"></i> ADD TO CART</button>
                                         </div>
 
 

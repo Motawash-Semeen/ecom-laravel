@@ -9,6 +9,7 @@ use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\SubSubCategoryController;
+use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\Frontend\LanguageController;
 use App\Http\Controllers\Frontend\ProfileController;
@@ -32,6 +33,7 @@ Route::get('/product-details/{id}/{slug}', [IndexController::class,'details'])->
 Route::get('/all-product/{id}/{cate_slug?}/{subcate_slug?}/{subsubcate_slug?}', [IndexController::class,'show'])->name('product.all');
 Route::get('/search-product/{by}/{name}', [IndexController::class,'showByTag'])->name('product.all.tag');
 Route::get('/product/view/modal/{id}', [IndexController::class,'modalView'])->name('product.all.modal');
+Route::post('/cart/data/store/{id}', [CartController::class,'cartStore'])->name('product.cart.store');
 
 Route::group(['prefix'=> 'admin', 'middleware'=>['admin:admin']], function(){
 	Route::get('/login', [AdminController::class, 'loginForm'])->name('admin.loginForm');

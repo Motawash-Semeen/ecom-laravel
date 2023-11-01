@@ -75,12 +75,14 @@ class IndexController extends Controller
     public function details($id,$slug){
 
         $oneproduct = Product::with('multiImgs','categories')->where('id', $id)->where('status',1)->first();
+        $oneproduct->product_color_en = explode(',',$oneproduct->product_color_en);
+        $oneproduct->product_size_en = $oneproduct->product_size_en!=null? explode(',',$oneproduct->product_size_en):'';
         $tags_en = explode(',', $oneproduct->product_tags_en);
         $tags_bn = explode(',', $oneproduct->product_tags_bn);
         //return $product;
         $hotdeals = Product::where('hot_deals',1)->where('status',1)->where('discount_price', '!=', null)->orderBy('id','desc')->limit(4)->get();
         $related = Product::where('subcategory_id', $oneproduct->subcategory_id)->where('id', '!=', $id)->where('status',1)->get();
-
+        //return $oneproduct->product_size_en;
         return view('frontend.product-details', compact('oneproduct', 'related','hotdeals','tags_en','tags_bn'));
 
     }
@@ -358,4 +360,5 @@ class IndexController extends Controller
             'size_bn' => $size_bn,
         ]);
     }
+
 }
