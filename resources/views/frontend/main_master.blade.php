@@ -166,14 +166,66 @@
                     $('#cartModal').modal('hide');
                     $('#cartShow').html(data);
                     if($.isEmptyObject(data.error)){
+                        miniCart();
                         toastr.success('Product Added to Cart Successfully')
                     }
                     else{
                         toastr.error('An error occurred. Please try again.')
                     }
+                   
                 }
             })
         }
+
+        function miniCart(){
+            $.ajax({
+                type: 'GET',
+                dataType: 'json',
+                url: "/cart/mini/show",
+                success: function(data){
+                    console.log(data)
+                    var miniCart = '';
+                    $.each(data.carts, function(key, value){
+                    $('.cartTotal').text(data.cartTotal);
+                    $('.price').text(data.cartTotal);
+                    $('.count').text(data.cartQty);
+                        //console.log(value)
+                        miniCart += `<div class="row" style="margin-bottom:10px;">
+                                        <div class="col-xs-4">
+                                            <div class="image"> <a href="{{ url('/product-details/`+value.id+`') }}"><img
+                                                        src="{{ asset('upload/products/') }}/${value.options.image}"
+                                                        alt=""></a> </div>
+                                        </div>
+                                        <div class="col-xs-7" style="padding-left: 0px;">
+                                            <h3 class="name" style="margin-bottom:5px;"><a href="{{ url('/product-details/`+value.id+`') }}">`+value.name+`</a>
+                                            </h3>
+                                            <div class="price">$`+value.subtotal+`</div>
+                                        </div>
+                                        <div class="col-xs-1 action"> <button type="submit" id="${value.rowId}" onclick="miniCartRemove(this.id)"><i
+                                                    class="fa fa-trash"></i></button> </div>
+                                    </div>`;
+                    })
+                    $('#miniCart').html(miniCart);
+                    
+                }
+            })
+        }
+        miniCart();
+
+        function miniCartRemove(id){
+            //alert(rowId)
+            $.ajax({
+                type: 'GET',
+                dataType: 'json',
+                url: "/cart/mini/remove/"+id,
+                success: function(data){
+                    //console.log(data)
+                    miniCart();
+                    toastr.success('Product Removed from Cart Successfully')
+                }
+            })
+        }
+        
 
     </script>
 

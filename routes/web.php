@@ -29,11 +29,13 @@ use Illuminate\Support\Facades\Redirect;
 */
 
 Route::get('/', [IndexController::class, 'index'])->name('index');
-Route::get('/product-details/{id}/{slug}', [IndexController::class,'details'])->name('product.details');
+Route::get('/product-details/{id}/{slug?}', [IndexController::class,'details'])->name('product.details');
 Route::get('/all-product/{id}/{cate_slug?}/{subcate_slug?}/{subsubcate_slug?}', [IndexController::class,'show'])->name('product.all');
 Route::get('/search-product/{by}/{name}', [IndexController::class,'showByTag'])->name('product.all.tag');
 Route::get('/product/view/modal/{id}', [IndexController::class,'modalView'])->name('product.all.modal');
 Route::post('/cart/data/store/{id}', [CartController::class,'cartStore'])->name('product.cart.store');
+Route::get('/cart/mini/show', [CartController::class,'miniCart'])->name('product.mini.cart');
+Route::get('/cart/mini/remove/{id}', [CartController::class,'miniCartRemove'])->name('product.mini.cartremove');
 
 Route::group(['prefix'=> 'admin', 'middleware'=>['admin:admin']], function(){
 	Route::get('/login', [AdminController::class, 'loginForm'])->name('admin.loginForm');

@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\Slider;
 use App\Models\SubCategory;
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 
 class IndexController extends Controller
@@ -72,7 +73,7 @@ class IndexController extends Controller
         //return $props;
     	return view('frontend.index', compact('categories', 'sliders' ,'slidercates', 'props', 'items','hotdeals','offers','featured','specialdeals','firstcateproducts','firstcate','allTagsen','allTagsbn'));
     }
-    public function details($id,$slug){
+    public function details($id,$slug = null){
 
         $oneproduct = Product::with('multiImgs','categories')->where('id', $id)->where('status',1)->first();
         $oneproduct->product_color_en = explode(',',$oneproduct->product_color_en);
@@ -360,5 +361,4 @@ class IndexController extends Controller
             'size_bn' => $size_bn,
         ]);
     }
-
 }
