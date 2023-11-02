@@ -7,7 +7,7 @@
                 <div class="cnt-account">
                     <ul class="list-unstyled">
 
-                        <li><a href="#"><i class="icon fa fa-heart"></i>Wishlist</a></li>
+                        <li><a href="{{ url('/view/wishlist') }}"><i class="icon fa fa-heart"></i>Wishlist</a></li>
                         <li><a href="#"><i class="icon fa fa-shopping-cart"></i>@lang('words.cart')</a></li>
                         <li><a href="#"><i class="icon fa fa-check"></i>Checkout</a></li>
                         @if (Auth::user())
@@ -113,10 +113,10 @@
                             data-toggle="dropdown">
                             <div class="items-cart-inner">
                                 <div class="basket"> <i class="glyphicon glyphicon-shopping-cart"></i> </div>
-                                <div class="basket-item-count"><span class="count">2</span></div>
+                                <div class="basket-item-count"><span class="count">0</span></div>
                                 <div class="total-price-basket"> <span class="lbl">cart -</span> <span
                                         class="total-price"> <span class="sign">$</span><span
-                                            class="cartTotal">600.00</span> </span> </div>
+                                            class="cartTotal">0.00</span> </span> </div>
                             </div>
                         </a>
                         <ul class="dropdown-menu">

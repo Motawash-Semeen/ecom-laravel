@@ -226,6 +226,24 @@
             })
         }
         
+        function addWishlist(id){
+            //alert(id)
+            $.ajax({
+                type: 'GET',
+                dataType: 'json',
+                url: "/add/wishlist/"+id,
+                success: function(data){
+                    console.log(data)
+                    //toastr.success('Product Added to Wishlist Successfully')
+                    if($.isEmptyObject(data.error)){
+                        toastr.success(data.success)
+                    }
+                    else{
+                        toastr.error(data.error)
+                    }
+                }
+            })
+        }
 
     </script>
 

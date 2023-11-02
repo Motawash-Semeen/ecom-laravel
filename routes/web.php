@@ -13,6 +13,7 @@ use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\Frontend\LanguageController;
 use App\Http\Controllers\Frontend\ProfileController;
+use App\Http\Controllers\Frontend\WishlistController;
 use App\Models\Product;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Redirect;
@@ -36,6 +37,9 @@ Route::get('/product/view/modal/{id}', [IndexController::class,'modalView'])->na
 Route::post('/cart/data/store/{id}', [CartController::class,'cartStore'])->name('product.cart.store');
 Route::get('/cart/mini/show', [CartController::class,'miniCart'])->name('product.mini.cart');
 Route::get('/cart/mini/remove/{id}', [CartController::class,'miniCartRemove'])->name('product.mini.cartremove');
+Route::get('/add/wishlist/{id}', [WishlistController::class,'addWishlist'])->name('product.add.wishlist');
+Route::get('/view/wishlist', [WishlistController::class,'viewWishlist'])->name('product.view.wishlist');
+Route::get('/remove-product/wishlist/{id}', [WishlistController::class,'removeWishlist'])->name('product.remove.wishlist');
 
 Route::group(['prefix'=> 'admin', 'middleware'=>['admin:admin']], function(){
 	Route::get('/login', [AdminController::class, 'loginForm'])->name('admin.loginForm');
