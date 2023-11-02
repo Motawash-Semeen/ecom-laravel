@@ -8,7 +8,7 @@
                     <ul class="list-unstyled">
 
                         <li><a href="{{ url('/view/wishlist') }}"><i class="icon fa fa-heart"></i>Wishlist</a></li>
-                        <li><a href="#"><i class="icon fa fa-shopping-cart"></i>@lang('words.cart')</a></li>
+                        <li><a href="{{ url('/show/cart') }}"><i class="icon fa fa-shopping-cart"></i>@lang('words.cart')</a></li>
                         <li><a href="#"><i class="icon fa fa-check"></i>Checkout</a></li>
                         @if (Auth::user())
                             <li><a href="{{ url('dashboard') }}"><i class="icon fa fa-user"></i>My Account</a></li>
@@ -129,7 +129,7 @@
                                 <hr>
                                 <div class="clearfix cart-total">
                                     <div class="pull-right"> <span class="text">Sub Total :</span><span
-                                            class='price'>$600.00</span> </div>
+                                            class='total_price'>$600.00</span> </div>
                                     <div class="clearfix"></div>
                                     <a href="checkout.html"
                                         class="btn btn-upper btn-primary btn-block m-t-20">Checkout</a>

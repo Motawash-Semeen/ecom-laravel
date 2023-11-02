@@ -40,4 +40,13 @@ class CartController extends Controller
         Cart::remove($id);
         return response()->json(['success' => 'Product remove successfully']);
     }
+    public function showCart(){
+        $carts = Cart::content();
+        $cartQty = Cart::count();
+        $cartTotal = Cart::total();
+        $subtotal = Cart::subtotal();
+        $tax = Cart::tax();
+        //return $carts;
+        return view('frontend.shopping_cart', compact('carts', 'cartQty', 'cartTotal', 'tax', 'subtotal'));
+    }
 }

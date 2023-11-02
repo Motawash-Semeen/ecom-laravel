@@ -1,5 +1,15 @@
 @extends('frontend.main_master')
 @section('main_content')
+<div class="breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-inner">
+            <ul class="list-inline list-unstyled">
+                <li><a href="{{ url('/') }}">Home</a></li>
+                <li class='active'>Wishlist</li>
+            </ul>
+        </div><!-- /.breadcrumb-inner -->
+    </div><!-- /.container -->
+</div><!-- /.breadcrumb -->
   <div class="body-content">
       <div class="container">
           <div class="my-wishlist-page">
@@ -18,7 +28,7 @@
                                   <td class="col-md-2"><img src="{{ asset('upload/products/'.$wishlist->product->product_thambnail) }}"
                                           alt="imga"></td>
                                   <td class="col-md-7">
-                                      <div class="product-name"><a href="#">{{ session()->get('lang')=='bn' ? $wishlist->product->product_name_bn : $wishlist->product->product_name_en }}</a></div>
+                                      <div class="product-name"><a href="{{url('product-details/'.$wishlist->product->id.'/'.$wishlist->product->product_slug_en)}}">{{ session()->get('lang')=='bn' ? $wishlist->product->product_name_bn : $wishlist->product->product_name_en }}</a></div>
                                       <div class="rating">
                                           <i class="fa fa-star rate"></i>
                                           <i class="fa fa-star rate"></i>
@@ -41,7 +51,9 @@
                                         @endif 
                                   </td>
                                   <td class="col-md-2">
-                                      <a href="#" class="btn-upper btn btn-primary">Add to cart</a>
+                                      <input type="hidden" name="product_id" id="product_id" value="{{ $wishlist->product->id }}">
+                                      <button class="btn-upper btn btn-primary" type="button"
+                                      title="Add Cart" data-toggle="modal" data-target="#cartModal" id="{{ $wishlist->product->id }}" onclick="productView(this.id)">Add to cart</button>
                                   </td>
                                   <td class="col-md-1 close-btn">
                                       <a href="{{ url('/remove-product/wishlist/'.$wishlist->product->id) }}" class><i class="fa fa-times"></i></a>
@@ -57,4 +69,5 @@
           </div><!-- /.sigin-in-->
       </div><!-- /.container -->
   </div><!-- /.body-content -->
+  @include('frontend.body.brands')
 @endsection

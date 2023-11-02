@@ -83,7 +83,7 @@ class IndexController extends Controller
         //return $product;
         $hotdeals = Product::where('hot_deals',1)->where('status',1)->where('discount_price', '!=', null)->orderBy('id','desc')->limit(4)->get();
         $related = Product::where('subcategory_id', $oneproduct->subcategory_id)->where('id', '!=', $id)->where('status',1)->get();
-        //return $oneproduct->product_size_en;
+        //return $oneproduct->discount_price;
         return view('frontend.product-details', compact('oneproduct', 'related','hotdeals','tags_en','tags_bn'));
 
     }

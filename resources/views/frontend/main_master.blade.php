@@ -102,7 +102,7 @@
                     $('#cartModal').modal('show');
                     $('.modal-title').text(data.product.product_name_en);
                     $('#product_id').val(data.product.id);
-                    $('.card-img-top').attr('src', 'upload/products/'+data.product.product_thambnail);
+                    $('.card-img-top').attr('src', '{{ asset('') }}upload/products/'+data.product.product_thambnail);
                     $("#quntyControl").attr({
                         "max" : data.product.product_qty,        // substitute your own
                     });
@@ -183,12 +183,12 @@
                 dataType: 'json',
                 url: "/cart/mini/show",
                 success: function(data){
-                    console.log(data)
+                    //console.log(data)
                     var miniCart = '';
-                    $.each(data.carts, function(key, value){
                     $('.cartTotal').text(data.cartTotal);
-                    $('.price').text(data.cartTotal);
+                    $('.total_price').text(data.cartTotal);
                     $('.count').text(data.cartQty);
+                    $.each(data.carts, function(key, value){
                         //console.log(value)
                         miniCart += `<div class="row" style="margin-bottom:10px;">
                                         <div class="col-xs-4">
@@ -199,7 +199,7 @@
                                         <div class="col-xs-7" style="padding-left: 0px;">
                                             <h3 class="name" style="margin-bottom:5px;"><a href="{{ url('/product-details/`+value.id+`') }}">`+value.name+`</a>
                                             </h3>
-                                            <div class="price">$`+value.subtotal+`</div>
+                                            <div class="sub_price">$`+value.subtotal+`</div>
                                         </div>
                                         <div class="col-xs-1 action"> <button type="submit" id="${value.rowId}" onclick="miniCartRemove(this.id)"><i
                                                     class="fa fa-trash"></i></button> </div>
@@ -220,8 +220,8 @@
                 url: "/cart/mini/remove/"+id,
                 success: function(data){
                     //console.log(data)
+                    toastr.success('Product Removed from Cart Successfully');
                     miniCart();
-                    toastr.success('Product Removed from Cart Successfully')
                 }
             })
         }

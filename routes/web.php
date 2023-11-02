@@ -35,11 +35,12 @@ Route::get('/all-product/{id}/{cate_slug?}/{subcate_slug?}/{subsubcate_slug?}', 
 Route::get('/search-product/{by}/{name}', [IndexController::class,'showByTag'])->name('product.all.tag');
 Route::get('/product/view/modal/{id}', [IndexController::class,'modalView'])->name('product.all.modal');
 Route::post('/cart/data/store/{id}', [CartController::class,'cartStore'])->name('product.cart.store');
-Route::get('/cart/mini/show', [CartController::class,'miniCart'])->name('product.mini.cart');
-Route::get('/cart/mini/remove/{id}', [CartController::class,'miniCartRemove'])->name('product.mini.cartremove');
-Route::get('/add/wishlist/{id}', [WishlistController::class,'addWishlist'])->name('product.add.wishlist');
-Route::get('/view/wishlist', [WishlistController::class,'viewWishlist'])->name('product.view.wishlist');
-Route::get('/remove-product/wishlist/{id}', [WishlistController::class,'removeWishlist'])->name('product.remove.wishlist');
+Route::get('/cart/mini/show', [CartController::class,'miniCart'])->name('mini.cart');
+Route::get('/cart/mini/remove/{id}', [CartController::class,'miniCartRemove'])->name('mini.cartremove');
+Route::get('/add/wishlist/{id}', [WishlistController::class,'addWishlist'])->name('add.wishlist');
+Route::get('/view/wishlist', [WishlistController::class,'viewWishlist'])->name('view.wishlist');
+Route::get('/remove-product/wishlist/{id}', [WishlistController::class,'removeWishlist'])->name('remove.wishlist');
+Route::get('/show/cart', [CartController::class,'showCart'])->name('show.wishlist');
 
 Route::group(['prefix'=> 'admin', 'middleware'=>['admin:admin']], function(){
 	Route::get('/login', [AdminController::class, 'loginForm'])->name('admin.loginForm');

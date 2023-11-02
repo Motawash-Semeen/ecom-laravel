@@ -477,8 +477,8 @@
                                         $discount = floatval($product->discount_price);
                                         $discountedPrice = $sellingPrice - ($sellingPrice * $discount / 100);
                                         @endphp
-                                        <span class="price">$ {{ number_format($discountedPrice, 2) }}</span>
-                                        <span class="price-before-discount">$ {{ number_format($sellingPrice, 2) }}</span>
+                                        <span class="price">$ {{ $discountedPrice }}</span>
+                                        <span class="price-before-discount">$ {{ $sellingPrice }}</span>
                                             @endif
                                       </div><!-- /.product-price -->
 
