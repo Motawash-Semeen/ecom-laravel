@@ -94,6 +94,21 @@
               </ul>
           </li>
 
+          <li class="treeview {{ $route[1]=='cupons' ? 'active menu-open':'' }}">
+              <a href="{{ url('admin/cupons') }}">
+                  <i data-feather="message-circle"></i>
+                  <span>Cupons</span>
+                  <span class="pull-right-container">
+                      <i class="fa fa-angle-right pull-right"></i>
+                  </span>
+              </a>
+              <ul class="treeview-menu ">
+                  <li class="{{ isset($route[1]) ? $route[1]=='cupons' ? 'active': '':'' }}"><a href="{{ url('admin/cupons') }}"><i class="ti-more"></i>Manage Cupons</a></li>
+                  
+                  
+              </ul>
+          </li>
+
           <li class="treeview">
               <a href="#">
                   <i data-feather="mail"></i> <span>Mailbox</span>

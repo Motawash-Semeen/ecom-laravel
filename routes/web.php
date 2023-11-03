@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Backend\AdminProfileController;
 use App\Http\Controllers\Backend\BrandsController;
 use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Backend\CuponController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\SubCategoryController;
@@ -111,7 +112,14 @@ Route::group(['prefix'=> 'admin', 'middleware'=>['auth:sanctum,admin', 'verified
 	Route::get('slider/{id}', [SliderController::class, 'edit'])->name('admin.slider.edit');
 	Route::get('slider/status/{id}', [SliderController::class, 'status'])->name('admin.slider.status');
 	
-	
+		// Cupons
+
+		Route::get('cupons', [CuponController::class, 'show'])->name('admin.cupons');
+		Route::post('cupons/store', [CuponController::class, 'store'])->name('admin.cupons.store');
+		Route::get('cupons/delete/{id}', [CuponController::class, 'delete'])->name('admin.cupons.delete');
+		Route::get('cupons/{id}', [CuponController::class, 'edit'])->name('admin.cupons.edit');
+		Route::get('cupons/status/{id}', [SliderController::class, 'status'])->name('admin.cupons.status');
+
 
 });
 

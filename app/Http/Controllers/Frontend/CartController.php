@@ -21,7 +21,7 @@ class CartController extends Controller
         {
             $price = $product->selling_price;
         }
-        Cart::add(['id' => $id, 'name' => $product->product_name_en, 'qty' => $request->qty, 'price' => $price, 'weight' => 1, 'options' => ['size' => $request->size, 'color' => $request->color, 'image' => $product->product_thambnail]]);
+        Cart::add(['id' => $id, 'name' => $product->product_name_en, 'qty' => $request->qty, 'price' => $price, 'weight' => 1, 'options' => ['size' => $request->size, 'color' => $request->color, 'image' => $product->product_thambnail, 'max_qty' => $product->product_qty]]);
 
         return response()->json(['success' => 'Product added successfully']);
        
@@ -46,6 +46,7 @@ class CartController extends Controller
         $cartTotal = Cart::total();
         $subtotal = Cart::subtotal();
         $tax = Cart::tax();
+
         //return $carts;
         return view('frontend.shopping_cart', compact('carts', 'cartQty', 'cartTotal', 'tax', 'subtotal'));
     }
@@ -55,6 +56,7 @@ class CartController extends Controller
         $cartTotal = Cart::total();
         $subtotal = Cart::subtotal();
         $tax = Cart::tax();
+        
         return response()->json([
             'carts' => $carts,
             'cartQty' => $cartQty,

@@ -3,15 +3,15 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Models\Brand;
 use Illuminate\Http\Request;
-use Image;
-class BrandsController extends Controller
+use App\Models\Cupon;
+
+class CuponController extends Controller
 {
     public function show()
     {
-        $brands = Brand::all();
-        return view('admin.brands.brand_view', compact('brands'));
+        $cupons = Cupon::all();
+        return view('admin.cupon.cupon_view', compact('cupons'));
     }
     public function store(Request $request)
     {
@@ -45,10 +45,10 @@ else{
         //return $request->all();
         if(isset($request->id)){
             $id = $request->id;
-            $brand =  Brand::find($id);
+            $brand =  Cupon::find($id);
         }
         else{
-            $brand = new Brand();
+            $brand = new Cupon;
         }
         // $brand = new Brand();
         $brand->brand_name = $request->brand_name;
@@ -57,7 +57,7 @@ else{
         $brand->brand_slug_bn = strtolower(str_replace(' ', '-', $request->brand_name_bn));
         if ($request->hasFile('brand_image')) {
             if (isset($request->id)) {
-                $brand = Brand::find($request->id); // Assuming you have a Brand model
+                $brand = Cupon::find($request->id); // Assuming you have a Brand model
         
                 if ($brand) {
                     $image_path = 'upload/brands/' . $brand->brand_image;
@@ -91,45 +91,30 @@ else{
         
         $brand->save();
         $notification = array(
-            'message' => 'Brand Added Successfully',
+            'message' => 'Cupon Added Successfully',
             'alert-type' => 'success'
         );
-        return redirect('admin/brands')->with($notification);
+        return redirect('admin/cupons')->with($notification);
     }
 
     public function delete($id)
     {
-        $brand = Brand::find($id);
-        $image_path = 'upload/brands/' . $brand->brand_image;
+        $brand = Cupon::find($id);
+        $image_path = 'upload/cupons/' . $brand->brand_image;
                     if (file_exists($image_path)) {
                         unlink($image_path);
                     }
         $brand->delete();
         $notification = array(
-            'message' => 'Brand Deleted Successfully',
+            'message' => 'Cupon Deleted Successfully',
             'alert-type' => 'success'
         );
         return redirect()->back()->with($notification);
     }
     public function edit($id)
     {
-        $brands = Brand::all();
-        $brand_edit = Brand::find($id);
-        return view('admin.brands.brand_view', compact('brand_edit','brands'));
-    }
-    public function status($id)
-    {
-        $slider = Brand::find($id);
-        if ($slider->slider_status == 1) {
-            $slider->slider_status = 0;
-        } else {
-            $slider->slider_status = 1;
-        }
-        $slider->save();
-        $notification = array(
-            'message' => 'Slider Updated Successfully',
-            'alert-type' => 'success'
-        );
-        return redirect()->back()->with($notification);
+        $brands = Cupon::all();
+        $brand_edit = Cupon::find($id);
+        return view('admin.cupon.cupon_view', compact('brand_edit','brands'));
     }
 }

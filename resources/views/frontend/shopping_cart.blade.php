@@ -96,6 +96,15 @@
                   </td>
                 </tr>
                 @endif --}}
+                @if($cartQty <= 0)
+                <tr>
+                  <td colspan="7">
+                        <p class="text-center">Your Shopping Cart is empty</p>
+                      <!-- /.shopping-cart-btn -->
+                  </td>
+                </tr>
+                @else
+                @endif
 
               </tbody><!-- /tbody -->
             </table><!-- /table -->
