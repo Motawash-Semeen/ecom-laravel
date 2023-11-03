@@ -35,7 +35,7 @@
                       <span class>
                         <a href="#" class="btn btn-upper btn-primary outer-left-xs">Continue
                           Shopping</a>
-                        <a href="#"
+                        <a href="{{ request()->url() }}"
                           class="btn btn-upper btn-primary pull-right outer-right-xs">Update
                           shopping cart</a>
                       </span>
@@ -43,13 +43,14 @@
                   </td>
                 </tr>
               </tfoot>
-              <tbody>
+              <tbody id="cart-main">
+                {{-- @if($cartQty > 0)
                 @foreach ($carts as $cart)
                 @php
                 $product = App\Models\Product::where('id', $cart->id)->first();
                 @endphp
                 <tr>
-                  <td class="romove-item"><button type="submit" title="cancel" class="icon"><i
+                  <td class="romove-item"><button type="submit" title="cancel" class="icon" onclick="miniCartRemove(this.id)" id="{{ $cart->rowId }}"><i
                         class="fa fa-trash-o"></i></button></td>
                   <td class="cart-image">
                     <a class="entry-thumbnail" href="{{url('product-details/'.$cart->id.'/'.$product->product_slug_en)}}">
@@ -57,7 +58,7 @@
                     </a>
                   </td>
                   <td class="cart-product-name-info">
-                    <h4 class='cart-product-description'><a href="{{url('product-details/'.$cart->id.'/'.$product->product_slug_en)}}">{{ session()->get('lang')=='bn' ? $product->product_name_bn : $product->product_name_en }}</a></h4>
+                    <h4 class='cart-product-description'><a href="{{url('product-details/'.$cart->id.'/'.$product->product_slug_en)}}" class="modal-title">{{ session()->get('lang')=='bn' ? $product->product_name_bn : $product->product_name_en }}</a></h4>
                     <div class="row">
                       <div class="col-sm-4">
                         <div class="rating rateit-small"></div>
@@ -70,12 +71,16 @@
                     </div><!-- /.row -->
                     <div class="cart-product-info">
                       <span class="product-color">COLOR:<span>{{ $cart->options->color }}</span></span>
+                      @if($cart->options->size != NULL)
+                      <span class="product-color" style="margin-left: 10px;">SIZE:<span>{{ $cart->options->size }}</span></span>
+                      @endif
                     </div>
                   </td>
                   <td class="cart-product-edit"><a href="#" class="product-edit">Edit</a></td>
                   <td class="cart-product-quantity">
                     <div class="quant-input">
-                      <input type="number" value="{{ $cart->qty }}" min="1">
+                      <input type="hidden" name="product_id" id="product_id" value="{{ $cart->id }}">
+                      <input type="number" value="{{ $cart->qty }}" min="1" max="{{ $product->product_qty }}" onchange="updateCart('{{ $cart->rowId }}')" id="quntyControl-{{ $cart->rowId }}">
                     </div>
                   </td>
                   <td class="cart-product-sub-total"><span class="cart-sub-total-price">${{ ($cart->price) }}</span></td>
@@ -83,6 +88,14 @@
                       class="cart-grand-total-price">${{ $cart->price*$cart->qty }}</span></td>
                 </tr>
                 @endforeach
+                @else
+                <tr>
+                  <td colspan="7">
+                        <p class="text-center">Your Shopping Cart is empty</p>
+                      <!-- /.shopping-cart-btn -->
+                  </td>
+                </tr>
+                @endif --}}
 
               </tbody><!-- /tbody -->
             </table><!-- /table -->
@@ -169,7 +182,7 @@
             <thead>
               <tr>
                 <th>
-                  <div class="cart-sub-total">
+                  {{-- <div class="cart-sub-total">
                     Subtotal<span class="inner-left-md">${{ $subtotal }}</span>
                   </div>
                   <div class="cart-sub-total">
@@ -177,6 +190,15 @@
                   </div>
                   <div class="cart-grand-total">
                     Grand Total<span class="inner-left-md">${{ $cartTotal }}</span>
+                  </div> --}}
+                  <div class="cart-sub-total">
+                    Subtotal<span class="inner-left-md sub-totals">$0.00</span>
+                  </div>
+                  <div class="cart-sub-total">
+                    Tax<span class="inner-left-md total-tax">$0.00</span>
+                  </div>
+                  <div class="cart-grand-total">
+                    Grand Total<span class="inner-left-md grnd-total">$0.00</span>
                   </div>
                 </th>
               </tr>
@@ -198,84 +220,7 @@
       </div><!-- /.shopping-cart -->
     </div> <!-- /.row -->
     <!-- ============================================== BRANDS CAROUSEL ============================================== -->
-    <div id="brands-carousel" class="logo-slider wow fadeInUp">
-
-      <div class="logo-slider-inner">
-        <div id="brand-slider"
-          class="owl-carousel brand-slider custom-carousel owl-theme">
-          <div class="item m-t-15">
-            <a href="#" class="image">
-              <img data-echo="assets/images/brands/brand1.png"
-                src="assets/images/blank.gif" alt>
-            </a>
-          </div><!--/.item-->
-
-          <div class="item m-t-10">
-            <a href="#" class="image">
-              <img data-echo="assets/images/brands/brand2.png"
-                src="assets/images/blank.gif" alt>
-            </a>
-          </div><!--/.item-->
-
-          <div class="item">
-            <a href="#" class="image">
-              <img data-echo="assets/images/brands/brand3.png"
-                src="assets/images/blank.gif" alt>
-            </a>
-          </div><!--/.item-->
-
-          <div class="item">
-            <a href="#" class="image">
-              <img data-echo="assets/images/brands/brand4.png"
-                src="assets/images/blank.gif" alt>
-            </a>
-          </div><!--/.item-->
-
-          <div class="item">
-            <a href="#" class="image">
-              <img data-echo="assets/images/brands/brand5.png"
-                src="assets/images/blank.gif" alt>
-            </a>
-          </div><!--/.item-->
-
-          <div class="item">
-            <a href="#" class="image">
-              <img data-echo="assets/images/brands/brand6.png"
-                src="assets/images/blank.gif" alt>
-            </a>
-          </div><!--/.item-->
-
-          <div class="item">
-            <a href="#" class="image">
-              <img data-echo="assets/images/brands/brand2.png"
-                src="assets/images/blank.gif" alt>
-            </a>
-          </div><!--/.item-->
-
-          <div class="item">
-            <a href="#" class="image">
-              <img data-echo="assets/images/brands/brand4.png"
-                src="assets/images/blank.gif" alt>
-            </a>
-          </div><!--/.item-->
-
-          <div class="item">
-            <a href="#" class="image">
-              <img data-echo="assets/images/brands/brand1.png"
-                src="assets/images/blank.gif" alt>
-            </a>
-          </div><!--/.item-->
-
-          <div class="item">
-            <a href="#" class="image">
-              <img data-echo="assets/images/brands/brand5.png"
-                src="assets/images/blank.gif" alt>
-            </a>
-          </div><!--/.item-->
-        </div><!-- /.owl-carousel #logo-slider -->
-      </div><!-- /.logo-slider-inner -->
-
-    </div><!-- /.logo-slider -->
+    @include('frontend.body.brands')
     <!-- ============================================== BRANDS CAROUSEL : END ============================================== -->
   </div><!-- /.container -->
 </div><!-- /.body-content -->

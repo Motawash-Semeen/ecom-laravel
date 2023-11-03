@@ -49,4 +49,23 @@ class CartController extends Controller
         //return $carts;
         return view('frontend.shopping_cart', compact('carts', 'cartQty', 'cartTotal', 'tax', 'subtotal'));
     }
+    public function allCart(){
+        $carts = Cart::content();
+        $cartQty = Cart::count();
+        $cartTotal = Cart::total();
+        $subtotal = Cart::subtotal();
+        $tax = Cart::tax();
+        return response()->json([
+            'carts' => $carts,
+            'cartQty' => $cartQty,
+            'cartTotal' => $cartTotal,
+            'subtotal' => $subtotal,
+            'tax' => $tax,
+        ]);
+    }
+    public function updateCart(Request $request, $id){
+        Cart::update($id, $request->qty);
+        return response()->json(['success'=> 'Cart Updated Successfully']);
+        //return redirect()->back()->with('success', 'Cart updated successfully');
+    }
 }

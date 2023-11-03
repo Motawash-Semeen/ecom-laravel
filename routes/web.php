@@ -40,7 +40,9 @@ Route::get('/cart/mini/remove/{id}', [CartController::class,'miniCartRemove'])->
 Route::get('/add/wishlist/{id}', [WishlistController::class,'addWishlist'])->name('add.wishlist');
 Route::get('/view/wishlist', [WishlistController::class,'viewWishlist'])->name('view.wishlist');
 Route::get('/remove-product/wishlist/{id}', [WishlistController::class,'removeWishlist'])->name('remove.wishlist');
-Route::get('/show/cart', [CartController::class,'showCart'])->name('show.wishlist');
+Route::get('/show/cart', [CartController::class,'showCart'])->name('show.cart');
+Route::get('/cart/view', [CartController::class,'allCart'])->name('all.cart');
+Route::get('/cart/update/{id}', [CartController::class,'updateCart'])->name('update.cart');
 
 Route::group(['prefix'=> 'admin', 'middleware'=>['admin:admin']], function(){
 	Route::get('/login', [AdminController::class, 'loginForm'])->name('admin.loginForm');

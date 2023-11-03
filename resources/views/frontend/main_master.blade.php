@@ -244,6 +244,83 @@
                 }
             })
         }
+        
+        function updateCart(id){
+            var rowId = id;
+            var qty = $('#quntyControl-'+rowId).val();
+            //console.log(rowId, qty)
+            $.ajax({
+                type: 'GET',
+                dataType: 'json',
+                data: {qty:qty},
+                url: "/cart/update/"+rowId,
+                success: function(data){
+                    //console.log(data)
+                    //$('#cartShow').html(data);
+                    miniCart();
+                    viewCart();
+                    toastr.success(data.success)
+                }
+            })
+        }
+
+        function viewCart(){
+            $.ajax({
+                type: 'GET',
+                dataType: 'json',
+                url: "/cart/view",
+                success: function(data){
+                    var cart = '';
+                    console.log(data)
+                    //$('#cartShow').html(data);
+                    $.each(data.carts, function(key, value){
+                        //console.log(value)
+                        cart += `<tr>
+                            <td class="romove-item"><button type="submit" title="cancel" class="icon" onclick="miniCartRemove(this.id)" id="${value.rowId}"><i
+                        class="fa fa-trash-o"></i></button></td>
+                                    <td class="cart-image">
+                                        <a class="entry-thumbnail" href="{{url('product-details/${value.id}')}}">
+                                            <img src="{{ asset('upload/products/${value.options.image}') }}" alt>
+                                        </a>
+                                    </td>
+                                    <td class="cart-product-name-info">
+                                        <h4 class='cart-product-description'><a href="{{url('product-details/${value.id}')}}">${value.name}</a></h4>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <div class="rating rateit-small rateit"></div>
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <div class="reviews">
+                                                    (06 Reviews)
+                                                </div>
+                                            </div>
+                                        </div><!-- /.row -->
+                                        <div class="cart-product-info">
+                                            <span class="product-color">COLOR:<span>${value.options.color}</span></span>
+                                            ${value.options.size != null ? `<span class="product-color">SIZE:<span>${value.options.size}</span></span>` :``}
+                                            
+                                        </div>
+                                    </td>
+                                    <td class="cart-product-edit"><a href="#" class="product-edit">Edit</a></td>
+                                    <td class="cart-product-quantity">
+                                        <div class="quant-input">
+                      <input type="hidden" name="product_id" id="product_id" value="${value.id}">
+                      <input type="number" value="${value.qty}" min="1" onchange="updateCart('${value.rowId}')" id="quntyControl-${value.rowId}">
+                    </div>
+                                    </td>
+                                    <td class="cart-product-sub-total"><span class="cart-sub-total-price">$${value.price}</span></td>
+                  <td class="cart-product-grand-total"><span
+                      class="cart-grand-total-price">$${value.price*value.qty}</span></td>
+                                </tr>`;
+                    })
+                    $('#cart-main').html(cart);
+                    $('.sub-totals').text('$'+data.subtotal);
+                    $('.total-tax').text('$'+data.tax);
+                    $('.grnd-total').text('$'+data.cartTotal);
+                }
+            })
+        }
+        viewCart();
 
     </script>
 
