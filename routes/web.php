@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Backend\AddressController;
 use App\Http\Controllers\Backend\AdminProfileController;
 use App\Http\Controllers\Backend\BrandsController;
 use App\Http\Controllers\Backend\CategoryController;
@@ -119,6 +120,29 @@ Route::group(['prefix'=> 'admin', 'middleware'=>['auth:sanctum,admin', 'verified
 		Route::get('cupons/delete/{id}', [CuponController::class, 'delete'])->name('admin.cupons.delete');
 		Route::get('cupons/{id}', [CuponController::class, 'edit'])->name('admin.cupons.edit');
 		Route::get('cupons/status/{id}', [CuponController::class, 'status'])->name('admin.cupons.status');
+
+			
+		// Address
+
+		Route::get('address/division', [AddressController::class, 'showDivision'])->name('admin.division');
+		Route::post('address/division/store', [AddressController::class, 'storeDivision'])->name('admin.division.store');
+		Route::get('address/division/delete/{id}', [AddressController::class, 'deleteDivision'])->name('admin.division.delete');
+		Route::get('address/division/{id}', [AddressController::class, 'editDivision'])->name('admin.division.edit');
+			
+		// Cities
+
+		Route::get('address/cities', [AddressController::class, 'showCity'])->name('admin.cities');
+		Route::post('address/cities/store', [AddressController::class, 'storeCity'])->name('admin.cities.store');
+		Route::get('address/cities/delete/{id}', [AddressController::class, 'deleteCity'])->name('admin.cities.delete');
+		Route::get('address/cities/{id}', [AddressController::class, 'editCity'])->name('admin.cities.edit');
+			
+		// Office
+
+		Route::get('address/area', [AddressController::class, 'showArea'])->name('admin.area');
+		Route::post('address/area/store', [AddressController::class, 'storeArea'])->name('admin.area.store');
+		Route::get('address/area/delete/{id}', [AddressController::class, 'deleteArea'])->name('admin.area.delete');
+		Route::get('address/area/{id}', [AddressController::class, 'editArea'])->name('admin.area.edit');
+		Route::get('/address/city/get/{id}', [AddressController::class, 'getCity'])->name('admin.get.city');
 
 
 });

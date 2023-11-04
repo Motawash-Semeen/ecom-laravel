@@ -89,8 +89,6 @@
               </a>
               <ul class="treeview-menu ">
                   <li class="{{ isset($route[1]) ? $route[1]=='slider' ? 'active': '':'' }}"><a href="{{ url('admin/slider/manage') }}"><i class="ti-more"></i>Manage Sliders</a></li>
-                  
-                  
               </ul>
           </li>
 
@@ -104,24 +102,22 @@
               </a>
               <ul class="treeview-menu ">
                   <li class="{{ isset($route[1]) ? $route[1]=='cupons' ? 'active': '':'' }}"><a href="{{ url('admin/cupons') }}"><i class="ti-more"></i>Manage Cupons</a></li>
-                  
-                  
               </ul>
           </li>
-
-          <li class="treeview">
-              <a href="#">
-                  <i data-feather="mail"></i> <span>Mailbox</span>
-                  <span class="pull-right-container">
-                      <i class="fa fa-angle-right pull-right"></i>
-                  </span>
-              </a>
-              <ul class="treeview-menu">
-                  <li><a href="mailbox_inbox.html"><i class="ti-more"></i>Inbox</a></li>
-                  <li><a href="mailbox_compose.html"><i class="ti-more"></i>Compose</a></li>
-                  <li><a href="mailbox_read_mail.html"><i class="ti-more"></i>Read</a></li>
-              </ul>
-          </li>
+          <li class="treeview {{ $route[1]=='address' ? 'active menu-open':'' }}">
+            <a href="{{ url('admin/address') }}">
+                <i data-feather="message-circle"></i>
+                <span>Address</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-right pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu ">
+                <li class="{{ $route[1]=='division' ? 'active':'' }}"><a href="{{ url('admin/address/division') }}"><i class="ti-more"></i>All Divition</a></li>
+                <li class="{{ $route[1]=='cities' ? 'active':'' }}"><a href="{{ url('admin/address/cities') }}"><i class="ti-more"></i>All Cities</a></li>
+                <li class="{{ $route[1]=='area' ? 'active':'' }}"><a href="{{ url('admin/address/area') }}"><i class="ti-more"></i>All Post Office</a></li>
+            </ul>
+        </li>
 
           <li class="treeview">
               <a href="#">
