@@ -118,7 +118,7 @@ Route::group(['prefix'=> 'admin', 'middleware'=>['auth:sanctum,admin', 'verified
 		Route::post('cupons/store', [CuponController::class, 'store'])->name('admin.cupons.store');
 		Route::get('cupons/delete/{id}', [CuponController::class, 'delete'])->name('admin.cupons.delete');
 		Route::get('cupons/{id}', [CuponController::class, 'edit'])->name('admin.cupons.edit');
-		Route::get('cupons/status/{id}', [SliderController::class, 'status'])->name('admin.cupons.status');
+		Route::get('cupons/status/{id}', [CuponController::class, 'status'])->name('admin.cupons.status');
 
 
 });

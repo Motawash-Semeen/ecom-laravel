@@ -37,7 +37,6 @@
                                             <th>Name</th>
                                             <th>Discount</th>
                                             <th>Validity</th>
-                                            <th>Limit</th>
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
@@ -49,8 +48,7 @@
                                                 <td>
                                                     <span class="badge rounded-pill badge-info">{{ $cupon->cupon_discount }} %</span>
                                                 </td>
-                                                <td>{{ $cupon->cupon_validity }}</td>
-                                                <td>{{ $cupon->cupon_limit }}</td>
+                                                <td width="100px">{{ $cupon->cupon_validity }}</td>
                                                 <td>
                                                     @if ($cupon->status == 1)
                                                         <a href="{{ url('admin/cupons/status/'.$cupon->id) }}" class="badge badge-success icon-link-hover" style="--bs-link-hover-color-rgb: 0, 0, 0;">Active</a>
@@ -60,9 +58,9 @@
                                                 </td>
                                                 <td>
                                                     <a href="{{ url('admin/cupons/'. $cupon->id) }}"
-                                                        class="btn btn-info">Edit</a>
+                                                        class="btn btn-info"><i class="fa-regular fa-pen-to-square"></i></a>
                                                     <a href="{{ url('admin/cupons/delete/'. $cupon->id) }}" class="btn btn-danger delete"
-                                                        id="delete">Delete</a>
+                                                        id="delete"><i class="fa-regular fa-trash-can"></i></a>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -87,7 +85,7 @@
                       @endif
                     </div>
                     <div class="box-body">
-                    <form novalidate="" method="POST" action="{{ url('admin/cupon/store') }}" enctype="multipart/form-data">
+                    <form novalidate="" method="POST" action="{{ url('admin/cupons/store') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-12">
@@ -122,7 +120,7 @@
 
                                 </div>
                                 <div class="form-group">
-                                    <h5>Brand Limit <span class="text-danger">*</span></h5>
+                                    <h5>Cupon Limit <span class="text-danger">*</span></h5>
                                     <div class="controls">
                                         <input type="number" name="cupon_limit" class="form-control" required=""
                                             data-validation-required-message="This field is required" value="{{ isset($cupon_edit)? $cupon_edit->cupon_limit : '' }}">
@@ -140,9 +138,12 @@
                                       <div class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                       </div>
-                                      <input type="text" class="form-control pull-right" id="reservation">
+                                      <input type="text" name="cupon_validity" class="form-control pull-right" id="reservation">
                                     </div>
                                     <!-- /.input group -->
+                                    @error('cupon_validity')
+                                        <div class="form-control-feedback text-danger"><small>{{ $message }}</small></div>
+                                    @enderror
                                   </div>
                                 <!-- /.form group -->
                             </div>

@@ -15,96 +15,48 @@ class CuponController extends Controller
     }
     public function store(Request $request)
     {
-    if(!isset($request->id)) {
-    $request->validate(
-        [
-            'brand_name' => 'required',
-            'brand_name_bn' => 'required',
-            'brand_image' => 'required|mimes:png,jpg,jpeg',
-        ],
-        [
-            'brand_name.required' => 'Input Brand Name',
-            'brand_name_bn.required' => 'Input Brand Name in Bangla',
-            'brand_image.required' => 'Please select an image',
-            'brand_image.mimes' => 'Only PNG, JPG, JPEG are allowed',
-        ]
-    );
-}
-else{
-    $request->validate(
-        [
-            'brand_name' => 'required',
-            'brand_name_bn' => 'required',
-        ],
-        [
-            'brand_name.required' => 'Input Brand Name',
-            'brand_name_bn.required' => 'Input Brand Name in Bangla',
-        ]
-    );
-}
-        //return $request->all();
-        if(isset($request->id)){
-            $id = $request->id;
-            $brand =  Cupon::find($id);
-        }
-        else{
-            $brand = new Cupon;
-        }
-        // $brand = new Brand();
-        $brand->brand_name = $request->brand_name;
-        $brand->brand_name_bn = $request->brand_name_bn;
-        $brand->brand_slug = strtolower(str_replace(' ', '-', $request->brand_name));
-        $brand->brand_slug_bn = strtolower(str_replace(' ', '-', $request->brand_name_bn));
-        if ($request->hasFile('brand_image')) {
-            if (isset($request->id)) {
-                $brand = Cupon::find($request->id); // Assuming you have a Brand model
-        
-                if ($brand) {
-                    $image_path = 'upload/brands/' . $brand->brand_image;
-                    if (file_exists($image_path)) {
-                        unlink($image_path);
-                    }
+            
+            $request->validate(
+                [
+                    'cupon_name' => 'required',
+                    'cupon_discount' => 'required',
+                    'cupon_validity' => 'required',
+                    'cupon_limit' => 'required',
+                ],
+                [
+                    'cupon_name.required' => 'Input Cupon Name',
+                    'cupon_discount.required' => 'Input Cupon Discount Amount',
+                    'cupon_validity.required' => 'Input Cupon Validity',
+                    'cupon_limit.required' => 'Input Cupon Limit',
+                ]
+            );
+
+                if(isset($request->id)){
+                    $id = $request->id;
+                    $cupon =  Cupon::find($id);
                 }
-            }
-        
-            $image = $request->file('brand_image');
-            $image_name = time() . '_brand_img'; // Updated image name format
-            $ext = strtolower($image->getClientOriginalExtension());
-            $image_full_name = $image_name . '.' . $ext;
-            $upload_path = 'upload/brands/';
-        
-            // Use Laravel's file upload method to move and resize the image
-            $success = $image->move($upload_path, $image_full_name);
-        
-            // Check if the image was successfully uploaded
-            if ($success) {
-                // Resize the uploaded image to 300x300 pixels
-                Image::make($upload_path . $image_full_name)
-                    ->resize(300, 300)
-                    ->save($upload_path . $image_full_name);
-        
-                // Update the brand's image attribute
-                $brand->brand_image = $image_full_name;
-                $brand->save(); // Save the changes to the database
-            }
-        }
-        
-        $brand->save();
-        $notification = array(
-            'message' => 'Cupon Added Successfully',
-            'alert-type' => 'success'
-        );
+                else{
+                    $cupon = new Cupon;
+                }
+                // $brand = new Brand();
+                $cupon->cupon_name = $request->cupon_name;
+                $cupon->cupon_discount = $request->cupon_discount;
+                $cupon->cupon_validity = $request->cupon_validity;
+                $cupon->cupon_limit = $request->cupon_limit;
+
+                $cupon->save();
+                $notification = array(
+                    'message' => 'Cupon Added/Updated Successfully',
+                    'alert-type' => 'success'
+                );
+        //return $request->all();
         return redirect('admin/cupons')->with($notification);
     }
 
     public function delete($id)
     {
-        $brand = Cupon::find($id);
-        $image_path = 'upload/cupons/' . $brand->brand_image;
-                    if (file_exists($image_path)) {
-                        unlink($image_path);
-                    }
-        $brand->delete();
+        $cupon = Cupon::find($id);
+        $cupon->delete();
         $notification = array(
             'message' => 'Cupon Deleted Successfully',
             'alert-type' => 'success'
@@ -113,8 +65,23 @@ else{
     }
     public function edit($id)
     {
-        $brands = Cupon::all();
-        $brand_edit = Cupon::find($id);
-        return view('admin.cupon.cupon_view', compact('brand_edit','brands'));
+        $cupons = Cupon::all();
+        $cupon_edit = Cupon::find($id);
+        return view('admin.cupon.cupon_view', compact('cupon_edit', 'cupons'));
+    }
+    public function status($id)
+    {
+        $cupon = Cupon::find($id);
+        if ($cupon->status == 1) {
+            $cupon->status = 0;
+        } else {
+            $cupon->status = 1;
+        }
+        $cupon->save();
+        $notification = array(
+            'message' => 'Cupon Updated Successfully',
+            'alert-type' => 'success'
+        );
+        return redirect()->back()->with($notification);
     }
 }
