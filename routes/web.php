@@ -12,6 +12,7 @@ use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\SubSubCategoryController;
 use App\Http\Controllers\Frontend\CartController;
+use App\Http\Controllers\Frontend\CuponController as FrontendCuponController;
 use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\Frontend\LanguageController;
 use App\Http\Controllers\Frontend\ProfileController;
@@ -45,6 +46,9 @@ Route::get('/remove-product/wishlist/{id}', [WishlistController::class,'removeWi
 Route::get('/show/cart', [CartController::class,'showCart'])->name('show.cart');
 Route::get('/cart/view', [CartController::class,'allCart'])->name('all.cart');
 Route::get('/cart/update/{id}', [CartController::class,'updateCart'])->name('update.cart');
+Route::get('/cupon/apply', [FrontendCuponController::class,'applyCupon'])->name('apply.cupon');
+Route::get('/cupon/view', [FrontendCuponController::class,'ViewCupon'])->name('view.cupon');
+Route::get('/cupon/remove', [FrontendCuponController::class,'removeCupon'])->name('remove.cupon');
 
 Route::group(['prefix'=> 'admin', 'middleware'=>['admin:admin']], function(){
 	Route::get('/login', [AdminController::class, 'loginForm'])->name('admin.loginForm');

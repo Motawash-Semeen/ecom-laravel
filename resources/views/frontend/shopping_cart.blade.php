@@ -109,12 +109,13 @@
               </tbody><!-- /tbody -->
             </table><!-- /table -->
           </div>
-        </div><!-- /.shopping-cart-table --> <div
-          class="col-md-4 col-sm-12 estimate-ship-tax">
+        </div><!-- /.shopping-cart-table --> 
+        <div class="col-md-4 col-sm-12 estimate-ship-tax">
           <table class="table">
             <thead>
               <tr>
                 <th>
+                  {{ Session::has('coupon') ? Session::get('coupon')['total_amount'] : '' }}
                   <span class="estimate-title">Estimate shipping and tax</span>
                   <p>Enter your destination to get shipping and tax.</p>
                 </th>
@@ -159,8 +160,10 @@
           </table>
         </div><!-- /.estimate-ship-tax -->
 
-        <div class="col-md-4 col-sm-12 estimate-ship-tax">
-          <table class="table">
+        <div class="col-md-4 col-sm-12 estimate-ship-tax" id="cupon-main">
+          {{-- @if(Session::has('coupon'))
+          @else --}}
+          {{-- <table class="table">
             <thead>
               <tr>
                 <th>
@@ -175,21 +178,24 @@
                   <div class="form-group">
                     <input type="text"
                       class="form-control unicase-form-control text-input"
-                      placeholder="You Coupon..">
+                      placeholder="You Coupon.." id="cupon_code">
                   </div>
                   <div class="clearfix pull-right">
-                    <button type="submit" class="btn-upper btn btn-primary">APPLY COUPON</button>
+                    <button type="submit" class="btn-upper btn btn-primary" onclick="applyCupon()">APPLY COUPON</button>
                   </div>
                 </td>
               </tr>
             </tbody><!-- /tbody -->
-          </table><!-- /table -->
+          </table><!-- /table --> --}}
+          {{-- @endif --}}
         </div><!-- /.estimate-ship-tax -->
 
+        
         <div class="col-md-4 col-sm-12 cart-shopping-total">
+          
           <table class="table">
             <thead>
-              <tr>
+              <tr id="priceShow">
                 <th>
                   {{-- <div class="cart-sub-total">
                     Subtotal<span class="inner-left-md">${{ $subtotal }}</span>
@@ -225,6 +231,7 @@
             </tbody><!-- /tbody -->
           </table><!-- /table -->
         </div><!-- /.cart-shopping-total -->
+        
 
       </div><!-- /.shopping-cart -->
     </div> <!-- /.row -->

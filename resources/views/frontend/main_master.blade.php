@@ -272,10 +272,11 @@
                 },
                 url: "/cart/update/" + rowId,
                 success: function(data) {
-                    //console.log(data)
+                    console.log(data)
                     //$('#cartShow').html(data);
                     miniCart();
                     viewCart();
+                    viewPrice();
                     toastr.success(data.success)
                 }
             })
@@ -333,14 +334,117 @@
                     })
                 
                     $('#cart-main').html(cart);
-                    $('.sub-totals').text('$' + data.subtotal);
-                    $('.total-tax').text('$' + data.tax);
-                    $('.grnd-total').text('$' + data.cartTotal);
+                    // $('.sub-totals').text('$' + data.subtotal);
+                    // $('.total-tax').text('$' + data.tax);
+                    // $('.grnd-total').text('$' + data.cartTotal);
                 }
                 }
             })
         }
         viewCart();
+
+        function applyCupon(){
+            var cupon = $('#cupon_code').val();
+            //alert(cupon)
+            $.ajax({
+                type: 'GET',
+                dataType: 'json',
+                data: {cupon:cupon},
+                url: "/cupon/apply",
+                success: function(data) {
+                    console.log(data)
+                    if(data.status == 'error'){
+                        toastr.error(data.message)
+                    }else{
+                        toastr.success(data.message)
+                        viewCart();
+                        viewPrice();
+                    }
+                }
+            })
+        }
+        function viewPrice(){
+            $.ajax({
+                type:'GET',
+                dataType: 'json',
+                url: "/cupon/view",
+                success: function(data){
+                    var priceView = '';
+                    var discountView = '';
+                    console.log(data)
+                    if(data.cupon_name){
+                        priceView += `<th>
+                  <div class="cart-sub-total">
+                    Subtotal<span class="inner-left-md sub-totals">$${data.subtotal}</span>
+                  </div>
+                  <div class="cart-sub-total">
+                    Tax<span class="inner-left-md total-tax">$${data.tax}</span>
+                  </div>
+                  <div class="cart-sub-total"><button class="btn btn-link" onclick="removeCupon()"><i class="fa fa-times text-danger" aria-hidden="true"></i></button>
+                    
+                    Discount (${data.discount})%<span class="inner-left-md total-tax">$${data.discount_amount}</span>
+                  </div>
+                  <div class="cart-grand-total">
+                    Grand Total<span class="inner-left-md grnd-total">$${data.totla_after_discount}</span>
+                  </div>
+                </th>`;
+                    }
+                    else{
+                        priceView += `<th>
+                  <div class="cart-sub-total">
+                    Subtotal<span class="inner-left-md sub-totals">$${data.subtotal}</span>
+                  </div>
+                  <div class="cart-sub-total">
+                    Tax<span class="inner-left-md total-tax">$${data.tax}</span>
+                  </div>
+                  <div class="cart-grand-total">
+                    Grand Total<span class="inner-left-md grnd-total">$${data.cartTotal}</span>
+                  </div>
+                </th>`;
+                discountView += `<table class="table">
+            <thead>
+              <tr>
+                <th>
+                  <span class="estimate-title">Discount Code</span>
+                  <p>Enter your coupon code if you have one..</p>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div class="form-group">
+                    <input type="text"
+                      class="form-control unicase-form-control text-input"
+                      placeholder="You Coupon.." id="cupon_code">
+                  </div>
+                  <div class="clearfix pull-right">
+                    <button type="submit" class="btn-upper btn btn-primary" onclick="applyCupon()">APPLY COUPON</button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>`;
+                    }
+                    $('#priceShow').html(priceView);
+                    $('#cupon-main').html(discountView);
+                }
+            })
+        }
+        viewPrice();
+        function removeCupon(){
+            $.ajax({
+                type: 'GET',
+                dataType: 'json',
+                url: "/cupon/remove",
+                success: function(data) {
+                    console.log(data)
+                    toastr.success(data.message)
+                    viewCart();
+                    viewPrice();
+                }
+            })
+        }
     </script>
 
 </body>
