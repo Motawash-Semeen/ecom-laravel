@@ -131,7 +131,7 @@
                                     <div class="pull-right"> <span class="text">Sub Total :</span><span
                                             class='total_price'>$600.00</span> </div>
                                     <div class="clearfix"></div>
-                                    <a href="checkout.html"
+                                    <a href="{{ url('/checkout') }}"
                                         class="btn btn-upper btn-primary btn-block m-t-20">Checkout</a>
                                 </div>
                                 <!-- /.cart-total-->

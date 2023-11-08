@@ -12,6 +12,7 @@ use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\SubSubCategoryController;
 use App\Http\Controllers\Frontend\CartController;
+use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\CuponController as FrontendCuponController;
 use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\Frontend\LanguageController;
@@ -49,6 +50,14 @@ Route::get('/cart/update/{id}', [CartController::class,'updateCart'])->name('upd
 Route::get('/cupon/apply', [FrontendCuponController::class,'applyCupon'])->name('apply.cupon');
 Route::get('/cupon/view', [FrontendCuponController::class,'ViewCupon'])->name('view.cupon');
 Route::get('/cupon/remove', [FrontendCuponController::class,'removeCupon'])->name('remove.cupon');
+Route::get('/checkout', [CheckoutController::class,'CheckoutCreate'])->name('checkout');
+Route::get('/checkout/store', [CheckoutController::class,'CheckoutStore'])->name('checkout.store');
+
+
+Route::get('/get/city', [CheckoutController::class,'getCity']);
+Route::get('/get/area', [CheckoutController::class,'getArea']);
+
+
 
 Route::group(['prefix'=> 'admin', 'middleware'=>['admin:admin']], function(){
 	Route::get('/login', [AdminController::class, 'loginForm'])->name('admin.loginForm');

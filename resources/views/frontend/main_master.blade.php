@@ -320,7 +320,7 @@
                                             
                                         </div>
                                     </td>
-                                    <td class="cart-product-edit"><a href="#" class="product-edit">Edit</a></td>
+                                    
                                     <td class="cart-product-quantity">
                                         <div class="quant-input">
                       <input type="hidden" name="product_id" id="product_id" value="${value.id}">
@@ -445,6 +445,7 @@
                 }
             })
         }
+        
     </script>
 
 </body>

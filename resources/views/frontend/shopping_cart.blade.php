@@ -22,7 +22,6 @@
                   <th class="cart-romove item">Remove</th>
                   <th class="cart-description item">Image</th>
                   <th class="cart-product-name item">Product Name</th>
-                  <th class="cart-edit item">Edit</th>
                   <th class="cart-qty item">Quantity</th>
                   <th class="cart-sub-total item">Subtotal</th>
                   <th class="cart-total last-item">Grandtotal</th>
@@ -33,7 +32,7 @@
                   <td colspan="7">
                     <div class="shopping-cart-btn">
                       <span class>
-                        <a href="#" class="btn btn-upper btn-primary outer-left-xs">Continue
+                        <a href="{{ url('/') }}" class="btn btn-upper btn-primary outer-left-xs">Continue
                           Shopping</a>
                         <a href="{{ request()->url() }}"
                           class="btn btn-upper btn-primary pull-right outer-right-xs">Update
@@ -222,8 +221,8 @@
               <tr>
                 <td>
                   <div class="cart-checkout-btn pull-right">
-                    <button type="submit" class="btn btn-primary checkout-btn">PROCCED
-                      TO CHEKOUT</button>
+                    <a href="{{ url('/checkout') }}" type="submit" class="btn btn-primary checkout-btn" {{ Cart::count() > 0 ? '' : 'disabled' }} >PROCCED
+                      TO CHEKOUT</a>
                     <span class>Checkout with multiples address!</span>
                   </div>
                 </td>

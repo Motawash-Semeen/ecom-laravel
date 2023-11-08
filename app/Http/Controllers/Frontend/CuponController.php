@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Cupon;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class CuponController extends Controller
@@ -112,4 +113,5 @@ class CuponController extends Controller
             "message" => "Remove Cupon Successfully",
         ]);
     }
+    
 }
