@@ -1,5 +1,6 @@
 <?php
 
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Backend\AddressController;
@@ -17,6 +18,7 @@ use App\Http\Controllers\Frontend\CuponController as FrontendCuponController;
 use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\Frontend\LanguageController;
 use App\Http\Controllers\Frontend\ProfileController;
+use App\Http\Controllers\Frontend\StripeController;
 use App\Http\Controllers\Frontend\WishlistController;
 use App\Models\Product;
 use Illuminate\Support\Facades\App;
@@ -52,6 +54,12 @@ Route::get('/cupon/view', [FrontendCuponController::class,'ViewCupon'])->name('v
 Route::get('/cupon/remove', [FrontendCuponController::class,'removeCupon'])->name('remove.cupon');
 Route::get('/checkout', [CheckoutController::class,'CheckoutCreate'])->name('checkout');
 Route::get('/checkout/store', [CheckoutController::class,'CheckoutStore'])->name('checkout.store');
+
+Route::post('/stripe/payment', [StripeController::class,'StripePayment'])->name('stripe.payment');
+
+Route::get('/get/cart', function(){
+	return Cart::content();
+});
 
 
 Route::get('/get/city', [CheckoutController::class,'getCity']);
