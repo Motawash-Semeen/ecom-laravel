@@ -311,7 +311,7 @@
                                                 <input type="radio" id="cod" name="method" value="COD">
                                                 <div class="">
                                                     <label for="cod">COD</label><br>
-                                                    <img src="{{ asset('frontend/assets/images/payments/3.png') }}"
+                                                    <img src="{{ asset('frontend/assets/images/payments/6.jpg') }}"
                                                         alt="">
                                                 </div>
                                             </div>

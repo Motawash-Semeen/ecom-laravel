@@ -89,7 +89,7 @@ class CheckoutController extends Controller
             return 'Card';
         }
         elseif($request->method == 'COD'){
-            return 'Cash On Delivery';
+            return view('frontend.cod', compact('data', 'total'));
             }
         else{
             $notification = array(

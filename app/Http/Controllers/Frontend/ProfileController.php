@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\User;
 use Auth;
 use Illuminate\Support\Facades\Hash;
@@ -17,13 +19,17 @@ class ProfileController extends Controller
 }
     public function index()
     {
-        return view('dashboard');
+        $id = Auth::user()->id;
+        $orders = Order::where('user_id', $id)->orderBy('id', 'DESC')->get();
+        //return $orders;
+        return view('dashboard', compact('orders'));
     }
     public function show()
     {
         $id = Auth::user()->id;
         $user = User::find($id);
-        return view('dashboard', compact('user'));
+        $orders = Order::where('user_id', $id)->orderBy('id', 'DESC')->get();
+        return view('dashboard', compact('user', 'orders'));
     }
     public function updateProfile(Request $request){
         $request->validate([
@@ -92,5 +98,13 @@ class ProfileController extends Controller
             );
             return redirect()->back()->with($notification);
         }
+    }
+
+
+    public function OrderView($id){
+        $order = Order::with('division','city','area')->where('id', $id)->first();
+        $orderitems = OrderItem::with('product')->where('order_id', $id)->get();
+        //return $orderitems;
+        return view('dashboard', compact('order', 'orderitems'));
     }
 }

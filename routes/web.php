@@ -14,6 +14,7 @@ use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\SubSubCategoryController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\CheckoutController;
+use App\Http\Controllers\Frontend\CODController;
 use App\Http\Controllers\Frontend\CuponController as FrontendCuponController;
 use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\Frontend\LanguageController;
@@ -56,10 +57,11 @@ Route::get('/checkout', [CheckoutController::class,'CheckoutCreate'])->name('che
 Route::get('/checkout/store', [CheckoutController::class,'CheckoutStore'])->name('checkout.store');
 
 Route::post('/stripe/payment', [StripeController::class,'StripePayment'])->name('stripe.payment');
+Route::post('/cod/payment', [CODController::class,'CODPayment'])->name('stripe.payment');
 
-Route::get('/get/cart', function(){
-	return Cart::content();
-});
+// Route::get('/get/cart', function(){
+// 	return Cart::content();
+// });
 
 
 Route::get('/get/city', [CheckoutController::class,'getCity']);
@@ -182,7 +184,7 @@ Route::group([ 'middleware'=>['auth:sanctum,web', 'verified']], function(){
 	Route::get('user-password', [ProfileController::class, 'passwordForm'])->name('user.password');
 	Route::post('user-password', [ProfileController::class, 'updatePassword'])->name('user.passwordupdate');
 	
-
+	Route::get('order-view/{id}', [ProfileController::class, 'OrderView'])->name('user.order.view');
 });
 
 

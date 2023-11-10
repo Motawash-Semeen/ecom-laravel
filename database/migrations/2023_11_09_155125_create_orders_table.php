@@ -20,14 +20,15 @@ return new class extends Migration
             $table->string('name');
             $table->string('email');
             $table->string('phone');
+            $table->text('address');
             $table->integer('post_code');
             $table->text('notes')->nullable();
             $table->string('payment_type');
             $table->string('payment_method')->nullable();
-            $table->string('transaction_id');
-            $table->string('currency');
+            $table->string('transaction_id')->nullable();
+            $table->string('currency')->default('BDT');
             $table->float('amount',8,2);
-            $table->string('order_number');
+            $table->string('order_number')->nullable();
             $table->string('invoice_number');
             $table->string('order_date');
             $table->string('confirmed_date')->nullable();

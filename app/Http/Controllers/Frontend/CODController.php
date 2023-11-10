@@ -3,36 +3,21 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-use App\Mail\OrderMail;
+use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
 use Stripe\Stripe;
 use Stripe\Charge;
 
-class StripeController extends Controller
+class CODController extends Controller
 {
-    public function StripePayment(Request $request){
+    public function CODPayment(Request $request)
+    {
         if(Auth::check()){
-            $total = session()->has('coupon') ? session()->get('coupon')['totla_after_discount'] : Cart::total();
-
-        Stripe::setApiKey(env('STRIPE_SECRET'));
-        try {
-            
-            $charge = Charge::create([
-                'amount' => round($total) * 100, // amount in cents
-                'currency' => 'usd',
-                'source' => $request->stripeToken,
-                'description' => 'Payment to Ecommerce',
-                'metadata' => [
-                    'order_id' => uniqid(),
-                ],
-            ]);
             $total = session()->has('coupon') ? session()->get('coupon')['totla_after_discount'] : Cart::total();
             $order = new Order;
             $order->user_id = Auth::id();
@@ -45,34 +30,17 @@ class StripeController extends Controller
             $order->phone = $request->shipping_phone;
             $order->post_code = $request->post_code;
             $request->notes ? $order->notes = $request->notes:'';
-            $order->payment_type = 'Stripe';
-            $order->payment_method = 'Stripe';
-            $order->transaction_id = $charge->balance_transaction;
-            $order->currency = $charge->currency;
+            $order->payment_type = 'COD';
+            $order->payment_method = 'COD';
             $order->amount = $total;
             $order->tax = Cart::tax();
             session()->has('coupon') ? $order->discount = session()->get('coupon')['discount_amount'] : '';
-            $order->order_number = $charge->metadata->order_id;
-            $order->invoice_number = 'Ecommerce-'.mt_rand(100000, 999999);
+            $order->order_number = uniqid();
+            $order->invoice_number = 'Ecommerce-'.uniqid();
             $order->order_date = time();
             $order->save();
 
             $carts = Cart::content();
-
-            $invoice = Order::findOrFail($order->id);
-            $data = [
-                'invoice' => $invoice->invoice_number,
-                'amount' => $total,
-                'name' => $request->shipping_name,
-                'email' => $request->shipping_email,
-
-            ];
-            try{
-                Mail::to($request->shipping_email)->send(new OrderMail($data));
-            }
-            catch (\Exception $e) {
-                dd($e->getMessage());
-            }
             foreach ($carts as $cart) {
                 $orderitem = new OrderItem;
 
@@ -99,12 +67,6 @@ class StripeController extends Controller
                 'alert-type' => 'success');
             return redirect('/')->with($notification);
             //dd($charge);
-        } catch (\Exception $ex) {
-            $notification = array(
-                'message' => $ex->getMessage(),
-                'alert-type' => 'error');
-            return redirect()->back()->with($notification);
-        }
         }
         else{
             $notification = array(
