@@ -10,6 +10,7 @@ use Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Laravel\Fortify\Contracts\LogoutResponse;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ProfileController extends Controller
 {
@@ -106,5 +107,14 @@ class ProfileController extends Controller
         $orderitems = OrderItem::with('product')->where('order_id', $id)->get();
         //return $orderitems;
         return view('dashboard', compact('order', 'orderitems'));
+    }
+
+    public function InvoiceDownload($id){
+        $order = Order::with('division','city','area')->where('id', $id)->first();
+        $orderitems = OrderItem::with('product')->where('order_id', $id)->get();
+        $pdf = Pdf::loadView('pdf.order_invoice', compact('order', 'orderitems'))->setPaper('a4');
+        return $pdf->download('invoice.pdf');
+        //return $orderitems;
+        //return view('pdf.order_invoice', compact('order', 'orderitems'));
     }
 }

@@ -176,7 +176,7 @@
                                                                     <a href="{{ url('order-view/' . $order->id) }}"
                                                                         class="btn btn-sm btn-info" title="View"><i
                                                                             class="fa fa-eye"></i></a>
-                                                                    <a href="{{ url('order-view/' . $order->id) }}"
+                                                                    <a href="{{ url('invoice_download/' . $order->id) }}"
                                                                         class="btn btn-sm btn-info" title="Invoice"><i
                                                                             class="fa fa-download"></i></a>
                                                                 </td>
@@ -427,14 +427,7 @@
                                                 @endif
                                             </div>
                                         </div>
-                                        {{-- <div class="row">
-                                            <div class="col-md-9" style="padding-left: 0px">
-                                                <span id="name">Shipping</span>
-                                            </div>
-                                            <div class="col-md-3 text-right" style="padding-right: 0px">
-                                                <span id="price">&pound;33.00</span>
-                                            </div>
-                                        </div> --}}
+                                        
                                     </div>
                                 </div>
                                 

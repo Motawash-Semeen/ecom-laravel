@@ -185,6 +185,7 @@ Route::group([ 'middleware'=>['auth:sanctum,web', 'verified']], function(){
 	Route::post('user-password', [ProfileController::class, 'updatePassword'])->name('user.passwordupdate');
 	
 	Route::get('order-view/{id}', [ProfileController::class, 'OrderView'])->name('user.order.view');
+	Route::get('invoice_download/{id}', [ProfileController::class, 'InvoiceDownload'])->name('user.order.view');
 });
 
 

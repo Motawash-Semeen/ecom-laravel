@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Mail\OrderMail;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 use Stripe\Stripe;
@@ -56,7 +58,20 @@ class CODController extends Controller
                 $product->product_qty = $product->product_qty - $cart->qty;
                 $product->save();
             }
-            
+            $invoice = Order::findOrFail($order->id);
+            $data = [
+                'invoice' => $invoice->invoice_number,
+                'amount' => $total,
+                'name' => $request->shipping_name,
+                'email' => $request->shipping_email,
+
+            ];
+            try{
+                Mail::to($request->shipping_email)->send(new OrderMail($data));
+            }
+            catch (\Exception $e) {
+                dd($e->getMessage());
+            }
             
             if(Session::has('coupon')){
                 Session::forget('coupon');
