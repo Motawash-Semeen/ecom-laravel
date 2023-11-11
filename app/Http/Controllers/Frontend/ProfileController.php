@@ -123,4 +123,26 @@ class ProfileController extends Controller
         //return $orderitems;
         //return view('pdf.order_invoice', compact('order', 'orderitems'));
     }
+    public function OrderReturnStore(Request $request, $id) {
+        $request->validate([
+            'return_reason' => 'required',
+        ],[
+            'return_reason.required'=> 'This field is required',
+        ]);
+        $order = Order::where('id', $id)->first();
+        $order->return_date = time();
+        $order->return_reason = $request->return_reason;
+        $order->update();
+        $notification = array(
+            'message' => 'Order Return Request Sent Successfully',
+            'alert-type' => 'success'
+        );
+        return redirect()->back()->with($notification);
+}
+public function AllReturn(){
+        $id = Auth::user()->id;
+        $orders = Order::where('user_id', $id)->where('return_reason','!=',null)->orderBy('id', 'DESC')->get();
+        //return $orderitems;
+        return view('dashboard', compact('orders'));
+}
 }

@@ -26,18 +26,23 @@ class OrderController extends Controller
         $order = Order::find($id);
         if ($order->status == 'pending') {
             $order->status = 2;
+            $order->confirmed_date = time();
         }
         if ($order->status == 'confirmed') {
             $order->status = 3;
+            $order->processing_date = time();
         }
         if ($order->status == 'processing') {
             $order->status = 4;
+            $order->picked_date = time();
         }
         if ($order->status == 'picked') {
             $order->status = 5;
+            $order->shipped_date = time();
         }
         if ($order->status == 'shipped') {
             $order->status = 6;
+            $order->delivary_date = time();
         }
         $order->update();
         $notification = array(

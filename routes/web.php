@@ -186,11 +186,13 @@ Route::middleware(['auth:sanctum,admin', 'verified'])->get('/admin/dashboard', f
 Route::group(['middleware' => ['auth:sanctum,web', 'verified']], function () {
 	Route::get('profile', [ProfileController::class, 'show'])->name('user.profile');
 	Route::post('profile', [ProfileController::class, 'updateProfile'])->name('user.updateprofile');
+	Route::get('return-order', [ProfileController::class, 'AllReturn'])->name('user.return-order');
 	Route::get('user-password', [ProfileController::class, 'passwordForm'])->name('user.password');
 	Route::post('user-password', [ProfileController::class, 'updatePassword'])->name('user.passwordupdate');
 
 	Route::get('order-view/{id}', [ProfileController::class, 'OrderView'])->name('user.order.view');
 	Route::get('order-return/{id}', [ProfileController::class, 'OrderReturn'])->name('user.order.return');
+	Route::post('order-return/{id}', [ProfileController::class, 'OrderReturnStore'])->name('user.order.return.store');
 	Route::get('invoice_download/{id}', [ProfileController::class, 'InvoiceDownload'])->name('user.order.view');
 });
 
