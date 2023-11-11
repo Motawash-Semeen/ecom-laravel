@@ -153,7 +153,7 @@
                                                         <th style="text-align: center">Status</th>
                                                         <th style="text-align: center">Total</th>
                                                         <th style="text-align: center">Created</th>
-                                                        <th style="text-align: center; width:150px;">Action</th>
+                                                        <th style="text-align: center; width:200px;">Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody class="table-body">
@@ -170,12 +170,15 @@
                                                                 <td><span
                                                                         class="badge badge-warning badge-pill">{{ $order->status }}</span>
                                                                 </td>
-                                                                <td>${{ $order->amount }}</td>
+                                                                <td>${{ round($order->amount) }}</td>
                                                                 <td>{{ date('F d, Y', $order->order_date) }}</td>
                                                                 <td>
                                                                     <a href="{{ url('order-view/' . $order->id) }}"
                                                                         class="btn btn-sm btn-info" title="View"><i
                                                                             class="fa fa-eye"></i></a>
+                                                                    <a href="{{ url('order-return/' . $order->id) }}"
+                                                                        class="btn btn-sm btn-info" title="Return" @if ($order->status != 'delivared') disabled @endif><i
+                                                                            class="fa fa-reply"></i></a>
                                                                     <a href="{{ url('invoice_download/' . $order->id) }}"
                                                                         class="btn btn-sm btn-info" title="Invoice"><i
                                                                             class="fa fa-download"></i></a>
@@ -193,7 +196,7 @@
                         </div>
 
                     @endif
-                    @if (request()->is('order-view/*'))
+                    @if (request()->is('order-view/*')||request()->is('order-return/*'))
                         <style>
                             
                             .card-track {
@@ -287,7 +290,7 @@
                             #progressbar li {
                                 list-style-type: none;
                                 font-size: x-small;
-                                width: 25%;
+                                width: 16%;
                                 float: left;
                                 position: relative;
                                 font-weight: 400;
@@ -321,6 +324,22 @@
                             }
 
                             #progressbar #step4:before {
+                                content: "";
+                                color: #fff;
+                                width: 5px;
+                                height: 5px;
+                                margin-right: 0px !important;
+                                /* padding-right: 11px !important */
+                            }
+                            #progressbar #step5:before {
+                                content: "";
+                                color: #fff;
+                                width: 5px;
+                                height: 5px;
+                                margin-right: 0px !important;
+                                /* padding-right: 11px !important */
+                            }
+                            #progressbar #step6:before {
                                 content: "";
                                 color: #fff;
                                 width: 5px;
@@ -373,6 +392,14 @@
                                 margin-left: auto;
                                 width: 132%;
                             }
+                            /* #progressbar li:nth-child(5):after {
+                                margin-left: auto;
+                                width: 132%;
+                            }
+                            #progressbar li:nth-child(6):after {
+                                margin-left: auto;
+                                width: 132%;
+                            } */
 
                             #progressbar li.active {
                                 color: black;
@@ -438,29 +465,36 @@
                                     <div class="col-md-3 text-right" style="padding-right: 0px"><big>${{ round($order->amount) }}</big></div>
                                 </div>
                             </div>
+                            @if (request()->is('order-view/*'))
                             <div class="tracking">
                                 <div class="title">Tracking Order</div>
                             </div>
                             <div class="progress-track">
                                 <ul id="progressbar">
-                                    <li class="step0 @if ($order->status == 'pending') active @endif " id="step1">Ordered</li>
-                                    <li class="step0 text-center @if ($order->status == 'confirmed') active @endif" id="step2">Confirmed</li>
-                                    <li class="step0 text-right @if ($order->status == 'processing') active @endif" id="step3">Processing</li>
-                                    <li class="step0 text-right @if ($order->status == 'picked') active @endif" id="step4">Delivered</li>
+                                    <li class="step0 @if ($order->status == 'pending' || $order->status == 'confirmed' || $order->status == 'processing'|| $order->status == 'picked'|| $order->status == 'shipped'|| $order->status == 'delivared') active @endif " id="step1">Ordered</li>
+                                    <li class="step0 text-center @if ($order->status == 'confirmed' || $order->status == 'processing'|| $order->status == 'picked'|| $order->status == 'shipped'|| $order->status == 'delivared') active @endif" id="step2">Confirmed</li>
+                                    <li class="step0 text-right @if ($order->status == 'processing'|| $order->status == 'picked'|| $order->status == 'shipped'|| $order->status == 'delivared') active @endif" id="step3">Processing</li>
+                                    <li class="step0 text-right @if ($order->status == 'picked'|| $order->status == 'shipped'|| $order->status == 'delivared') active @endif" id="step4">Picked</li>
+                                    <li class="step0 text-right @if ($order->status == 'shipped'|| $order->status == 'delivared') active @endif" id="step5">Shipped</li>
+                                    <li class="step0 text-right @if ($order->status == 'delivared') active @endif" id="step6">Delivered</li>
                                 </ul>
                             </div>
-
+                            @endif
+                            @if (request()->is('order-return/*') && $order->status == 'delivared')
+                            <div class="form-group">
+                                <label for="returnReason">Reason for Return</label>
+                                <textarea class="form-control" id="returnReason" rows="3" placeholder="Enter the reason for return"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit Return</button>
+                            @endif
 
                             <div class="footer" style="margin: 5rem 0px;">
                                 <div class="row">
                                     <div class="col-md-12 text-center">Want any help? Please &nbsp;<a> contact us</a></div>
                                 </div>
-
-
                             </div>
                         </div>
                     @endif
-
                 </div>
             </div>
         </div>

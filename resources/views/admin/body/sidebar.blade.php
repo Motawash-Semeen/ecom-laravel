@@ -77,7 +77,18 @@
               </ul>
           </li>
 
-          
+          <li class="treeview {{ $route[1]=='orders' ? 'active menu-open':'' }}">
+            <a href="{{ url('admin/orders') }}">
+                <i data-feather="message-circle"></i>
+                <span>Orders</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-right pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu ">
+                <li class="{{ $route[1]=='orders' ? 'active':'' }}"><a href="{{ url('admin/orders') }}"><i class="ti-more"></i>All Orders</a></li>
+            </ul>
+        </li>
 
           <li class="treeview {{ $route[1]=='slider' ? 'active menu-open':'' }}">
               <a href="{{ url('admin/slider') }}">

@@ -108,6 +108,12 @@ class ProfileController extends Controller
         //return $orderitems;
         return view('dashboard', compact('order', 'orderitems'));
     }
+    public function OrderReturn($id){
+        $order = Order::with('division','city','area')->where('id', $id)->first();
+        $orderitems = OrderItem::with('product')->where('order_id', $id)->get();
+        //return $orderitems;
+        return view('dashboard', compact('order', 'orderitems'));
+    }
 
     public function InvoiceDownload($id){
         $order = Order::with('division','city','area')->where('id', $id)->first();
